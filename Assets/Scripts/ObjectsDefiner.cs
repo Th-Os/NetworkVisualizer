@@ -10,6 +10,8 @@ public class ObjectsDefiner : MonoBehaviour {
     public Transform Camera;
     public Transform Cube;
 
+    
+
     Canvas canvas;
     Text text;
     Vector3 position;
@@ -54,8 +56,10 @@ public class ObjectsDefiner : MonoBehaviour {
     void OnTap(TappedEventArgs args)
     {
         Debug.Log("TAPPED " + args.tapCount);
-        EventManager.Broadcast(EVNT.NewDevice, "device", position);
+        
         currentObj = Instantiate(Cube, currentObj.position, currentObj.rotation, this.transform);
+        Events.Broadcast(Events.EVENTS.DEVICE_FOUND, currentObj.gameObject);
+        //EventManager.Broadcast(EVNT.NewDevice, currentObj);
     }
 
     void OnError(GestureErrorEventArgs args)

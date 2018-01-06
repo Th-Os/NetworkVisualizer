@@ -7,13 +7,14 @@ using HoloToolkit.Unity;
 public class ObjectManager : MonoBehaviour {
 
     public int DeviceCount = 3;
+    public string[] Device_Names = new string[] { "Router", "First", "Second", "Third" };
 
     private int count;
 
 	// Use this for initialization
 	void Start () {
-        EventManager.AddHandler(EVNT.NewDevice, OnDeviceFound);
-        
+        //EventManager.AddHandler<Transform>(EVNT.NewDevice, OnDeviceFound);
+        Events.OnDeviceFound += OnNewDevice;
                                                             
         count = 0;
 	}
@@ -33,11 +34,16 @@ public class ObjectManager : MonoBehaviour {
         WorldAnchorManager.Instance.RemoveAnchor(obj);
     }
 
-    void OnDeviceFound(string name, Vector3 position)
+    void OnNewDevice(GameObject obj)
     {
+        string name = Device_Names[count];
         Debug.Log("hello " + name);
+
+        obj.name = name;
+        AddAnchor(obj, name);
+
         count++;
-        if(count == DeviceCount)
+        if (count == DeviceCount)
         {
             Debug.Log("device count reached");
             GetComponent<ObjectsDefiner>().enabled = false;

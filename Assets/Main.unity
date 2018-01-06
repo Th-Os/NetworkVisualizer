@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657886, g: 0.4964127, b: 0.57481724, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -239,6 +239,7 @@ GameObject:
   - component: {fileID: 619351493}
   - component: {fileID: 619351496}
   - component: {fileID: 619351495}
+  - component: {fileID: 619351497}
   m_Layer: 0
   m_Name: CustomManagers
   m_TagString: Untagged
@@ -285,6 +286,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeviceCount: 3
+  Device_Names:
+  - Router
+  - First
+  - Second
+  - Third
 --- !u!114 &619351496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,6 +303,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Uri: 192.168.178.25
+--- !u!114 &619351497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 619351492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2af6557a28dbdab4292dd9629090b04a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Devices: {fileID: 0}
 --- !u!1 &1074959756
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,7 +386,7 @@ RectTransform:
   m_GameObject: {fileID: 1088910181}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 100}
-  m_LocalScale: {x: 0.037377886, y: 0.037377886, z: 0.037377886}
+  m_LocalScale: {x: 0.039533295, y: 0.039533295, z: 0.039533295}
   m_Children:
   - {fileID: 1933617804}
   m_Father: {fileID: 619351494}

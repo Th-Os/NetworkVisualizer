@@ -21,6 +21,9 @@ public class ConnectionMove : MonoBehaviour {
             if (transform.position != m_Target)
             {
                 transform.position = Vector3.MoveTowards(transform.position, m_Target, m_Speed * Time.deltaTime);
+            }else
+            {
+                moving = false;
             }
         }
        

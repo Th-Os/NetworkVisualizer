@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using HoloToolkit.Unity.InputModule;
@@ -20,35 +20,38 @@ public class DeviceManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         devices = new Dictionary<string, Transform>();
-        EventManager.AddHandler(EVNT.NewConnection, TestConnection);
+        EventManager.AddHandler<string>(EVNT.NewConnection, TestConnection);
         EventManager.AddHandler(EVNT.UpdateDevice, UpdateDevice);
         m_Devices = gameObject.transform;
-        EventManager.AddHandler(EVNT.StartTest, TestConnection);
+        EventManager.AddHandler<string>(EVNT.StartTest, TestConnection);
     }
 
-    void TestConnection(string value)
+    public void TestConnection<T>(T value)
     {
-        Transform device = Instantiate(m_Device);
-        device.position = new Vector3(-5, 1, 10);
-        Transform target = Instantiate(m_Device);
-        target.position = new Vector3(5, 1, 10);
-        Transform trail = Instantiate(m_Trail);
-        trail.parent = device;
+        if (value is string)
+        {
+            Transform device = Instantiate(m_Device);
+            device.position = new Vector3(-5, 1, 10);
+            Transform target = Instantiate(m_Device);
+            target.position = new Vector3(5, 1, 10);
+            Transform trail = Instantiate(m_Trail);
+            trail.parent = device;
 
-        ConnectionMove move = trail.GetComponent<ConnectionMove>();
-        move.m_Origin = device.position;
-        move.m_Target = target.position;
-        move.m_Speed = 1f;
-        move.Move();
+            ConnectionMove move = trail.GetComponent<ConnectionMove>();
+            move.m_Origin = device.position;
+            move.m_Target = target.position;
+            move.m_Speed = 1f;
+            move.Move();
 
-        Transform connection = Instantiate(m_Connection);
-        LineRenderer renderer = connection.GetComponent<LineRenderer>();
-        renderer.positionCount = 2;
-        renderer.SetPositions(new Vector3[] { device.position, target.position });
+            Transform connection = Instantiate(m_Connection);
+            LineRenderer renderer = connection.GetComponent<LineRenderer>();
+            renderer.positionCount = 2;
+            renderer.SetPositions(new Vector3[] { device.position, target.position });
 
 
-        Transform call = Instantiate(m_Call);
-        call.position = new Vector3(0f, -5f, 50f);
+            Transform call = Instantiate(m_Call);
+            call.position = new Vector3(0f, -5f, 50f);
+        }
     }
 	
 	// Update is called once per frame

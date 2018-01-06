@@ -11,12 +11,13 @@ public class CanvasController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         TestCanvas = Instantiate(TestCanvas, transform);
-        EventManager.AddHandler(EVNT.SwitchTestUI, ToggleTestUI);
+        Events.OnTestUISwitched += ToggleTestUI;
+        //EventManager.AddHandler<string>(EVNT.SwitchTestUI, ToggleTestUI);
         active = false;
         TestCanvas.SetActive(active);
 	}
 	
-    void ToggleTestUI(string value)
+    void ToggleTestUI()
     {
         Debug.Log("Toggle TEST UI");
         active = (active) ? false : true;

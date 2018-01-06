@@ -10,15 +10,17 @@ public static class EventManager
     //TODO EventManager erweitern
     private static Dictionary<EVNT, Delegate> eventTable = new Dictionary<EVNT, Delegate>();
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="evnt"></param>
-    /// <param name="action">string</param>
-    public static void AddHandler(EVNT evnt, Action<string> action)
+    public static void AddHandler<T>(EVNT evnt, Action<T> action)
     {
         if (!eventTable.ContainsKey(evnt)) eventTable[evnt] = action;
-        else eventTable[evnt] = (Action<string>)eventTable[evnt] + action;
+        else eventTable[evnt] = (Action<T>)eventTable[evnt] + action;
+    }
+
+
+    public static void AddHandler<T, E>(EVNT evnt, Action<T, E> action)
+    {
+        if (!eventTable.ContainsKey(evnt)) eventTable[evnt] = action;
+        else eventTable[evnt] = (Action<T, E>)eventTable[evnt] + action;
     }
 
     /// <summary>
@@ -43,6 +45,27 @@ public static class EventManager
         else eventTable[evnt] = (Action<string, string>)eventTable[evnt] + action;
     }
 
+
+    public static void Broadcast <T>(EVNT evnt, T value)
+    {
+        Delegate d;
+        if (eventTable.TryGetValue(evnt, out d))
+        {
+            Action<T> action = d as Action<T>;
+            if (action != null) action(value);
+        }
+    }
+
+    public static void Broadcast<T, E>(EVNT evnt, T value1, E value2)
+    {
+        Delegate d;
+        if (eventTable.TryGetValue(evnt, out d))
+        {
+            Action<T, E> action = d as Action<T, E>;
+            if (action != null) action(value1, value2);
+        }
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -53,8 +76,11 @@ public static class EventManager
         Delegate d;
         if (eventTable.TryGetValue(evnt, out d))
         {
-            Action<string> action = d as Action<string>;
-            if (action != null) action(value);
+            if (d is Action<string>)
+            {
+                Action<string> action = d as Action<string>;
+                if (action != null) action(value);
+            }
         }
     }
 
