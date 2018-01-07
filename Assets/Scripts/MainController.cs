@@ -2,58 +2,59 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainController : MonoBehaviour
+using NetworkVisualizer.Objects;
+
+namespace NetworkVisualizer
 {
 
-    public string m_Uri;
-
-    // Use this for initialization
-    void Start()
+    public class MainController : MonoBehaviour
     {
-        EventManager.AddHandler<string>(EVNT.StartTest, BeginTest);
-        MqttController.Start(m_Uri);
 
-        Test();
-    }
+        public string m_Uri;
 
-    // Update is called once per frame
-    void Update()
-    {
-        //not working for hololens ...
-        if (Input.GetKeyDown(KeyCode.S))
+        // Use this for initialization
+        void Start()
         {
-            Debug.Log("key pressed");
-            //EventManager.Broadcast(EVNT.NewConnection, "hello");
+            EventManager.AddHandler<string>(EVNT.StartTest, BeginTest);
+           // MqttController.Start(m_Uri);
+
+            Test();
         }
-    }
 
-    private void BeginTest(string name)
-    {
-        EventManager.Broadcast(EVNT.SwitchTestUI, "");
-        Debug.Log("Beginning " + name);
-    }
+        // Update is called once per frame
+        void Update()
+        {
 
-    void Test()
-    {
-        /*
-        EventManager.AddHandler<string>(EVNT.UpdateDevice, TestString);
-        EventManager.Broadcast<string>(EVNT.UpdateDevice, "hello");
+        }
 
-        EventManager.AddHandler<GameObject>(EVNT.UpdateDevice, TestTransform);
-        EventManager.Broadcast<GameObject>(EVNT.UpdateDevice, new GameObject());
-        */
+        private void BeginTest(string name)
+        {
+            EventManager.Broadcast(EVNT.SwitchTestUI, "");
+            Debug.Log("Beginning " + name);
+        }
 
-        Events.OnTest += TestString;
-        
-    }
+        void Test()
+        {
+            /*
+            EventManager.AddHandler<string>(EVNT.UpdateDevice, TestString);
+            EventManager.Broadcast<string>(EVNT.UpdateDevice, "hello");
 
-    void TestString(string value)
-    {
-        Debug.Log("TestString:  " + value);
-    }
+            EventManager.AddHandler<GameObject>(EVNT.UpdateDevice, TestTransform);
+            EventManager.Broadcast<GameObject>(EVNT.UpdateDevice, new GameObject());
+            */
 
-    void TestTransform(GameObject t)
-    {
-        Debug.Log("TestObject " + t.ToString());
+            Events.OnTest += TestString;
+
+        }
+
+        void TestString(string value)
+        {
+            Debug.Log("TestString:  " + value);
+        }
+
+        void TestTransform(GameObject t)
+        {
+            Debug.Log("TestObject " + t.ToString());
+        }
     }
 }

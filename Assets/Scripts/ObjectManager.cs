@@ -40,7 +40,7 @@ public class ObjectManager : MonoBehaviour {
         Debug.Log("hello " + name);
 
         obj.name = name;
-        AddAnchor(obj, name);
+        //AddAnchor(obj, name);
 
         count++;
         if (count == DeviceCount)
