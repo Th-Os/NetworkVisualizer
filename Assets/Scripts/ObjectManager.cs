@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using HoloToolkit.Unity;
 
+using NetworkVisualizer.Objects;
+
 //Responsible for Device Initialization and Protection (World Anchor)
 public class ObjectManager : MonoBehaviour {
 
-    public int DeviceCount = 3;
+    public int DeviceCount = 4;
     public string[] Device_Names = new string[] { "Router", "First", "Second", "Third" };
+    public GameObject Device;
+
+    public Transform Devices;
 
     private int count;
 
 	// Use this for initialization
 	void Start () {
-        //EventManager.AddHandler<Transform>(EVNT.NewDevice, OnDeviceFound);
         Events.OnDeviceFound += OnNewDevice;
                                                             
         count = 0;
@@ -34,20 +38,28 @@ public class ObjectManager : MonoBehaviour {
         WorldAnchorManager.Instance.RemoveAnchor(obj);
     }
 
-    void OnNewDevice(GameObject obj)
+    void OnNewDevice(Transform transform)
     {
         string name = Device_Names[count];
         Debug.Log("hello " + name);
 
+        if(name.Equals("None"))
+        {
+            Debug.Log("Here is a None");
+        }
+
+        GameObject obj = Instantiate(Device, transform.position, transform.rotation, Devices);
+
         obj.name = name;
         //AddAnchor(obj, name);
+        obj.AddComponent<Content>();
 
         count++;
         if (count == DeviceCount)
         {
             Debug.Log("device count reached");
             GetComponent<ObjectsDefiner>().enabled = false;
-            EventManager.Broadcast(EVNT.SwitchTestUI, "");
+            Events.Broadcast(Events.EVENTS.SWITCH_UI);
         }
     }
 }

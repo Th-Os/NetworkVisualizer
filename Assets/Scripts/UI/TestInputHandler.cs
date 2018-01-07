@@ -11,7 +11,7 @@ public class TestInputHandler : MonoBehaviour {
     public void OnTestClicked(InteractionSourcePressedEventArgs args)
     {
         Debug.Log("clicked: " + this.name);
-        EventManager.Broadcast(EVNT.TestClicked, this.name);
+        Events.Broadcast(Events.EVENTS.START_TEST, Convert.ToInt32(name));
     }
 
     // Use this for initialization

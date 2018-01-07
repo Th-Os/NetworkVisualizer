@@ -21,13 +21,7 @@ public class TestController : MonoBehaviour {
         {
             Debug.Log("key pressed");
 
-
-            GameObject obj = Instantiate(m_Device, m_Devices.transform);
-            obj.transform.position = new Vector3(1, 2, 3);
-
-            Events.Broadcast(Events.EVENTS.DEVICE_FOUND, obj);
-            Events.Broadcast(Events.EVENTS.NEW_CONNECTION, new Call(new Device("Router", new Position(1, 2, 3)), "call", "time", "body"));
-            //EventManager.Broadcast(EVNT.NewConnection, "hello");
+            Events.Broadcast(Events.EVENTS.SWITCH_UI);
         }
     }
 }

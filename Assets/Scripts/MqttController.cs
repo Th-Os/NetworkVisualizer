@@ -15,7 +15,8 @@ public static class MqttController {
     private static string SUB_TOPIC = "hololens/#";
     private static string CONNECTION = "hololens/connection";
     private static string CALL = "hololens/call";
-    private static string DATA = "hololens/data";
+    private static string DATA_CONNECTION = "hololens/data/connection";
+    private static string DATA_DEVICE = "hololens/data/device";
 
     private static MqttClient client;
 
@@ -37,12 +38,18 @@ public static class MqttController {
         SendDeviceData("blub", new Vector3(1,2,3));
 
         Events.OnDataRequested += SendDataRequest;
+        Events.OnTestStarted += SendTestInitializer;
     }
 
     static void Send(string topic, string msg)
     {
         Debug.Log("Sent message: " + topic + ": " + msg);
         client.Publish(topic, Encoding.UTF8.GetBytes(msg), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+    }
+
+    private static void SendTestInitializer(int testId)
+    {
+        Send(PUB_TOPIC + "/test", "" + testId);
     }
 
     public static void SendDeviceData(string name, Vector3 position)
@@ -52,6 +59,7 @@ public static class MqttController {
         Send(PUB_TOPIC, json);
     }
 
+    // Name eines Geräts oder ID einer Connection/Call
     static void SendDataRequest(string name)
     {
         Send(PUB_TOPIC + "/data", name);
@@ -72,9 +80,13 @@ public static class MqttController {
         {
             Events.Broadcast(Events.EVENTS.NEW_CONNECTION, JsonConvert.DeserializeObject<Call>(msg));
         }
-        if (String.Equals(topic, DATA, StringComparison.OrdinalIgnoreCase))
+        if (String.Equals(topic, DATA_CONNECTION, StringComparison.OrdinalIgnoreCase))
         {
-            Events.Broadcast(Events.EVENTS.DATA_ARRIVED, JsonConvert.DeserializeObject<Data>(msg));
+            Events.Broadcast(Events.EVENTS.DATA_ARRIVED, JsonConvert.DeserializeObject<ConnectionData>(msg));
+        }
+        if (String.Equals(topic, DATA_DEVICE, StringComparison.OrdinalIgnoreCase))
+        {
+            Events.Broadcast(Events.EVENTS.DATA_ARRIVED, JsonConvert.DeserializeObject<DeviceData>(msg));
         }
 
         Debug.Log("Got message: " + topic + ": " + msg);

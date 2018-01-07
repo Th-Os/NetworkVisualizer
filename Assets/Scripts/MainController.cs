@@ -12,49 +12,59 @@ namespace NetworkVisualizer
 
         public string m_Uri;
 
+        private bool trackGaze;
+
         // Use this for initialization
         void Start()
         {
-            EventManager.AddHandler<string>(EVNT.StartTest, BeginTest);
-           // MqttController.Start(m_Uri);
+            // MqttController.Start(m_Uri);
+            Events.OnTestStarted += OnTestStarted;
+            Events.OnTestEnded += OnTestEnded;
 
-            Test();
+            trackGaze = false;
+;
         }
 
         // Update is called once per frame
         void Update()
         {
+            if(trackGaze)
+            {
+                RaycastHit hitInfo;
+                if (Physics.Raycast(
+                        Camera.main.transform.position,
+                        Camera.main.transform.forward,
+                        out hitInfo,
+                        20.0f,
+                        Physics.DefaultRaycastLayers))
+                {
+                    // If the Raycast has succeeded and hit a hologram
+                    // hitInfo's point represents the position being gazed at
+                    // hitInfo's collider GameObject represents the hologram being gazed at
+                    GameObject hitObject = hitInfo.collider.gameObject;
+                    if (hitObject != null)
+                    {
+                        DisplayDataOf(hitObject);
+
+                    }
+                }
+            }
 
         }
 
-        private void BeginTest(string name)
+        void DisplayDataOf(GameObject obj)
         {
-            EventManager.Broadcast(EVNT.SwitchTestUI, "");
-            Debug.Log("Beginning " + name);
+            Debug.Log("Trying to display data of " + obj.name + " with id " + obj.GetInstanceID());
         }
 
-        void Test()
+        void OnTestStarted(int test)
         {
-            /*
-            EventManager.AddHandler<string>(EVNT.UpdateDevice, TestString);
-            EventManager.Broadcast<string>(EVNT.UpdateDevice, "hello");
-
-            EventManager.AddHandler<GameObject>(EVNT.UpdateDevice, TestTransform);
-            EventManager.Broadcast<GameObject>(EVNT.UpdateDevice, new GameObject());
-            */
-
-            Events.OnTest += TestString;
-
+            trackGaze = true;
         }
 
-        void TestString(string value)
+        void OnTestEnded()
         {
-            Debug.Log("TestString:  " + value);
-        }
-
-        void TestTransform(GameObject t)
-        {
-            Debug.Log("TestObject " + t.ToString());
+            trackGaze = false;
         }
     }
 }

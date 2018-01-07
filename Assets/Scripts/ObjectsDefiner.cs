@@ -9,7 +9,6 @@ public class ObjectsDefiner : MonoBehaviour {
 
     public Transform Camera;
     public Transform Cube;
-
     
 
     Canvas canvas;
@@ -39,7 +38,7 @@ public class ObjectsDefiner : MonoBehaviour {
 
     private void InteractionManager_SourcePressed(InteractionSourcePressedEventArgs args)
     {
-        Debug.Log("hello " + args.pressType);
+        Debug.Log("PressType: " + args.pressType);
     }
 
     // Update is called once per frame
@@ -57,8 +56,10 @@ public class ObjectsDefiner : MonoBehaviour {
     {
         Debug.Log("TAPPED " + args.tapCount);
         
-        currentObj = Instantiate(Cube, currentObj.position, currentObj.rotation, this.transform);
-        Events.Broadcast(Events.EVENTS.DEVICE_FOUND, currentObj.gameObject);
+        Instantiate(Cube, currentObj.position, currentObj.rotation, transform);
+
+        Debug.Log(currentObj + " : " + currentObj.position);
+        Events.Broadcast(Events.EVENTS.DEVICE_FOUND, currentObj);
         //EventManager.Broadcast(EVNT.NewDevice, currentObj);
     }
 
