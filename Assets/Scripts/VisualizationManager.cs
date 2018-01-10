@@ -55,11 +55,7 @@ public class VisualizationManager : MonoBehaviour {
 
     private void AddData(Data data)
     {
-        if(data is DeviceData)
-            Debug.Log("New Data for " + (data as DeviceData).device.name);
-
-        if (data is ConnectionData)
-            Debug.Log("New Data for a Connection");
+        Debug.Log("New Data for " + data.name + " Type: " + data.GetType());
     }
 
     private Transform GetDeviceByName(string name)

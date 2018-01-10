@@ -15,8 +15,7 @@ public static class MqttController {
     private static string SUB_TOPIC = "hololens/#";
     private static string CONNECTION = "hololens/connection";
     private static string CALL = "hololens/call";
-    private static string DATA_CONNECTION = "hololens/data/connection";
-    private static string DATA_DEVICE = "hololens/data/device";
+    private static string INCOMING_DATA = "hololens/data";
 
     private static MqttClient client;
 
@@ -80,13 +79,9 @@ public static class MqttController {
         {
             Events.Broadcast(Events.EVENTS.NEW_CONNECTION, JsonConvert.DeserializeObject<Call>(msg));
         }
-        if (String.Equals(topic, DATA_CONNECTION, StringComparison.OrdinalIgnoreCase))
+        if (String.Equals(topic, INCOMING_DATA, StringComparison.OrdinalIgnoreCase))
         {
-            Events.Broadcast(Events.EVENTS.DATA_ARRIVED, JsonConvert.DeserializeObject<ConnectionData>(msg));
-        }
-        if (String.Equals(topic, DATA_DEVICE, StringComparison.OrdinalIgnoreCase))
-        {
-            Events.Broadcast(Events.EVENTS.DATA_ARRIVED, JsonConvert.DeserializeObject<DeviceData>(msg));
+            Events.Broadcast(Events.EVENTS.DATA_ARRIVED, JsonConvert.DeserializeObject<Data>(msg));
         }
 
         Debug.Log("Got message: " + topic + ": " + msg);

@@ -8,7 +8,6 @@ namespace NetworkVisualizer.Objects
     {
         public string name { get; }
         public Position position { get; }
-        public DeviceData data {get; set;}
 
         public Device(string name, Position position)
         {
