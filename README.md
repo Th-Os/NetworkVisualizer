@@ -9,3 +9,7 @@
 
 * Schieberegler
 * Eventuell Änderungen an den gerätespezifischen Daten dokumentieren und hier auch jeweils darstellen 
+
+## Ideen für Visualisierung:
+
+Particle System mit Trails
