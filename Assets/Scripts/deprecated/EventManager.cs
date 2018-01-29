@@ -6,7 +6,8 @@ using System.Collections.Generic;
 public enum EVNT { TestClicked, StartTest, Mqtt, NewConnection, UpdateDevice, NewDevice, EndTest, SwitchTestUI };
 
 public static class EventManager
-{
+{   
+    /*
     //TODO EventManager erweitern
     private static Dictionary<EVNT, Delegate> eventTable = new Dictionary<EVNT, Delegate>();
 
@@ -107,4 +108,5 @@ public static class EventManager
         if (eventTable[evnt] == null)
             eventTable.Remove(evnt);
     }
+    */
 }

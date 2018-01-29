@@ -5,7 +5,7 @@ using HoloToolkit.Unity.InputModule;
 
 public class DeviceManager : MonoBehaviour {
 
-    
+    /*
     public Transform m_Device;
     public Transform m_Trail;
     public Transform m_Connection;
@@ -98,11 +98,11 @@ public class DeviceManager : MonoBehaviour {
             Transform connection = Instantiate(m_Connection);
             connection.parent = d_Start;
 
-            /*
+            
             LineRenderer renderer = connection.GetComponent<LineRenderer>();
             renderer.positionCount = 2;
             renderer.SetPositions(new Vector3[] { d_Start.position, d_Target.position });
-            */
+            
             ConnectionMove move = connection.GetComponent<ConnectionMove>();
             move.m_Origin = d_Start.position;
             move.m_Target = d_Target.position;
@@ -122,5 +122,5 @@ public class DeviceManager : MonoBehaviour {
             call.parent = device;
         }
     }
-
+    */
 }

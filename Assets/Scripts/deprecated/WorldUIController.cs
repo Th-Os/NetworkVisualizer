@@ -8,7 +8,7 @@ using UnityEngine;
 /// http://heliosinteractive.com/scaling-ui-hololens/
 /// </summary>
 public class WorldUIController : MonoBehaviour {
-
+    /*
     public Transform DevicePanel;
 
     float currentZ;
@@ -17,7 +17,7 @@ public class WorldUIController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         currentZ = 0;
-        EventManager.AddHandler(EVNT.NewDevice, SetElementPosition);
+        Events.OnDeviceFound += SetElementPosition;
 	}
 	
 	// Update is called once per frame
@@ -35,14 +35,15 @@ public class WorldUIController : MonoBehaviour {
         }
 	}
 
-    void SetElementPosition(string name, Vector3 position)
+    void SetElementPosition(Transform t)
     {
-        transform.position = position;
+        transform.position = t.position;
         transform.LookAt(Camera.main.transform);
         /*
         Instantiate(DevicePanel, transform);
         DevicePanel.position = position;
         DevicePanel.GetComponentInChildren<Text>().text = name;
-        */
     }
+        */
+    
 }

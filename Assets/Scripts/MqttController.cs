@@ -48,7 +48,7 @@ public static class MqttController {
 
     private static void SendTestInitializer(int testId)
     {
-        Send(PUB_TOPIC + "/test", "" + testId);
+        Send(PUB_TOPIC + "/test", "{\"test\":" + testId + "}");
     }
 
     public static void SendDeviceData(string name, Vector3 position)
@@ -58,11 +58,10 @@ public static class MqttController {
         Send(PUB_TOPIC, json);
     }
 
-    // Name eines Geräts oder ID einer Connection/Call
-    static void SendDataRequest(string name)
+    static void SendDataRequest(DataRequest request)
     {
-        Send(PUB_TOPIC + "/data", name);
-        Debug.Log("Get Data for " + name);
+        Send(PUB_TOPIC + "/data", JsonConvert.SerializeObject(request));
+        Debug.Log("Get Data for " + request.Type + " : " + request.Id + " in this manner: multiple: " + request.Multiple + ", timebased: " + request.Timebased + ", specific: " + request.Specific);
 
     }
 

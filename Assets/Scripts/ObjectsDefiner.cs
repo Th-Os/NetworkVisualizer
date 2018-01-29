@@ -60,7 +60,6 @@ public class ObjectsDefiner : MonoBehaviour {
 
         Debug.Log(currentObj + " : " + currentObj.position);
         Events.Broadcast(Events.EVENTS.DEVICE_FOUND, currentObj);
-        //EventManager.Broadcast(EVNT.NewDevice, currentObj);
     }
 
     void OnError(GestureErrorEventArgs args)

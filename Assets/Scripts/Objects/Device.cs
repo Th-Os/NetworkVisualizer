@@ -6,8 +6,8 @@ namespace NetworkVisualizer.Objects
     [Serializable]
     public class Device
     {
-        public string name { get; }
-        public Position position { get; }
+        public string name { get; set;  }
+        public Position position { get; set; }
 
         public Device(string name, Position position)
         {

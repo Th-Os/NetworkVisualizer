@@ -11,7 +11,7 @@ public class Events {
     public delegate void DeviceFound(Transform transform);
     public static event DeviceFound OnDeviceFound;
 
-    public delegate void DataRequested(string name);
+    public delegate void DataRequested(DataRequest request);
     public static event DataRequested OnDataRequested;
 
     public delegate void DataArrived(Data data);

@@ -12,7 +12,6 @@ public class VisualizationManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        //EventManager.AddHandler<System.Object>(EVNT.NewConnection, OnConnection);
         Events.OnNewConnection += OnConnection;
         Events.OnDataArrived += OnDataArrived;
 	}
@@ -55,7 +54,7 @@ public class VisualizationManager : MonoBehaviour {
 
     private void AddData(Data data)
     {
-        Debug.Log("New Data for " + data.name + " Type: " + data.GetType());
+        Debug.Log("New Data for " + data.Type + " type: " + data.GetType());
     }
 
     private Transform GetDeviceByName(string name)

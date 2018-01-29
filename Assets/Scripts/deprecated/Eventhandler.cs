@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Eventhandler : MonoBehaviour {
 
+    /*
+
     public float smoothTime = 0.3f;
     public GameObject line;
     public GameObject canvas;
@@ -26,7 +28,7 @@ public class Eventhandler : MonoBehaviour {
 
     // https://gist.github.com/brean/5210d01240116573d61556173837745e
     void Update () {
-        /*
+        
         // move cube to camera
         Quaternion toQuat = Camera.main.transform.rotation;
 
@@ -59,7 +61,7 @@ public class Eventhandler : MonoBehaviour {
 
         Debug.Log("start: " + start);
         Debug.Log("target: " + cube.position);
-        */
+        
     }
 
     private void OnUI(string name)
@@ -67,4 +69,5 @@ public class Eventhandler : MonoBehaviour {
         EventManager.Broadcast(EVNT.StartTest, name);
         Debug.Log("name of clicked: " + name);
     }
+    */
 }

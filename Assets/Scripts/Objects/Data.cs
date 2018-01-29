@@ -1,43 +1,79 @@
 ﻿using System;
-using UnityEngine;
 
 namespace NetworkVisualizer.Objects
+/*
+data : {
+            multiple: _Boolean,
+            devices: _DeviceArray (devices with specific connection types),
+            timebased: _Boolean,
+            specific: _Boolean
+            type: _Type,
+            connection: _Connection, (as JSONObject)
+            call: _Call, (as JSONObject)
+            device: _Device (as JSONObject)
+           }
+       */
 {
     [Serializable]
     public class Data
     {
-        public String name;
-        public Device device;
-        public Connection connection;
-        public Call call;
+        public bool Multiple { get; set; }
+        public Device[] Devices { get; set; }
+        public bool Timebased { get; set; }
+        public bool Specific { get; set; }
+        public string Type { get; set; }
+        public Connection Connection { get; set; }
+        public Call Call { get; set; }
+        public Device Device { get; set; }
 
-        public Data(String name, Device device, Connection connection, Call call)
+        public Data(bool multiple, Device[] devices, bool timebased, bool specific, string type, Connection connection, Call call, Device device)
         {
-            this.name = name;
-            this.device = device;
-            this.connection = connection;
-            this.call = call;
+            this.Multiple = multiple;
+            this.Devices = devices;
+            this.Timebased = timebased;
+            this.Specific = specific;
+            this.Type = type;
+            this.Connection = connection;
+            this.Call = call;
+            this.Device = device;
         }
 
-        new public Type GetType() {
-            Debug.Log("Device:" + (device != null) + " Connection: " + (connection != null) + " call: " + (call != null));
-            if(device != null)
+        public object GetRequest()
+        {
+            if(Type.Equals("connection"))
             {
-                return device.GetType();
+                return Connection;
             }
-            if(connection != null)
+            if(Type.Equals("call"))
             {
-                return connection.GetType();
+                return Call;
             }
-            if(call != null)
-            {
-                call.GetType();
-            }
+            if (Type.Equals("device"))
+                return Device;
 
             return null;
         }
-        
 
+        public Device[] GetDevices()
+        {
+            if(Multiple)
+            {
+                return Devices;
+            }
+
+            return new Device[] { };
+        }
+
+        new public string GetType()
+        {
+            if (Multiple)
+                return "multiple";
+            if (Timebased)
+                return "timebased";
+            if (Specific)
+                return "specific";
+            return "undefined";
+        }
     }
 }
 
