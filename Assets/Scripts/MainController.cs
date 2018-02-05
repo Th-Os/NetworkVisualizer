@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using NetworkVisualizer.Objects;
+using Newtonsoft.Json;
 
 namespace NetworkVisualizer
 {
@@ -17,7 +18,7 @@ namespace NetworkVisualizer
         // Use this for initialization
         void Start()
         {
-            // MqttController.Start(m_Uri);
+            MqttController.Start(m_Uri);
             Events.OnTestStarted += OnTestStarted;
             Events.OnTestEnded += OnTestEnded;
 
@@ -54,7 +55,7 @@ namespace NetworkVisualizer
 
         void DisplayDataOf(GameObject obj)
         {
-            Debug.Log("Trying to display data of " + obj.name + " with id " + obj.GetInstanceID());
+            Debug.Log("Trying to display data of " + obj.name + " with id " + obj.GetInstanceID() + " and tag " + obj.tag);
         }
 
         void OnTestStarted(int test)

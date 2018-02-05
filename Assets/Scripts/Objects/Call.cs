@@ -9,14 +9,12 @@ namespace NetworkVisualizer.Objects
         public Device start { get; }
         public string type { get; }
         public string time { get; }
-        public string body { get; }
 
-        public Call(Device start, string type, string time, string body)
+        public Call(Device start, string type, string time)
         {
             this.start = start;
             this.type = type;
             this.time = time;
-            this.body = body;
         }
 
     }
