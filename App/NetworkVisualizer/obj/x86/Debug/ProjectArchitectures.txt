@@ -1,1 +1,2 @@
+C:\Users\BiShY\Documents\NetworkVisualizer\App\GeneratedProjects\UWP\Assembly-CSharp\Assembly-CSharp.csproj;x86
 C:\Users\BiShY\Documents\NetworkVisualizer\App\NetworkVisualizer\NetworkVisualizer.csproj;x86

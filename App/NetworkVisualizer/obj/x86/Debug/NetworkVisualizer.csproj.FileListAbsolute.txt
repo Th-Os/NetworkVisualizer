@@ -111,7 +111,6 @@ C:\Users\BiShY\Documents\NetworkVisualizer\App\NetworkVisualizer\bin\x86\Debug\S
 C:\Users\BiShY\Documents\NetworkVisualizer\App\NetworkVisualizer\bin\x86\Debug\System.Xml.XDocument.dll
 C:\Users\BiShY\Documents\NetworkVisualizer\App\NetworkVisualizer\bin\x86\Debug\System.Xml.XmlDocument.dll
 C:\Users\BiShY\Documents\NetworkVisualizer\App\NetworkVisualizer\bin\x86\Debug\System.Xml.XmlSerializer.dll
-C:\Users\BiShY\Documents\NetworkVisualizer\App\NetworkVisualizer\bin\x86\Debug\Assembly-CSharp.dll
 C:\Users\BiShY\Documents\NetworkVisualizer\App\NetworkVisualizer\bin\x86\Debug\BridgeInterface.winmd
 C:\Users\BiShY\Documents\NetworkVisualizer\App\NetworkVisualizer\bin\x86\Debug\Newtonsoft.Json.dll
 C:\Users\BiShY\Documents\NetworkVisualizer\App\NetworkVisualizer\bin\x86\Debug\nunit.framework.dll
@@ -166,7 +165,6 @@ C:\Users\BiShY\Documents\NetworkVisualizer\App\NetworkVisualizer\bin\x86\Debug\U
 C:\Users\BiShY\Documents\NetworkVisualizer\App\NetworkVisualizer\bin\x86\Debug\UnityPlayer.winmd
 C:\Users\BiShY\Documents\NetworkVisualizer\App\NetworkVisualizer\bin\x86\Debug\WinRTBridge.winmd
 C:\Users\BiShY\Documents\NetworkVisualizer\App\NetworkVisualizer\bin\x86\Debug\WinRTLegacy.dll
-C:\Users\BiShY\Documents\NetworkVisualizer\App\NetworkVisualizer\bin\x86\Debug\Assembly-CSharp.pdb
 C:\Users\BiShY\Documents\NetworkVisualizer\App\NetworkVisualizer\bin\x86\Debug\UnityEngine.UIModule.pdb
 C:\Users\BiShY\Documents\NetworkVisualizer\App\NetworkVisualizer\bin\x86\Debug\UnityEngine.UIElementsModule.pdb
 C:\Users\BiShY\Documents\NetworkVisualizer\App\NetworkVisualizer\bin\x86\Debug\UnityEngine.TilemapModule.pdb

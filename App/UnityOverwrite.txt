@@ -5,9 +5,10 @@
 # Write a line equal to 'overwrite-all' (without quotes) to overwrite everything (preserved accross builds)
 # Write a line equal to 'keep-all' (without quotes) to keep files regardless their modification (preserved accross builds)
 # Default behavior is to never overwrite files
-NetworkVisualizer.sln: E463810BA38EC21C07F9EF9D2617ED4A
+NetworkVisualizer.sln: modified
+GeneratedProjects\UWP\Assembly-CSharp\project.json: 4FCF72A4D5EDB37E24C206A7BCFE7AF1
 NetworkVisualizer\App.cs: AC815A21AE43FE7E63875F91C798A750
-NetworkVisualizer\NetworkVisualizer.csproj: D6EE39E214D06116F75056271740B5B6
+NetworkVisualizer\NetworkVisualizer.csproj: 263FFED08AB91A79F678EF63242C739C
 NetworkVisualizer\NetworkVisualizer.csproj.user: modified
 NetworkVisualizer\Package.appxmanifest: EA903FC5EC522582714D70CFB2FFDC6B
 NetworkVisualizer\project.json: 1D02BC64BAC0D041019673A1C4C51737

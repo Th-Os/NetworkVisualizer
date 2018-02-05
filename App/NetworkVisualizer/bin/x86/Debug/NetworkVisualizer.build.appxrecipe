@@ -458,9 +458,6 @@
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\BiShY\Documents\NetworkVisualizer\App\NetworkVisualizer\Assembly-CSharp.dll">
-      <PackagePath>Assembly-CSharp.dll</PackagePath>
-    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\BiShY\Documents\NetworkVisualizer\App\NetworkVisualizer\UnityEngine.UIElementsModule.dll">
       <PackagePath>UnityEngine.UIElementsModule.dll</PackagePath>
     </AppxPackagedFile>
@@ -607,6 +604,9 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\BiShY\Documents\NetworkVisualizer\App\NetworkVisualizer\UnityEngine.Networking.dll">
       <PackagePath>UnityEngine.Networking.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\BiShY\Documents\NetworkVisualizer\App\NetworkVisualizer\Assembly-CSharp.dll">
+      <PackagePath>Assembly-CSharp.dll</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\BiShY\Documents\NetworkVisualizer\App\NetworkVisualizer\bin\x86\Debug\Core\NetworkVisualizer.exe">
       <PackagePath>NetworkVisualizer.exe</PackagePath>

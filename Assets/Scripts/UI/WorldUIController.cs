@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using UnityEngine;
 
 
+//TODO überarbeiten!
+
 /// <summary>
 /// http://heliosinteractive.com/scaling-ui-hololens/
 /// </summary>
@@ -17,7 +19,7 @@ public class WorldUIController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         currentZ = 0;
-        EventManager.AddHandler(EVNT.NewDevice, SetElementPosition);
+        //EventManager.AddHandler(EVNT.NewDevice, SetElementPosition);
 	}
 	
 	// Update is called once per frame

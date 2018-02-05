@@ -19,7 +19,7 @@ public class Eventhandler : MonoBehaviour {
         cube = this.transform.GetChild(0);
         renderer = line.GetComponent<LineRenderer>();
         cGroup = canvas.GetComponent<CanvasGroup>();
-        EventManager.AddHandler<string>(EVNT.TestClicked, OnUI);
+        //EventManager.AddHandler<string>(EVNT.TestClicked, OnUI);
 
 
 	}
@@ -64,7 +64,7 @@ public class Eventhandler : MonoBehaviour {
 
     private void OnUI(string name)
     {
-        EventManager.Broadcast(EVNT.StartTest, name);
+        //EventManager.Broadcast(EVNT.StartTest, name);
         Debug.Log("name of clicked: " + name);
     }
 }

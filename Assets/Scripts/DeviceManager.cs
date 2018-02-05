@@ -20,10 +20,8 @@ public class DeviceManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         devices = new Dictionary<string, Transform>();
-        EventManager.AddHandler<string>(EVNT.NewConnection, TestConnection);
-        EventManager.AddHandler(EVNT.UpdateDevice, UpdateDevice);
+
         m_Devices = gameObject.transform;
-        EventManager.AddHandler<string>(EVNT.StartTest, TestConnection);
     }
 
     public void TestConnection<T>(T value)
