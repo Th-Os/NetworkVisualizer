@@ -173,6 +173,7 @@ GameObject:
   - component: {fileID: 619351495}
   - component: {fileID: 619351497}
   - component: {fileID: 619351498}
+  - component: {fileID: 619351499}
   m_Layer: 0
   m_Name: CustomManagers
   m_TagString: Untagged
@@ -224,7 +225,7 @@ MonoBehaviour:
   - First
   - Second
   - Third
-  Device: {fileID: 1291301790276760, guid: 98a1aeb1bedf6124ab89fd8078bed8cb, type: 2}
+  Device: {fileID: 1180627074964324, guid: 0caab27e842ce21499abdb713f561dbd, type: 2}
   Devices: {fileID: 1074959758}
 --- !u!114 &619351496
 MonoBehaviour:
@@ -249,10 +250,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2af6557a28dbdab4292dd9629090b04a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Trail: {fileID: 4569864280293738, guid: d452fb0d6047d73419d1f9189fe5377b, type: 2}
-  m_Connection: {fileID: 4152917265428806, guid: a3ed6d86217f70046afa45ebcd43a05b,
-    type: 2}
-  m_Call: {fileID: 4730589462423162, guid: de83c9664790a2347a3f6f9157a43bc9, type: 2}
+  Connection: {fileID: 0}
+  Call: {fileID: 0}
   Devices: {fileID: 1074959756}
 --- !u!114 &619351498
 MonoBehaviour:
@@ -267,6 +266,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Devices: {fileID: 1074959756}
   m_Device: {fileID: 1291301790276760, guid: 98a1aeb1bedf6124ab89fd8078bed8cb, type: 2}
+--- !u!114 &619351499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 619351492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299fedefadb6d87419233720c8a12531, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConnectionLine: {fileID: 4673885096026148, guid: 0904d84980bfd7b44a6aae75f6437e49,
+    type: 2}
+  Connection: {fileID: 4391325000304320, guid: 0e05119267abdc24ab40a308423bd5fa, type: 2}
+  Call: {fileID: 4383032389736464, guid: 622896ff202809942ab2e04ca8d88dfd, type: 2}
+  m_Connection_Speed_Line: 1
+  m_Connection_Speed: 5
+  m_Connection_Smooth_WaitFor: 0.001
+  m_Call_Duration: 5
 --- !u!1 &1074959756
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,7 +339,7 @@ RectTransform:
   m_GameObject: {fileID: 1088910181}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 100}
-  m_LocalScale: {x: 0.039533295, y: 0.039533295, z: 0.039533295}
+  m_LocalScale: {x: 0.04004013, y: 0.04004013, z: 0.04004013}
   m_Children:
   - {fileID: 1933617804}
   m_Father: {fileID: 619351494}

@@ -55,7 +55,7 @@ namespace NetworkVisualizer
 
         void DisplayDataOf(GameObject obj)
         {
-            Debug.Log("Trying to display data of " + obj.name + " with id " + obj.GetInstanceID());
+            Debug.Log("Trying to display data of " + obj.name + " with id " + obj.GetInstanceID() + " and tag " + obj.tag);
         }
 
         void OnTestStarted(int test)

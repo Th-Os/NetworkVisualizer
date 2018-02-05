@@ -5,20 +5,14 @@ using NetworkVisualizer.Objects;
 
 public class VisualizationManager : MonoBehaviour {
 
-    public Transform m_Trail;
-    public Transform m_Connection;
-    public Transform m_Call;
+    public Transform Connection;
+    public Transform Call;
     public GameObject Devices;
 
 	// Use this for initialization
 	void Start () {
         Events.OnNewConnection += OnConnection;
         Events.OnDataArrived += OnDataArrived;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 
     public void OnConnection(NetworkObject connection)
@@ -45,11 +39,13 @@ public class VisualizationManager : MonoBehaviour {
     private void AddConnection(Connection con)
     {
         Debug.Log("New Connection from " + con.start.name + " to " + con.target.name);
+        Events.Broadcast(Events.EVENTS.DRAW_CONNECTION, GetDeviceByName(con.start.name), GetDeviceByName(con.target.name));
     }
 
     private void AddCall(Call call)
     {
         Debug.Log("New Call from " + call.start.name);
+        Events.Broadcast(Events.EVENTS.DRAW_CALL, GetDeviceByName(call.start.name));
     }
 
     private void AddData(Data data)

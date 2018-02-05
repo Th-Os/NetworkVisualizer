@@ -4,36 +4,27 @@ using UnityEngine;
 
 public class Line : MonoBehaviour {
 
-    public Transform start;
-    public Transform target;
+    public Transform Source;
+    public Transform Target;
 
     public Transform Ball;
-    public Transform AnotherBall;
+    public Transform Connection;
 
     public float m_Speed_Line = 1f;
     public float m_Speed_Connection = 5f;
     public float m_Smooth_WaitFor = 0.001f;
 
     private LineRenderer lineRenderer;
-    private Vector3[] positions;
+    private List<Transform[]> _transforms;
 
 	// Use this for initialization
 	void Start () {
-        positions = new Vector3[2];
         lineRenderer = GetComponent<LineRenderer>();
-        transform.position = start.position;
+        _transforms = new List<Transform[]>();
 
-        //positions[0] = start.position;
-        //positions[1] = start.position;
-        //lineRenderer.SetPositions(positions);
+        transform.position = Source.position;
 
-        lineRenderer.SetPosition(0, start.position);
-        lineRenderer.SetPosition(1, start.position);
-
-        //Ball.position = start.position;
-        AnotherBall.position = start.position;
-
-        StartCoroutine(DrawLine());
+        StartCoroutine(StartConnection(Source, Target));
 	}
 	
 	// Update is called once per frame
@@ -59,23 +50,55 @@ public class Line : MonoBehaviour {
            */
     }
 
-    IEnumerator DrawLine()
+    private void OnConnection(Transform source, Transform target)
     {
-        print(lineRenderer.GetPosition(1) + " : " + target.position);
-        while (!lineRenderer.GetPosition(1).Equals(target.position))
-        { 
-            lineRenderer.SetPosition(1, Vector3.MoveTowards(lineRenderer.GetPosition(1), target.position, m_Speed_Line * Time.deltaTime));
-            yield return new WaitForSeconds(m_Smooth_WaitFor);
-        }
-
-        StartCoroutine(Connect());
+        StartCoroutine(StartConnection(source, target));
     }
 
-    IEnumerator Connect()
+    private bool Add(Transform one, Transform two)
     {
-        while (!AnotherBall.position.Equals(target.position))
+        foreach(Transform[] transforms in _transforms)
         {
-            AnotherBall.position = Vector3.MoveTowards(AnotherBall.position, target.position, m_Speed_Connection * Time.deltaTime);
+            if(transforms[0].name == one.name || transforms[1].name == one.name)
+            {
+                if(transforms[0].name == two.name || transforms[1].name == two.name)
+                {
+                    return false;
+                }
+            }
+        }
+        _transforms.Add(new Transform[] { one, two });
+        return true;
+    }
+
+    //Establish Connection
+    IEnumerator StartConnection(Transform start, Transform target)
+    {
+        if (Add(start, target))
+        {
+            lineRenderer.SetPosition(0, start.position);
+            lineRenderer.SetPosition(1, target.position);
+            print(lineRenderer.GetPosition(1) + " : " + target.position);
+            while (!lineRenderer.GetPosition(1).Equals(target.position))
+            {
+                lineRenderer.SetPosition(1, Vector3.MoveTowards(lineRenderer.GetPosition(1), target.position, m_Speed_Line * Time.deltaTime));
+                yield return new WaitForSeconds(m_Smooth_WaitFor);
+            }
+        }
+
+        StartCoroutine(Connect(start, target));
+    }
+
+    //Connect
+    IEnumerator Connect(Transform start, Transform target)
+    {
+
+        Transform conn = Instantiate(Connection, start);
+        conn.position = start.position;
+
+        while (!conn.position.Equals(target.position))
+        {
+            conn.position = Vector3.MoveTowards(conn.position, target.position, m_Speed_Connection * Time.deltaTime);
             yield return new WaitForSeconds(m_Smooth_WaitFor);
         }
 
