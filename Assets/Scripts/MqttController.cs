@@ -21,23 +21,31 @@ public static class MqttController {
 
     public static void Start(String uri)
     {
-        client = new MqttClient(uri);
-        client.MqttMsgPublishReceived += OnMessageReceived;
+        try
+        {
+            client = new MqttClient(uri);
+            client.MqttMsgPublishReceived += OnMessageReceived;
 
-        string clientId = Guid.NewGuid().ToString();
-        client.Connect(clientId);
+            string clientId = Guid.NewGuid().ToString();
+            client.Connect(clientId);
 
-        client.Subscribe(new String[] { SUB_TOPIC }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+            client.Subscribe(new String[] { SUB_TOPIC }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+
+            Debug.Log("MQTT started with " + uri + " as host");
 
 
-        Debug.Log("MQTT started with " + uri + " as host");
+            Send(PUB_TOPIC, "Hololens online");
+            SendDeviceData("blub", new Vector3(1, 2, 3));
 
+            Events.OnDataRequested += SendDataRequest;
+            Events.OnTestStarted += SendTestInitializer;
 
-        Send(PUB_TOPIC, "Hololens online");
-        SendDeviceData("blub", new Vector3(1,2,3));
-
-        Events.OnDataRequested += SendDataRequest;
-        Events.OnTestStarted += SendTestInitializer;
+        }
+        catch(Exception e)
+        {
+            Debug.Log(e.StackTrace);
+            Debug.Log("No start up of Mqtt module possible.");
+        }
     }
 
     static void Send(string topic, string msg)
