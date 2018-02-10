@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace NetworkVisualizer.Objects
 {
@@ -15,6 +16,13 @@ namespace NetworkVisualizer.Objects
             this.x = x;
             this.y = y;
             this.z = z;
+        }
+
+        public Position(Vector3 position)
+        {
+            x = position.x;
+            y = position.y;
+            z = position.z;
         }
     }
 }

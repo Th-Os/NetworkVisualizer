@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4673885096026148}
   - component: {fileID: 120322622363197838}
+  - component: {fileID: 114527040911162070}
   m_Layer: 0
   m_Name: ConnectionLine
   m_TagString: Connection
@@ -40,6 +41,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114527040911162070
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1125990914064798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 729a3e68696d4314694f8bc30a8296ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!120 &120322622363197838
 LineRenderer:
   m_ObjectHideFlags: 1

@@ -3,7 +3,13 @@
 namespace NetworkVisualizer.Objects
 {
     [Serializable]
-    class Content
+    public class Content
     {
+        public string Value { get; set; }
+
+        public Content(string value)
+        {
+            Value = value;
+        }
     }
 }

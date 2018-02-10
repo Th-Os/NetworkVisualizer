@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Helpers;
 
 public class CanvasController : MonoBehaviour {
 
@@ -11,7 +12,11 @@ public class CanvasController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {        
-        Events.OnTestUISwitched += ToggleTestUI;
+        Events.OnTestStarted += OnWorldUI;
+        Events.OnTestEnded += OnTestUI;
+        Events.OnDefineProcessStarted += OnDefineUI;
+        Events.OnDefineProcessEnded += OnTestUI;
+
 
         DefineUI = Instantiate(DefineUI, transform);
         TestUI = Instantiate(TestUI, transform);
@@ -21,9 +26,50 @@ public class CanvasController : MonoBehaviour {
         WorldUI.SetActive(false);
     }
 
-    void OnDeviceFound(GameObject obj)
+    //When the change to singleton is needed.
+    void Init(GameObject TestUI, GameObject DefineUI, GameObject WorldUI)
     {
-        DefineUI.GetComponentInChildren<Text>().text = "Device " + obj.name + " defined with position " + obj.transform.position;
+        this.DefineUI = Instantiate(DefineUI, transform);
+        this.TestUI = Instantiate(TestUI, transform);
+        this.WorldUI = Instantiate(WorldUI, transform);
+
+        Events.OnTestStarted += OnWorldUI;
+        Events.OnTestEnded += OnTestUI;
+        Events.OnDefineProcessStarted += OnDefineUI;
+        Events.OnDefineProcessEnded += OnTestUI;
+
+        TestUI.SetActive(false);
+        WorldUI.SetActive(false);
+    }
+
+    void OnDefineUI()
+    {
+        if (!DefineUI.activeInHierarchy)
+            DefineUI.SetActive(true);
+
+        Events.OnDeviceFound += OnDeviceFound;
+    }
+
+    void OnTestUI()
+    {
+        Events.OnDeviceFound -= OnDeviceFound;
+        if (DefineUI.activeInHierarchy)
+            DefineUI.SetActive(false);
+
+
+        if (WorldUI.activeInHierarchy)
+            WorldUI.SetActive(false);
+
+        TestUI.SetActive(true);
+        
+    }
+
+    void OnWorldUI(int test)
+    {
+        if (TestUI.activeInHierarchy)
+            TestUI.SetActive(false);
+
+        WorldUI.SetActive(true);
     }
 	
     void ToggleTestUI()
@@ -45,4 +91,11 @@ public class CanvasController : MonoBehaviour {
 
         Debug.Log("Toggle TEST UI");
     }
+
+
+    void OnDeviceFound(Transform obj)
+    {
+        DefineUI.GetComponentInChildren<Text>().text = "Device " + obj.name + " defined with position " + obj.transform.position;
+    }
+
 }

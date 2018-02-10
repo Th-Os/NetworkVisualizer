@@ -9,9 +9,9 @@ namespace NetworkVisualizer.Objects
         multiple: _Boolean,
         devices: _DeviceIds, (list of device ids)
         //last
-        timebased: _Boolean, (last connection or call)
+        timebased: _Boolean, (last connection, call or device data)
         source: _DeviceId,
-        target: _DeviceId, (not required, when call)
+        target: _DeviceId, (not required, when call, or device)
         //specific
         specific: _Boolean,
         device: _DeviceId,
@@ -55,21 +55,20 @@ namespace NetworkVisualizer.Objects
         }
 
         //Timebased Device
-        public DataRequest(bool timebased, string type, long id)
+        public DataRequest(bool timebased, string type, Device device)
         {
             this.Timebased = timebased;
             this.Type = type;
-            this.Id = id;
+            this.Source = device;
         }
 
         //Timebased Connection/Call
-        public DataRequest(bool timebased, Device source, Device target, string type, long id)
+        public DataRequest(bool timebased, Device source, Device target, string type)
         {
             this.Timebased = timebased;
             this.Source = source;
             this.Target = target;
             this.Type = type;
-            this.Id = id;
         }
 
         //Specific Connection/Call/Device

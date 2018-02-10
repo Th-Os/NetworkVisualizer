@@ -21,7 +21,6 @@ public class TestController : MonoBehaviour {
         {
             Debug.Log("key pressed");
 
-            Events.Broadcast(Events.EVENTS.SWITCH_UI);
         }
     }
 }

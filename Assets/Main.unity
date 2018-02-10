@@ -172,7 +172,6 @@ GameObject:
   - component: {fileID: 619351496}
   - component: {fileID: 619351495}
   - component: {fileID: 619351497}
-  - component: {fileID: 619351498}
   - component: {fileID: 619351499}
   m_Layer: 0
   m_Name: CustomManagers
@@ -250,22 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2af6557a28dbdab4292dd9629090b04a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Connection: {fileID: 0}
-  Call: {fileID: 0}
   Devices: {fileID: 1074959756}
---- !u!114 &619351498
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 619351492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9dcc7812a9c4645b56d7f755f797f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Devices: {fileID: 1074959756}
-  m_Device: {fileID: 1291301790276760, guid: 98a1aeb1bedf6124ab89fd8078bed8cb, type: 2}
 --- !u!114 &619351499
 MonoBehaviour:
   m_ObjectHideFlags: 0

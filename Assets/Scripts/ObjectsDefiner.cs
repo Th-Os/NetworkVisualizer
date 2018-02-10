@@ -9,14 +9,13 @@ public class ObjectsDefiner : MonoBehaviour {
 
     public Transform Camera;
     public Transform Cube;
-    
-
-    Canvas canvas;
-    Text text;
-    Vector3 position;
-    Transform currentObj;
-    GestureRecognizer recognizer;
-    bool disabled;
+   
+    private Canvas canvas;
+    private Text text;
+    private Vector3 position;
+    private Transform currentObj;
+    private GestureRecognizer recognizer;
+    private bool disabled;
 
     // Use this for initialization
     void Start () {

@@ -22,11 +22,6 @@ public class ObjectManager : MonoBehaviour {
                                                             
         count = 0;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-
-	}
 
     void AddAnchor(GameObject obj, string name)
     {
@@ -59,7 +54,7 @@ public class ObjectManager : MonoBehaviour {
         {
             Debug.Log("device count reached");
             GetComponent<ObjectsDefiner>().enabled = false;
-            Events.Broadcast(Events.EVENTS.SWITCH_UI);
+            Events.Broadcast(Events.EVENTS.END_DEFINE);
         }
     }
 }

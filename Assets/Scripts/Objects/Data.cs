@@ -42,14 +42,14 @@ data : {
         {
             if(Type.Equals("connection"))
             {
-                return Connection;
+                return Connection as Connection;
             }
             if(Type.Equals("call"))
             {
-                return Call;
+                return Call as Call;
             }
             if (Type.Equals("device"))
-                return Device;
+                return Device as Device;
 
             return null;
         }

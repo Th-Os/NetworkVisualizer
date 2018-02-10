@@ -5,8 +5,6 @@ using NetworkVisualizer.Objects;
 
 public class VisualizationManager : MonoBehaviour {
 
-    public Transform Connection;
-    public Transform Call;
     public GameObject Devices;
 
 	// Use this for initialization
@@ -38,14 +36,14 @@ public class VisualizationManager : MonoBehaviour {
 
     private void AddConnection(Connection con)
     {
-        Debug.Log("New Connection from " + con.start.name + " to " + con.target.name);
-        Events.Broadcast(Events.EVENTS.DRAW_CONNECTION, GetDeviceByName(con.start.name), GetDeviceByName(con.target.name));
+        Debug.Log("New Connection from " + con.start.Name + " to " + con.target.Name);
+        Events.Broadcast(Events.EVENTS.DRAW_CONNECTION, GetDeviceByName(con.start.Name), GetDeviceByName(con.target.Name));
     }
 
     private void AddCall(Call call)
     {
-        Debug.Log("New Call from " + call.start.name);
-        Events.Broadcast(Events.EVENTS.DRAW_CALL, GetDeviceByName(call.start.name));
+        Debug.Log("New Call from " + call.start.Name);
+        Events.Broadcast(Events.EVENTS.DRAW_CALL, GetDeviceByName(call.start.Name));
     }
 
     private void AddData(Data data)
