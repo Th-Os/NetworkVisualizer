@@ -11,5 +11,10 @@ namespace NetworkVisualizer.Objects
         {
             Value = value;
         }
+
+        public string ToText()
+        {
+            return Value;
+        }
     }
 }

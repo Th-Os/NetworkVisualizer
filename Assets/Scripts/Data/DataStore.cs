@@ -52,6 +52,24 @@ namespace NetworkVisualizer
             return false;
         }
 
+        public DeviceConnection GetDeviceConnection(Transform one, Transform two)
+        {
+            Transform[] transforms = GetConnectedDevices(one, two);
+            DeviceConnection dc = null;
+            if (transforms != null)
+            {
+                foreach(Transform transform in transforms)
+                {
+                    dc = transform.gameObject.GetComponent<DeviceConnection>();
+                    if(dc != null)
+                    {
+                        break;
+                    }
+                }
+            }
+            return dc;
+        }
+
         public Transform[] GetConnectedDevices(Transform one, Transform two)
         {
             foreach(Transform[] array in _connectedDevices.Values)

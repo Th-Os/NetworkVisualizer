@@ -1,16 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using NetworkVisualizer.Objects;
 
 public class VisualizationManager : MonoBehaviour {
 
     public GameObject Devices;
 
-	// Use this for initialization
-	void Start () {
+    public GameObject DevicePanel;
+    public GameObject ConnectionPanel;
+
+    private Vector3 _panelOffset =  new Vector3(0f, 4f, 0f);
+
+    // Use this for initialization
+    void Start () {
         Events.OnNewConnection += OnConnection;
-        Events.OnDataArrived += OnDataArrived;
+        Events.OnShowDeviceData += ShowDeviceData;
+        Events.OnShowConnectionData += ShowConnectionData;
 	}
 
     public void OnConnection(NetworkObject connection)
@@ -29,26 +36,33 @@ public class VisualizationManager : MonoBehaviour {
 
     }
 
-    public void OnDataArrived(Data data)
+    public void ShowDeviceData(GameObject obj, Device device)
     {
-        AddData(data);
+        Vector3 position = obj.transform.position + _panelOffset;
+        obj.transform.position = position;
+        GameObject devicePanel = Instantiate(DevicePanel, position, obj.transform.rotation, obj.transform);
+        device.FillTexts(devicePanel.GetComponentsInChildren<Text>());
+        Debug.Log("Display data " + device.Content.Value + " of device: " + device.Name + " with ip: " + device.Ip + " and position: " + device.Position);
+    }
+
+    public void ShowConnectionData(DeviceConnection dc, Connection conn)
+    {
+        Vector3 position = Vector3.Lerp(dc.Source.position, dc.Target.position + _panelOffset, 0.5f);
+        GameObject connectionPanel = Instantiate(ConnectionPanel, position, dc.Source.rotation, dc.Source);
+        conn.FillTexts(connectionPanel.GetComponentsInChildren<Text>());
+        Debug.Log("Display data " + conn.Body + " of source: " + conn.Start.Name + " target: " + conn.Target.Name);
     }
 
     private void AddConnection(Connection con)
     {
-        Debug.Log("New Connection from " + con.start.Name + " to " + con.target.Name);
-        Events.Broadcast(Events.EVENTS.DRAW_CONNECTION, GetDeviceByName(con.start.Name), GetDeviceByName(con.target.Name));
+        Debug.Log("New Connection from " + con.Start.Name + " to " + con.Target.Name);
+        Events.Broadcast(Events.EVENTS.DRAW_CONNECTION, GetDeviceByName(con.Start.Name), GetDeviceByName(con.Target.Name));
     }
 
     private void AddCall(Call call)
     {
         Debug.Log("New Call from " + call.start.Name);
         Events.Broadcast(Events.EVENTS.DRAW_CALL, GetDeviceByName(call.start.Name));
-    }
-
-    private void AddData(Data data)
-    {
-        Debug.Log("New Data for " + data.Type + " type: " + data.GetType());
     }
 
     private Transform GetDeviceByName(string name)

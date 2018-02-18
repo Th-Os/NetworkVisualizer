@@ -7,32 +7,61 @@ using UnityEngine.XR.WSA.Input;
 
 public class ObjectsDefiner : MonoBehaviour {
 
-    public Transform Camera;
     public Transform Cube;
    
-    private Canvas canvas;
-    private Text text;
-    private Vector3 position;
-    private Transform currentObj;
-    private GestureRecognizer recognizer;
-    private bool disabled;
+    private Text _text;
+    private Vector3 _lastPosition;
+    private Transform _currentObj;
+    private GestureRecognizer _recognizer;
+    private bool _disabled;
 
     // Use this for initialization
     void Start () {
-        canvas = GetComponentInChildren<Canvas>();
-        text = canvas.GetComponentInChildren<Text>();
-        currentObj = Instantiate(Cube, this.transform);
-        recognizer = new GestureRecognizer();
-        recognizer.SetRecognizableGestures(GestureSettings.Tap);
-        recognizer.Tapped += OnTap;
-        recognizer.GestureError += OnError;
-        recognizer.StartCapturingGestures();
+        Events.OnDefineProcessStarted += OnStart;
+    }
+
+    // Update is called once per frame
+    void Update () {
+        if(!_disabled)
+        {
+            _lastPosition = GazeManager.Instance.HitInfo.point;
+            _currentObj.position = _lastPosition;
+            _text.text = _lastPosition.ToString();
+        }
+
+    }
+
+    void OnStart()
+    {
+        _text = GetComponentInChildren<Text>();
+        _currentObj = Instantiate(Cube, this.transform);
+        _recognizer = new GestureRecognizer();
+        _recognizer.SetRecognizableGestures(GestureSettings.Tap);
+        _recognizer.Tapped += OnTap;
+        _recognizer.GestureError += OnError;
+        _recognizer.StartCapturingGestures();
 
         InteractionManager.InteractionSourcePressed += InteractionManager_SourcePressed;
 
-        disabled = false;
+        _disabled = false;
 
         Debug.Log("Definer started");
+    }
+
+    void OnTap(TappedEventArgs args)
+    {
+        Debug.Log("TAPPED " + args.tapCount);
+        
+        Instantiate(Cube, _currentObj.position, _currentObj.rotation, transform);
+
+        Debug.Log(_currentObj + " : " + _currentObj.position);
+        Events.Broadcast(Events.EVENTS.DEVICE_FOUND, _currentObj);
+    }
+
+    void OnError(GestureErrorEventArgs args)
+    {
+        Debug.Log(args.error);
+        _recognizer.Dispose();
     }
 
     private void InteractionManager_SourcePressed(InteractionSourcePressedEventArgs args)
@@ -40,42 +69,17 @@ public class ObjectsDefiner : MonoBehaviour {
         Debug.Log("PressType: " + args.pressType);
     }
 
-    // Update is called once per frame
-    void Update () {
-        if(!disabled)
-        {
-            position = GazeManager.Instance.HitInfo.point;
-            currentObj.position = position;
-            text.text = position.ToString();
-        }
-
-    }
-
-    void OnTap(TappedEventArgs args)
-    {
-        Debug.Log("TAPPED " + args.tapCount);
-        
-        Instantiate(Cube, currentObj.position, currentObj.rotation, transform);
-
-        Debug.Log(currentObj + " : " + currentObj.position);
-        Events.Broadcast(Events.EVENTS.DEVICE_FOUND, currentObj);
-    }
-
-    void OnError(GestureErrorEventArgs args)
-    {
-        Debug.Log(args.error);
-    }
-
     private void OnDestroy()
     {
-        recognizer.Tapped -= OnTap;
-        recognizer.StopCapturingGestures();
+        _recognizer.Tapped -= OnTap;
+        _recognizer.StopCapturingGestures();
+        _recognizer.Dispose();
     }
 
     private void OnDisable()
     {
-        disabled = true;
-        recognizer.Tapped -= OnTap;
-        recognizer.StopCapturingGestures();
+        _disabled = true;
+        _recognizer.Tapped -= OnTap;
+        _recognizer.StopCapturingGestures();
     }
 }

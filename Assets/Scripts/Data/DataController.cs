@@ -13,9 +13,10 @@ namespace NetworkVisualizer
         private bool _hasDataLocally;
 
         // Use this for initialization
-        void Start()
+        public void Init()
         {
             Events.OnLocalDataRequested += OnDataRequested;
+            Events.OnDataArrived += OnDataArrived;
         }
 
         void OnDataRequested(Transform source, Transform target)
@@ -31,6 +32,45 @@ namespace NetworkVisualizer
                 Events.Broadcast(Events.EVENTS.REQUEST_DATA, CreateDataRequest(source, target));
 
         }
+
+        void OnDataArrived(Data data)
+        {
+            if (data.Timebased) {
+                if (data.Type.Equals("device"))
+                {
+                    Device device = data.Device;
+
+                    Events.Broadcast(Events.EVENTS.SHOW_DEVICE_DATA, DataStore.Instance.GetTransform(device).gameObject, device);
+                    
+                }
+                if(data.Type.Equals("connection"))
+                {
+                    Connection conn = data.Connection;
+                    Transform source = DataStore.Instance.GetTransform(conn.Start);
+                    Transform target = DataStore.Instance.GetTransform(conn.Target);
+
+                    DeviceConnection dc = LookUpDeviceConnection(source, target);
+                    if (dc == null)
+                        dc = LookUpDeviceConnection(target, source);
+
+                    Events.Broadcast(Events.EVENTS.SHOW_CONNECTION_DATA, dc, conn);
+                }
+
+            }
+        }
+
+        DeviceConnection LookUpDeviceConnection(Transform one, Transform two)
+        {
+            foreach (DeviceConnection dc in one.GetComponentsInChildren<DeviceConnection>())
+            {
+                if (dc.Target.name.Equals(two.name))
+                {
+                    return dc;
+                }
+            }
+            return null;
+        }
+
 
         //Not Implemented
         bool LookUpConnection(Transform source, Transform target)

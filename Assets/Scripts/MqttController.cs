@@ -20,7 +20,7 @@ namespace NetworkVisualizer {
 
         private static MqttClient client;
 
-        public static void Start(String uri)
+        public static void Init(String uri)
         {
             try
             {

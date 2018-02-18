@@ -47,7 +47,7 @@ public class ObjectManager : MonoBehaviour {
 
         obj.name = name;
         //AddAnchor(obj, name);
-        obj.AddComponent<Content>();
+        //obj.AddComponent<Content>();
 
         count++;
         if (count == DeviceCount)

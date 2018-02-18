@@ -1,24 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.XR.WSA.Input;
-using NetworkVisualizer.Objects;
-using Newtonsoft.Json;
+﻿using UnityEngine;
 
 namespace NetworkVisualizer
 {
 
     public class MainController : MonoBehaviour
     {
+        public GameObject ParentUI;
+        public GameObject TestUI;
+        public GameObject DefineUI;
+        public GameObject WorldUI;
 
-        public string m_Uri;
+        public string MQTT_URI;
 
         // Use this for initialization
         void Start()
         {
-            MqttController.Start(m_Uri);
+            MqttController.Init(MQTT_URI);
+            CanvasController.Instance.Init(ParentUI, TestUI, DefineUI, WorldUI);
+            DataController.Instance.Init();
+
             Events.OnTestStarted += OnTestStarted;
             Events.OnTestEnded += OnTestEnded;
+
+            Events.Broadcast(Events.EVENTS.START_DEFINE);
 
         }
 

@@ -1,10 +1,12 @@
 ﻿using System;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace NetworkVisualizer.Objects
 {
 
     [Serializable]
-    public class Device
+    public class Device : NetworkObject
     {
         public string Name { get; set;  }
         public string Ip { get; set; }
@@ -32,6 +34,27 @@ namespace NetworkVisualizer.Objects
             this.Position = position;
             this.Content = content;
 
+        }
+
+        public void FillTexts(Text[] texts)
+        {
+            foreach(Text text in texts)
+            {
+                switch(text.name)
+                {
+                    case "name":
+                        text.text += Name;
+                        break;
+                    case "ip":
+                        text.text += Ip;
+                        break;
+                    case "content":
+                        text.text += Content.ToText();
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
     }
 }
