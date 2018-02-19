@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Helpers;
 
+//important: https://forum.unity.com/threads/unity-ui-on-the-hololens.394629/
 public class CanvasController : Singleton<CanvasController> {
 
     public GameObject Parent;
@@ -61,6 +62,7 @@ public class CanvasController : Singleton<CanvasController> {
             DefineUI.SetActive(true);
 
         Events.OnDeviceDefined += OnDeviceFound;
+        DefineUI.GetComponent<Canvas>().worldCamera = Camera.main;
         DefineUI.GetComponentInChildren<Text>().text = "Device Define Process started.";
     }
 
@@ -76,6 +78,7 @@ public class CanvasController : Singleton<CanvasController> {
             WorldUI.SetActive(false);
 
         TestUI.SetActive(true);
+        TestUI.GetComponent<Canvas>().worldCamera = Camera.main;
         Events.OnHighlight += OnHighlight;
         Events.OnHide += OnHide;
     }
@@ -87,6 +90,7 @@ public class CanvasController : Singleton<CanvasController> {
             TestUI.SetActive(false);
 
         WorldUI.SetActive(true);
+        WorldUI.GetComponent<Canvas>().worldCamera = Camera.main;
         Events.OnHighlight -= OnHighlight;
         Events.OnHide -= OnHide;
     }
