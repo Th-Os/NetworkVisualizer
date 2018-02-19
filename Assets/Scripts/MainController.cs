@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 namespace NetworkVisualizer
 {
@@ -9,21 +10,40 @@ namespace NetworkVisualizer
         public GameObject TestUI;
         public GameObject DefineUI;
         public GameObject WorldUI;
+        public MQTT_URI URI = MQTT_URI.TEST;
 
-        public string MQTT_URI;
+        public enum MQTT_URI {
+            TEST,
+            PRODUCTIVE
+        };
 
         // Use this for initialization
         void Start()
         {
-            MqttController.Init(MQTT_URI);
+            string server = "";
+            if(URI == MQTT_URI.TEST)
+            {
+                server = "littleone";
+            }
+            if(URI == MQTT_URI.PRODUCTIVE)
+            {
+                server = "10.0.0.1";
+            }
+            MqttController.Init(server);
             CanvasController.Instance.Init(ParentUI, TestUI, DefineUI, WorldUI);
             DataController.Instance.Init();
 
             Events.OnTestStarted += OnTestStarted;
             Events.OnTestEnded += OnTestEnded;
+            StartCoroutine(InitApp());
 
+        }
+
+        IEnumerator InitApp()
+        {
+            Debug.Log("Wait for 5 seconds, then start application.");
+            yield return new WaitForSeconds(5f);
             Events.Broadcast(Events.EVENTS.START_DEFINE);
-
         }
 
 

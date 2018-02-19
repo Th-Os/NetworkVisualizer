@@ -7,7 +7,7 @@ using UnityEngine.XR.WSA.Input;
 
 public class ObjectsDefiner : MonoBehaviour {
 
-    public Transform Cube;
+    public Transform DefineCube;
    
     private Text _text;
     private Vector3 _lastPosition;
@@ -18,6 +18,7 @@ public class ObjectsDefiner : MonoBehaviour {
     // Use this for initialization
     void Start () {
         Events.OnDefineProcessStarted += OnStart;
+        _disabled = true;
     }
 
     // Update is called once per frame
@@ -25,8 +26,12 @@ public class ObjectsDefiner : MonoBehaviour {
         if(!_disabled)
         {
             _lastPosition = GazeManager.Instance.HitInfo.point;
-            _currentObj.position = _lastPosition;
-            _text.text = _lastPosition.ToString();
+            if (_currentObj != null && _lastPosition != null)
+            {
+                _currentObj.position = _lastPosition;
+                if(_text != null)
+                    _text.text = _lastPosition.ToString();
+            }
         }
 
     }
@@ -34,7 +39,7 @@ public class ObjectsDefiner : MonoBehaviour {
     void OnStart()
     {
         _text = GetComponentInChildren<Text>();
-        _currentObj = Instantiate(Cube, this.transform);
+        _currentObj = Instantiate(DefineCube, transform);
         _recognizer = new GestureRecognizer();
         _recognizer.SetRecognizableGestures(GestureSettings.Tap);
         _recognizer.Tapped += OnTap;
@@ -52,10 +57,10 @@ public class ObjectsDefiner : MonoBehaviour {
     {
         Debug.Log("TAPPED " + args.tapCount);
         
-        Instantiate(Cube, _currentObj.position, _currentObj.rotation, transform);
+        //Instantiate(DefineCube, _currentObj.position, _currentObj.rotation, transform);
 
         Debug.Log(_currentObj + " : " + _currentObj.position);
-        Events.Broadcast(Events.EVENTS.DEVICE_FOUND, _currentObj);
+        Events.Broadcast(Events.EVENTS.DEVICE_FOUND, _currentObj.position);
     }
 
     void OnError(GestureErrorEventArgs args)
@@ -71,15 +76,21 @@ public class ObjectsDefiner : MonoBehaviour {
 
     private void OnDestroy()
     {
-        _recognizer.Tapped -= OnTap;
-        _recognizer.StopCapturingGestures();
-        _recognizer.Dispose();
+        if (_recognizer != null)
+        {
+            _recognizer.Tapped -= OnTap;
+            _recognizer.StopCapturingGestures();
+            _recognizer.Dispose();
+        }
     }
 
     private void OnDisable()
     {
         _disabled = true;
-        _recognizer.Tapped -= OnTap;
-        _recognizer.StopCapturingGestures();
+        if (_recognizer != null)
+        {
+            _recognizer.Tapped -= OnTap;
+            _recognizer.StopCapturingGestures();
+        }
     }
 }

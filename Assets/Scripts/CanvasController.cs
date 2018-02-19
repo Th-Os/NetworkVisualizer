@@ -56,16 +56,18 @@ public class CanvasController : Singleton<CanvasController> {
 
     void OnDefineUI()
     {
+        Debug.Log("Start DefineUI");
         if (!DefineUI.activeInHierarchy)
             DefineUI.SetActive(true);
 
-        Events.OnDeviceFound += OnDeviceFound;
+        Events.OnDeviceDefined += OnDeviceFound;
         DefineUI.GetComponentInChildren<Text>().text = "Device Define Process started.";
     }
 
     void OnTestUI()
     {
-        Events.OnDeviceFound -= OnDeviceFound;
+        Debug.Log("Start TestUI");
+        Events.OnDeviceDefined -= OnDeviceFound;
         if (DefineUI.activeInHierarchy)
             DefineUI.SetActive(false);
 
@@ -80,6 +82,7 @@ public class CanvasController : Singleton<CanvasController> {
 
     void OnWorldUI(int test)
     {
+        Debug.Log("Start WorldUI");
         if (TestUI.activeInHierarchy)
             TestUI.SetActive(false);
 

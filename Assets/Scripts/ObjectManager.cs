@@ -33,7 +33,7 @@ public class ObjectManager : MonoBehaviour {
         WorldAnchorManager.Instance.RemoveAnchor(obj);
     }
 
-    void OnNewDevice(Transform transform)
+    void OnNewDevice(Vector3 position)
     {
         string name = Device_Names[count];
         Debug.Log("hello " + name);
@@ -43,9 +43,11 @@ public class ObjectManager : MonoBehaviour {
             Debug.Log("Here is a None");
         }
 
-        GameObject obj = Instantiate(Device, transform.position, transform.rotation, Devices);
+        GameObject obj = Instantiate(Device, position, transform.rotation, Devices);
 
         obj.name = name;
+
+        Events.Broadcast(Events.EVENTS.DEVICE_DEFINED, obj.transform);
         //AddAnchor(obj, name);
         //obj.AddComponent<Content>();
 

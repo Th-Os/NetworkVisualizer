@@ -6,10 +6,13 @@ using NetworkVisualizer.Objects;
 
 public class Events {
 
-    public enum EVENTS {DEVICE_FOUND, DATA_ARRIVED, REQUEST_LOCAL_DATA, REQUEST_DATA, START_DEFINE, END_DEFINE, START_TEST, END_TEST, NEW_CONNECTION, SHOW_DEVICE_DATA, SHOW_CONNECTION_DATA, DATA_VISUALIZED, DRAW_CONNECTION, DRAW_CALL, HIGHLIGHT_OJECT, HIDE_OBJECT};
+    public enum EVENTS {DEVICE_FOUND, DEVICE_DEFINED, DATA_ARRIVED, REQUEST_LOCAL_DATA, REQUEST_DATA, START_DEFINE, END_DEFINE, START_TEST, END_TEST, NEW_CONNECTION, SHOW_DEVICE_DATA, SHOW_CONNECTION_DATA, DATA_VISUALIZED, DRAW_CONNECTION, DRAW_CALL, HIGHLIGHT_OJECT, HIDE_OBJECT};
 
-    public delegate void DeviceFoundHandler(Transform transform);
+    public delegate void DeviceFoundHandler(Vector3 position);
     public static event DeviceFoundHandler OnDeviceFound;
+
+    public delegate void DeviceDefinedHandler(Transform transform);
+    public static event DeviceDefinedHandler OnDeviceDefined;
 
     public delegate void DataRequestedHandler(DataRequest request);
     public static event DataRequestedHandler OnDataRequested;
@@ -79,8 +82,8 @@ public class Events {
     {
         switch(evnt)
         {
-            case EVENTS.DEVICE_FOUND:
-                OnDeviceFound(value as Transform);
+            case EVENTS.DEVICE_DEFINED:
+                OnDeviceDefined(value as Transform);
                 break;
             case EVENTS.DATA_ARRIVED:
                 OnDataArrived(value as Data);
@@ -104,7 +107,7 @@ public class Events {
                 Debug.Log("NO valid event broadcast for " + evnt.ToString());
                 break;
         }
-        
+
     }
 
     public static void Broadcast (EVENTS evnt, int value)
@@ -113,6 +116,19 @@ public class Events {
         {
             case EVENTS.START_TEST:
                 OnTestStarted(value);
+                break;
+            default:
+                Debug.Log("NO valid event broadcast for " + evnt.ToString());
+                break;
+        }
+    }
+
+    public static void Broadcast(EVENTS evnt, Vector3 position)
+    {
+        switch (evnt)
+        {
+            case EVENTS.DEVICE_FOUND:
+                OnDeviceFound(position);
                 break;
             default:
                 Debug.Log("NO valid event broadcast for " + evnt.ToString());

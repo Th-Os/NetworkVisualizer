@@ -35,11 +35,11 @@ namespace NetworkVisualizer {
                 Debug.Log("MQTT started with " + uri + " as host");
 
 
-                Send(PUB_TOPIC, "Hololens online");
+                Send(PUB_TOPIC + "/status", "Hololens online");
 
                 Events.OnDataRequested += SendDataRequest;
                 Events.OnTestStarted += SendTestInitializer;
-                Events.OnDeviceFound += SendDeviceData;
+                Events.OnDeviceDefined += SendDeviceData;
 
             }
             catch (Exception e)
@@ -65,7 +65,7 @@ namespace NetworkVisualizer {
             Device device = new Device(transform.name, new Position(transform.position));
             DataStore.Instance.AddDevice(transform, device);
             string json = JsonConvert.SerializeObject(device);
-            Send(PUB_TOPIC, json);
+            Send(PUB_TOPIC + "/device", json);
         }
 
         static void SendDataRequest(DataRequest request)
