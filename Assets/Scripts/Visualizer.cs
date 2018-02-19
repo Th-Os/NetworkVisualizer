@@ -52,7 +52,8 @@ namespace NetworkVisualizer
                     ln.widthMultiplier += m_Connection_Highlight_Width;
                 }
             }
-            Debug.Log("Wants to highlight " + obj.name + " with tag: " + obj.tag);
+            if(obj != null)
+                Debug.Log("Wants to highlight " + obj.name + " with tag: " + obj.tag);
         }
 
         private void OnHide(Transform obj)

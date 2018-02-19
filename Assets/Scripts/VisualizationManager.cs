@@ -41,6 +41,7 @@ public class VisualizationManager : MonoBehaviour {
         Vector3 position = obj.transform.position + _panelOffset;
         obj.transform.position = position;
         GameObject devicePanel = Instantiate(DevicePanel, position, obj.transform.rotation, obj.transform);
+        devicePanel.GetComponentInChildren<Canvas>().worldCamera = Camera.main;
         device.FillTexts(devicePanel.GetComponentsInChildren<Text>());
         Debug.Log("Display data " + device.Content.Value + " of device: " + device.Name + " with ip: " + device.Ip + " and position: " + device.Position);
     }
@@ -49,7 +50,8 @@ public class VisualizationManager : MonoBehaviour {
     {
         Vector3 position = Vector3.Lerp(dc.Source.position, dc.Target.position + _panelOffset, 0.5f);
         GameObject connectionPanel = Instantiate(ConnectionPanel, position, dc.Source.rotation, dc.Source);
-        conn.FillTexts(connectionPanel.GetComponentsInChildren<Text>());
+        connectionPanel.GetComponentInChildren<Canvas>().worldCamera = Camera.main;
+        conn.FillTexts(connectionPanel.GetComponentsInChildren<Text>());       
         Debug.Log("Display data " + conn.Body + " of source: " + conn.Start.Name + " target: " + conn.Target.Name);
     }
 

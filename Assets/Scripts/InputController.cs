@@ -1,9 +1,11 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.XR.WSA.Input;
+using HoloToolkit.Unity.InputModule;
 
 // Functionality: All Input will be tracked. Different "Game States", different Events will be broadcasted
-public class InputController : MonoBehaviour {
+public class InputController : MonoBehaviour, IInputHandler
+{
 
     public enum States
     {
@@ -34,25 +36,27 @@ public class InputController : MonoBehaviour {
         recognizer.Tapped += OnTap;
         recognizer.GestureError += OnError;
         recognizer.StartCapturingGestures();
+        _currentlyOnObject = false;
+        _trackGaze = false;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (_trackGaze)
+        if (_trackGaze && CurrentState == States.Visualize)
         {
             RaycastHit hitInfo;
             if (Physics.Raycast(
                     Camera.main.transform.position,
                     Camera.main.transform.forward,
-                    out hitInfo,
-                    20.0f,
-                    Physics.DefaultRaycastLayers))
+                    out hitInfo))
             {
                 // If the Raycast has succeeded and hit a hologram
                 // hitInfo's point represents the position being gazed at
                 // hitInfo's collider GameObject represents the hologram being gazed at
-                GameObject hitObject = hitInfo.collider.gameObject;
+                GameObject hitObject = null;
+                if (hitInfo.collider != null)
+                    hitObject = hitInfo.collider.gameObject;
                 if (hitObject != null && !hitObject.tag.Equals("Untagged") && !_currentlyOnObject)
                 {
                     OnHighlightObject(hitObject);
@@ -73,7 +77,7 @@ public class InputController : MonoBehaviour {
     void OnTap(TappedEventArgs args)
     {
         Debug.Log("TAP " + args.tapCount);
-        if (_currentlyOnObject)
+        if (_currentlyOnObject && _currentObject != null)
         {
             Debug.Log("Clicked on " + _currentObject.name);
             Debug.Log("Get Data of a " + _currentObject.tag);
@@ -110,7 +114,7 @@ public class InputController : MonoBehaviour {
     void OnClick(InteractionSourcePressedEventArgs args)
     {
         Debug.Log("INTERACTION PRESS: " + args.pressType);
-        if (_currentlyOnObject)
+        if (_currentlyOnObject && _currentObject != null)
         {
             Debug.Log("Clicked on " + _currentObject.name);
             Debug.Log("Get Data of a " + _currentObject.tag);
@@ -118,7 +122,7 @@ public class InputController : MonoBehaviour {
             if(CurrentState == States.ChooseTest && _currentObject.tag.Equals("Test"))
             {
                 Debug.Log("Test: " + _currentObject.name);
-                Events.Broadcast(Events.EVENTS.START_TEST, 1);
+                Events.Broadcast(Events.EVENTS.START_TEST, Convert.ToInt32(_currentObject.name));
             }
 
             //Get Data of:
@@ -173,5 +177,16 @@ public class InputController : MonoBehaviour {
     {
         Debug.Log(args.error);
         recognizer.Dispose();
+    }
+
+    //TODO TEST !!!
+    public void OnInputDown(InputEventData eventData)
+    {
+        Debug.Log("OnInputDown " + eventData.PressType + " " + eventData.selectedObject);
+    }
+
+    public void OnInputUp(InputEventData eventData)
+    {
+        Debug.Log("OnInputUp " + eventData.PressType + " " + eventData.selectedObject);
     }
 }

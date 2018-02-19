@@ -22,7 +22,7 @@ public class ObjectsDefiner : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void FixedUpdate () {
         if(!_disabled)
         {
             _lastPosition = GazeManager.Instance.HitInfo.point;
