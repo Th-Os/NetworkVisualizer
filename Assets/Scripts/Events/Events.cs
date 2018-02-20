@@ -6,13 +6,19 @@ using NetworkVisualizer.Objects;
 
 public class Events {
 
-    public enum EVENTS {DEVICE_FOUND, DEVICE_DEFINED, DATA_ARRIVED, REQUEST_LOCAL_DATA, REQUEST_DATA, START_DEFINE, END_DEFINE, START_TEST, END_TEST, NEW_CONNECTION, SHOW_DEVICE_DATA, SHOW_CONNECTION_DATA, DATA_VISUALIZED, DRAW_CONNECTION, DRAW_CALL, HIGHLIGHT_OJECT, HIDE_OBJECT};
+    public enum EVENTS {DEVICE_FOUND, DEVICE_DEFINED, FOCUS_TEST, UNFOCUS_TEST, DATA_ARRIVED, REQUEST_LOCAL_DATA, REQUEST_DATA, START_DEFINE, END_DEFINE, START_TEST, END_TEST, NEW_CONNECTION, SHOW_DEVICE_DATA, SHOW_CONNECTION_DATA, DATA_VISUALIZED, DRAW_CONNECTION, DRAW_CALL, HIGHLIGHT_OJECT, HIDE_OBJECT};
 
     public delegate void DeviceFoundHandler(Vector3 position);
     public static event DeviceFoundHandler OnDeviceFound;
 
     public delegate void DeviceDefinedHandler(Transform transform);
     public static event DeviceDefinedHandler OnDeviceDefined;
+
+    public delegate void FocusTestHandler(Transform transform);
+    public static event FocusTestHandler OnFocus;
+
+    public delegate void UnFocusTestHandler(Transform transform);
+    public static event UnFocusTestHandler OnUnfocus;
 
     public delegate void DataRequestedHandler(DataRequest request);
     public static event DataRequestedHandler OnDataRequested;
@@ -102,6 +108,12 @@ public class Events {
                 break;
             case EVENTS.HIDE_OBJECT:
                 OnHide(value as Transform);
+                break;
+            case EVENTS.FOCUS_TEST:
+                OnFocus(value as Transform);
+                break;
+            case EVENTS.UNFOCUS_TEST:
+                OnUnfocus(value as Transform);
                 break;
             default:
                 Debug.Log("NO valid event broadcast for " + evnt.ToString());

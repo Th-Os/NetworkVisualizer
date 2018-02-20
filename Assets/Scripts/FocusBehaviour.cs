@@ -21,11 +21,13 @@ public class FocusBehaviour : MonoBehaviour, IFocusable {
     {
         if (OnFocus != null)
             _image.color = OnFocus;
+        Events.Broadcast(Events.EVENTS.FOCUS_TEST, transform);
     }
 
     public void OnFocusExit()
     {
         _image.color = _color;
+        Events.Broadcast(Events.EVENTS.UNFOCUS_TEST, transform);
     }
 
 

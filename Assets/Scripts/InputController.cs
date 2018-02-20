@@ -19,6 +19,7 @@ public class InputController : MonoBehaviour, IInputHandler
     private bool _trackGaze;
     private bool _currentlyOnObject;
     private GameObject _currentObject;
+    private Transform _focusedObject;
     private GestureRecognizer recognizer;
 
     // Use this for initialization
@@ -28,6 +29,8 @@ public class InputController : MonoBehaviour, IInputHandler
         Events.OnDefineProcessEnded += OnSwitchToStateOne;
         Events.OnTestStarted += OnSwitchToStateTwo;
         Events.OnTestEnded += OnSwitchToStateOne;
+        Events.OnFocus += OnFocus;
+        Events.OnUnfocus += OnUnfocus;
 
         InteractionManager.InteractionSourcePressed += OnClick;
 
@@ -74,9 +77,37 @@ public class InputController : MonoBehaviour, IInputHandler
 
     }
 
+    void OnFocus(Transform obj)
+    {
+        if(_focusedObject == null)
+        {
+            _focusedObject = obj;
+        }
+    }
+
+    void OnUnfocus(Transform obj)
+    {
+        if(_focusedObject != null && _focusedObject.Equals(obj))
+        {
+            _focusedObject = null;
+        }
+    }
+
     void OnTap(TappedEventArgs args)
     {
         Debug.Log("TAP " + args.tapCount);
+
+        if (CurrentState == States.ChooseTest)
+        {
+            Debug.Log("Test: " + args);
+            
+            if(_focusedObject != null)
+            {
+                Debug.Log("TestObj: " + _focusedObject.name);
+                Events.Broadcast(Events.EVENTS.START_TEST, Convert.ToInt32(_focusedObject.name));
+            }
+        }
+
         if (_currentlyOnObject && _currentObject != null)
         {
             Debug.Log("Clicked on " + _currentObject.name);
