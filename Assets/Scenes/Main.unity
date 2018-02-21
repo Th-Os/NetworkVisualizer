@@ -352,10 +352,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DeviceCount: 3
   Device_Names:
-  - Router
-  - First
-  - Second
-  - Third
+  - router
+  - esp_1
+  - esp_2
+  - esp_3
   Device: {fileID: 1180627074964324, guid: 0caab27e842ce21499abdb713f561dbd, type: 2}
   Devices: {fileID: 1074959758}
 --- !u!114 &619351496

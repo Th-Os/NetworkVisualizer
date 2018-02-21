@@ -39,6 +39,7 @@ namespace NetworkVisualizer {
 
                 Events.OnDataRequested += SendDataRequest;
                 Events.OnTestStarted += SendTestInitializer;
+                Events.OnTestEnded += SendTestCancel;
                 Events.OnDeviceDefined += SendDeviceData;
 
             }
@@ -58,6 +59,11 @@ namespace NetworkVisualizer {
         private static void SendTestInitializer(int testId)
         {
             Send(PUB_TOPIC + "/test", "{\"test\":" + testId + "}");
+        }
+
+        private static void SendTestCancel()
+        {
+            Send(PUB_TOPIC + "/test", "{\"stop\": true}");
         }
 
         public static void SendDeviceData(Transform transform)

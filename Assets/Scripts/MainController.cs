@@ -36,6 +36,7 @@ namespace NetworkVisualizer
             Events.OnTestStarted += OnTestStarted;
             Events.OnTestEnded += OnTestEnded;
             StartCoroutine(InitApp());
+            StartCoroutine(StopTest())
 
         }
 
@@ -45,6 +46,13 @@ namespace NetworkVisualizer
             yield return new WaitForSeconds(5f);
             Events.Broadcast(Events.EVENTS.START_DEFINE);
         }
+
+        IEnumerator StopTest()
+        {
+            yield return new WaitForSeconds(120f);
+            Events.Broadcast(Events.EVENTS.END_TEST);
+        }
+
 
 
         void OnTestStarted(int test)
