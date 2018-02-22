@@ -36,7 +36,7 @@ namespace NetworkVisualizer
             Events.OnTestStarted += OnTestStarted;
             Events.OnTestEnded += OnTestEnded;
             StartCoroutine(InitApp());
-            StartCoroutine(StopTest())
+            StartCoroutine(StopTest());
 
         }
 

@@ -91,8 +91,6 @@ public class CanvasController : Singleton<CanvasController> {
 
         WorldUI.SetActive(true);
         WorldUI.GetComponent<Canvas>().worldCamera = Camera.main;
-        Events.OnHighlight -= OnHighlight;
-        Events.OnHide -= OnHide;
     }
 
     void OnDeviceFound(Transform obj)
@@ -105,6 +103,11 @@ public class CanvasController : Singleton<CanvasController> {
         //TODO Highlight Panel with hMaterial or color
 
         Debug.Log(Parent.name + ": Highlight " + obj.name);
+    }
+
+    void OnClick(Transform obj)
+    {
+
     }
 
     void OnHide(Transform obj)

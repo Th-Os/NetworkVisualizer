@@ -6,7 +6,18 @@ using NetworkVisualizer.Objects;
 
 public class Events {
 
-    public enum EVENTS {DEVICE_FOUND, DEVICE_DEFINED, FOCUS_TEST, UNFOCUS_TEST, DATA_ARRIVED, REQUEST_LOCAL_DATA, REQUEST_DATA, START_DEFINE, END_DEFINE, START_TEST, END_TEST, NEW_CONNECTION, SHOW_DEVICE_DATA, SHOW_CONNECTION_DATA, DATA_VISUALIZED, DRAW_CONNECTION, DRAW_CALL, HIGHLIGHT_OJECT, HIDE_OBJECT};
+    public enum EVENTS {
+        DEVICE_FOUND, DEVICE_DEFINED,
+        FOCUS_TEST, UNFOCUS_TEST,
+        DATA_ARRIVED, REQUEST_LOCAL_DATA, REQUEST_DATA,
+        START_DEFINE, END_DEFINE,
+        START_TEST, END_TEST,
+        NEW_CONNECTION,
+        SHOW_DEVICE_DATA, SHOW_CONNECTION_DATA,
+        DATA_VISUALIZED,
+        DRAW_CONNECTION, DRAW_CALL,
+        HIGHLIGHT_OJECT, HIDE_OBJECT
+    };
 
     public delegate void DeviceFoundHandler(Vector3 position);
     public static event DeviceFoundHandler OnDeviceFound;
@@ -16,9 +27,7 @@ public class Events {
 
     public delegate void FocusTestHandler(Transform transform);
     public static event FocusTestHandler OnFocus;
-
-    public delegate void UnFocusTestHandler(Transform transform);
-    public static event UnFocusTestHandler OnUnfocus;
+    public static event FocusTestHandler OnUnfocus;
 
     public delegate void DataRequestedHandler(DataRequest request);
     public static event DataRequestedHandler OnDataRequested;
@@ -38,11 +47,9 @@ public class Events {
     public delegate void NewConnectionHandler(NetworkObject obj);
     public static event NewConnectionHandler OnNewConnection;
 
-    public delegate void StartDefineProcessHandler();
-    public static event StartDefineProcessHandler OnDefineProcessStarted;
-
-    public delegate void EndDefineProcessHander();
-    public static event EndDefineProcessHander OnDefineProcessEnded;
+    public delegate void DefineProcessHandler();
+    public static event DefineProcessHandler OnDefineProcessStarted;
+    public static event DefineProcessHandler OnDefineProcessEnded;
 
     public delegate void ShowDeviceDataHandler(GameObject obj, Device device);
     public static event ShowDeviceDataHandler OnShowDeviceData;
@@ -56,11 +63,9 @@ public class Events {
     public delegate void DrawCallHandler(Transform source);
     public static event DrawCallHandler OnDrawCall;
 
-    public delegate void HighlightObjectHandler(Transform obj);
-    public static event HighlightObjectHandler OnHighlight;
-
-    public delegate void HideObjectHandler(Transform obj);
-    public static event HideObjectHandler OnHide;
+    public delegate void HighlightUIHandler(Transform obj);
+    public static event HighlightUIHandler OnHighlight;
+    public static event HighlightUIHandler OnHide;
 
     public static void Broadcast<T, E> (EVENTS evnt, T value1, E value2)
     {
