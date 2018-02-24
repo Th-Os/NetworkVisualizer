@@ -14,6 +14,10 @@ public class CanvasController : Singleton<CanvasController> {
 
     private Vector3 _panelOffset;
 
+    private Transform _testInteraction;
+    private Transform _testPanels;
+    private bool _testShown;
+
 	// Use this for initialization
     /*
 	void Start () {        
@@ -79,6 +83,9 @@ public class CanvasController : Singleton<CanvasController> {
 
         TestUI.SetActive(true);
         TestUI.GetComponent<Canvas>().worldCamera = Camera.main;
+        _testInteraction = TestUI.transform.Find("Interaction");
+        _testPanels = TestUI.transform.Find("Tests");
+        _testShown = true;
         Events.OnHighlight += OnHighlight;
         Events.OnHide += OnHide;
     }
@@ -98,23 +105,52 @@ public class CanvasController : Singleton<CanvasController> {
         DefineUI.GetComponentInChildren<Text>().text = "Device " + obj.name + " defined with position " + obj.transform.position;
     }
 
-    void OnHighlight(Transform obj)
-    {
-        //TODO Highlight Panel with hMaterial or color
-
-        Debug.Log(Parent.name + ": Highlight " + obj.name);
-    }
-
     void OnClick(Transform obj)
     {
+        if (obj != null)
+        {
+            Debug.Log("Clicked: " + obj.name);
+        }
+    }
 
+    void OnHighlight(Transform obj)
+    {
+        if (obj != null)
+        {
+            //TODO Highlight Panel with hMaterial or color
+
+            Debug.Log(Parent.name + ": Highlight " + obj.name);
+        }
     }
 
     void OnHide(Transform obj)
     {
-        //TODO Hide Panel hMaterial
+        if (obj != null)
+        {
+            //TODO Hide Panel hMaterial
 
-        Debug.Log(Parent.name + ": Hide " + obj.name);
+            Debug.Log(Parent.name + ": Hide " + obj.name);
+        }
+    }
+
+    void OnTestToggleHide()
+    {
+        if(TestUI.activeInHierarchy && _testInteraction != null && _testPanels != null)
+        {
+            Text text = _testInteraction.GetComponentInChildren<Text>();
+            _testPanels.gameObject.SetActive(!_testShown);
+            if (_testShown)
+            {
+                _testShown = false;
+                text.text = "Show";
+            }else
+            {
+                _testShown = true;
+                text.text = "Hide";
+            }
+            
+        }
+
     }
 
     //Really there? Test second approach (VisualizationManager).

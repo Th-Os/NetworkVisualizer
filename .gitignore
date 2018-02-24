@@ -34,3 +34,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+#Files created on build to hololens platform
+SpatialUnderstanding.pdb.meta
+GpuTiming.pdb.meta

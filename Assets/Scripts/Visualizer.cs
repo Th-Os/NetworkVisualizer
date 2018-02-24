@@ -31,52 +31,60 @@ namespace NetworkVisualizer
 
         private void OnHighlight(Transform obj)
         {
-            if(obj.CompareTag("Device"))
+            Debug.Log("Visualizer Highlight with null: " + (obj == null));
+            if (obj != null)
             {
-                Transform shell = obj.transform.Find("Shell");
-                if(shell != null)
+                if (obj.CompareTag("Device"))
                 {
-                    Renderer renderer = shell.gameObject.GetComponent<Renderer>();
-                    if(_standardDeviceMaterial == null)
-                        _standardDeviceMaterial = renderer.material;
+                    Transform shell = obj.transform.Find("Shell");
+                    if (shell != null)
+                    {
+                        Renderer renderer = shell.gameObject.GetComponent<Renderer>();
+                        if (_standardDeviceMaterial == null)
+                            _standardDeviceMaterial = renderer.material;
 
-                    renderer.material = DeviceHighlightMaterial;
+                        renderer.material = DeviceHighlightMaterial;
+                    }
                 }
-            }
 
-            if(obj.CompareTag("Connection"))
-            {
-                LineRenderer ln = obj.GetComponent<LineRenderer>();
-                if (ln != null)
+                if (obj.CompareTag("Connection"))
                 {
-                    ln.widthMultiplier += m_Connection_Highlight_Width;
+                    LineRenderer ln = obj.GetComponent<LineRenderer>();
+                    if (ln != null)
+                    {
+                        ln.widthMultiplier += m_Connection_Highlight_Width;
+                    }
                 }
+                if (obj != null)
+                    Debug.Log("Wants to highlight " + obj.name + " with tag: " + obj.tag);
             }
-            if(obj != null)
-                Debug.Log("Wants to highlight " + obj.name + " with tag: " + obj.tag);
         }
 
         private void OnHide(Transform obj)
         {
-            if (obj.CompareTag("Device"))
+            Debug.Log("Visualizer Hide");
+            if (obj != null)
             {
-                Transform shell = obj.transform.Find("Shell");
-                if (shell != null)
+                if (obj.CompareTag("Device"))
                 {
-                    Renderer renderer = shell.gameObject.GetComponent<Renderer>();
-                    renderer.material = _standardDeviceMaterial;
+                    Transform shell = obj.transform.Find("Shell");
+                    if (shell != null)
+                    {
+                        Renderer renderer = shell.gameObject.GetComponent<Renderer>();
+                        renderer.material = _standardDeviceMaterial;
+                    }
                 }
-            }
 
-            if (obj.CompareTag("Connection"))
-            {
-                LineRenderer ln = obj.GetComponent<LineRenderer>();
-                if (ln != null)
+                if (obj.CompareTag("Connection"))
                 {
-                    ln.widthMultiplier -= m_Connection_Highlight_Width;
+                    LineRenderer ln = obj.GetComponent<LineRenderer>();
+                    if (ln != null)
+                    {
+                        ln.widthMultiplier -= m_Connection_Highlight_Width;
+                    }
                 }
+                Debug.Log("Wants to hide " + obj.name + " with tag: " + obj.tag);
             }
-            Debug.Log("Wants to hide " + obj.name + " with tag: " + obj.tag);
         }
 
         private void OnConnection(Transform source, Transform target)

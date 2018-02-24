@@ -60,13 +60,16 @@ public class InputController : MonoBehaviour, IInputHandler
                 GameObject hitObject = null;
                 if (hitInfo.collider != null)
                     hitObject = hitInfo.collider.gameObject;
+
+                
+
                 if (hitObject != null && !hitObject.tag.Equals("Untagged") && !_currentlyOnObject)
                 {
                     OnHighlightObject(hitObject);
                 }
                 else
                 {
-                    if(_currentlyOnObject && _currentObject != null)
+                    if(_currentlyOnObject && _currentObject != null && _currentObject != hitObject)
                     {
                         OnHideObject();                        
                     }
@@ -182,15 +185,20 @@ public class InputController : MonoBehaviour, IInputHandler
     void OnHighlightObject(GameObject obj)
     {
         _currentlyOnObject = true;
-        _currentObject = obj;
-        Events.Broadcast(Events.EVENTS.HIGHLIGHT_OJECT, obj);
-        Debug.Log("It is possible display data of " + obj.name + " with id " + obj.GetInstanceID() + " and tag " + obj.tag);
+        if (obj != null)
+        {           
+            _currentObject = obj;
+            Debug.Log("It is possible display data of " + obj.name + " with id " + obj.GetInstanceID() + " and tag " + obj.tag);
+            Events.Broadcast(Events.EVENTS.HIGHLIGHT_OJECT, obj);
+        }
     }
 
     void OnHideObject()
     {
-        Events.Broadcast(Events.EVENTS.HIDE_OBJECT, _currentObject);
         _currentlyOnObject = false;
+        if (_currentObject != null) {
+            Events.Broadcast(Events.EVENTS.HIDE_OBJECT, _currentObject);            
+        }
     }
 
     void OnSwitchToStateTwo(int id)

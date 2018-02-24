@@ -63,7 +63,7 @@ namespace NetworkVisualizer {
 
         private static void SendTestCancel()
         {
-            Send(PUB_TOPIC + "/test", "{\"stop\": true}");
+            Send(PUB_TOPIC + "/test/stop", "{\"stop\": true}");
         }
 
         public static void SendDeviceData(Transform transform)
