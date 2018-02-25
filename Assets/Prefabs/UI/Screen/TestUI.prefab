@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 224568304716185158}
   - component: {fileID: 222774300672201312}
   - component: {fileID: 114088562152367158}
+  - component: {fileID: 114775575877896982}
   m_Layer: 0
   m_Name: Interaction
   m_TagString: Untagged
@@ -196,7 +197,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe4ca8a6700b4440877c1f1f54a5f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnFocus: {r: 0.09803922, g: 0.657, b: 0.8235294, a: 0.80784315}
+  CurrentFocus: {fileID: 0}
+  OnFocus: 0
+  OnFocusColor: {r: 0, g: 0.6689658, b: 1, a: 1}
 --- !u!114 &114088562152367158
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -251,7 +254,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe4ca8a6700b4440877c1f1f54a5f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnFocus: {r: 1, g: 0.21323532, b: 0.21323532, a: 0.80784315}
+  CurrentFocus: {fileID: 0}
+  OnFocus: 0
+  OnFocusColor: {r: 1, g: 0.14705884, b: 0.14705884, a: 1}
 --- !u!114 &114280886946324820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -290,7 +295,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe4ca8a6700b4440877c1f1f54a5f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnFocus: {r: 0.686, g: 0.8235294, b: 0.34117648, a: 0.80784315}
+  CurrentFocus: {fileID: 0}
+  OnFocus: 0
+  OnFocusColor: {r: 0.5724137, g: 1, b: 0, a: 1}
 --- !u!114 &114682614751865842
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -378,6 +385,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 2
+--- !u!114 &114775575877896982
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1129425508999532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afe4ca8a6700b4440877c1f1f54a5f23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentFocus: {fileID: 0}
+  OnFocus: 0
+  OnFocusColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114802801426685152
 MonoBehaviour:
   m_ObjectHideFlags: 1

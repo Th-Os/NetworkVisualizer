@@ -10,7 +10,7 @@ public class CanvasController : Singleton<CanvasController> {
     public GameObject Parent;
     public GameObject TestUI;
     public GameObject DefineUI;
-    public GameObject WorldUI;
+    public GameObject VisualizeUI;
 
     private Vector3 _panelOffset;
 
@@ -40,12 +40,12 @@ public class CanvasController : Singleton<CanvasController> {
     */
 
     //When the change to singleton is needed.
-    public void Init(GameObject Parent, GameObject TestUI, GameObject DefineUI, GameObject WorldUI)
+    public void Init(GameObject Parent, GameObject TestUI, GameObject DefineUI, GameObject VisualizeUI)
     {
         this.Parent = Parent;
         this.DefineUI = GameObject.Instantiate(DefineUI, Parent.transform);
         this.TestUI = GameObject.Instantiate(TestUI, Parent.transform);
-        this.WorldUI = GameObject.Instantiate(WorldUI, Parent.transform);
+        this.VisualizeUI = GameObject.Instantiate(VisualizeUI, Parent.transform);
 
         Events.OnTestStarted += OnWorldUI;
         Events.OnTestEnded += OnTestUI;
@@ -54,7 +54,7 @@ public class CanvasController : Singleton<CanvasController> {
 
         DefineUI.SetActive(false);
         TestUI.SetActive(false);
-        WorldUI.SetActive(false);
+        VisualizeUI.SetActive(false);
 
         _panelOffset = new Vector3(0f, 4f, 0f);
     }
@@ -78,8 +78,8 @@ public class CanvasController : Singleton<CanvasController> {
             DefineUI.SetActive(false);
 
 
-        if (WorldUI.activeInHierarchy)
-            WorldUI.SetActive(false);
+        if (VisualizeUI.activeInHierarchy)
+            VisualizeUI.SetActive(false);
 
         TestUI.SetActive(true);
         TestUI.GetComponent<Canvas>().worldCamera = Camera.main;
@@ -96,8 +96,8 @@ public class CanvasController : Singleton<CanvasController> {
         if (TestUI.activeInHierarchy)
             TestUI.SetActive(false);
 
-        WorldUI.SetActive(true);
-        WorldUI.GetComponent<Canvas>().worldCamera = Camera.main;
+        VisualizeUI.SetActive(true);
+        VisualizeUI.GetComponent<Canvas>().worldCamera = Camera.main;
     }
 
     void OnDeviceFound(Transform obj)

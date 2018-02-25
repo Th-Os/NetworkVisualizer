@@ -8,7 +8,7 @@ namespace HoloToolkit.Unity.InputModule
     /// <summary>
     /// Interface to implement to react to simple pointer-like input.
     /// </summary>
-    public interface IInputHandler : IEventSystemHandler
+    public interface SetGlobalListener : IEventSystemHandler
     {
         void OnInputDown(InputEventData eventData);
         void OnInputUp(InputEventData eventData);

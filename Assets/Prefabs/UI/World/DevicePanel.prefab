@@ -36,6 +36,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224493846234335052}
+  - component: {fileID: 114035027042806230}
   m_Layer: 0
   m_Name: DevicePanel
   m_TagString: Untagged
@@ -112,6 +113,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114035027042806230
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1329803342818916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97eac422f74f24d4d8724bb1df4cc235, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114063612915666684
 MonoBehaviour:
   m_ObjectHideFlags: 1

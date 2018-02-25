@@ -9,7 +9,7 @@ namespace NetworkVisualizer
         public GameObject ParentUI;
         public GameObject TestUI;
         public GameObject DefineUI;
-        public GameObject WorldUI;
+        public GameObject VisualizeUI;
         public MQTT_URI URI = MQTT_URI.TEST;
 
         public enum MQTT_URI {
@@ -30,7 +30,7 @@ namespace NetworkVisualizer
                 server = "10.0.0.1";
             }
             MqttController.Init(server);
-            CanvasController.Instance.Init(ParentUI, TestUI, DefineUI, WorldUI);
+            CanvasController.Instance.Init(ParentUI, TestUI, DefineUI, VisualizeUI);
             DataController.Instance.Init();
 
             Events.OnTestStarted += OnTestStarted;

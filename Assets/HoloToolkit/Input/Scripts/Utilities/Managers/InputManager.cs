@@ -402,8 +402,8 @@ namespace HoloToolkit.Unity.InputModule
             // NOTE: In Unity UI, a "click" happens on every pointer up, so we have RaiseSourceUp call the pointerClickHandler.
         }
 
-        private static readonly ExecuteEvents.EventFunction<IInputHandler> OnSourceUpEventHandler =
-            delegate (IInputHandler handler, BaseEventData eventData)
+        private static readonly ExecuteEvents.EventFunction<SetGlobalListener> OnSourceUpEventHandler =
+            delegate (SetGlobalListener handler, BaseEventData eventData)
             {
                 var casted = ExecuteEvents.ValidateEventData<InputEventData>(eventData);
                 handler.OnInputUp(casted);
@@ -429,8 +429,8 @@ namespace HoloToolkit.Unity.InputModule
             }
         }
 
-        private static readonly ExecuteEvents.EventFunction<IInputHandler> OnSourceDownEventHandler =
-            delegate (IInputHandler handler, BaseEventData eventData)
+        private static readonly ExecuteEvents.EventFunction<SetGlobalListener> OnSourceDownEventHandler =
+            delegate (SetGlobalListener handler, BaseEventData eventData)
             {
                 var casted = ExecuteEvents.ValidateEventData<InputEventData>(eventData);
                 handler.OnInputDown(casted);

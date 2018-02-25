@@ -105,6 +105,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224262895569354264}
+  - component: {fileID: 114214809492366134}
   m_Layer: 0
   m_Name: ConnectionPanel
   m_TagString: Untagged
@@ -200,6 +201,17 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Type: '
+--- !u!114 &114214809492366134
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1583458447435354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1313727082b74924b9216ba2c21f75ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114506247956648008
 MonoBehaviour:
   m_ObjectHideFlags: 1

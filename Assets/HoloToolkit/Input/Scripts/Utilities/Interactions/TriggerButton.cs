@@ -9,7 +9,7 @@ namespace HoloToolkit.Unity.InputModule
     /// <summary>
     /// Very simple class that implements basic logic for a trigger button.
     /// </summary>
-    public class TriggerButton : MonoBehaviour, IInputHandler
+    public class TriggerButton : MonoBehaviour, SetGlobalListener
     {
         /// <summary>
         /// Indicates whether the button is clickable or not.
@@ -30,12 +30,12 @@ namespace HoloToolkit.Unity.InputModule
             }
         }
 
-        void IInputHandler.OnInputDown(InputEventData eventData)
+        void SetGlobalListener.OnInputDown(InputEventData eventData)
         {
             // Nothing.
         }
 
-        void IInputHandler.OnInputUp(InputEventData eventData)
+        void SetGlobalListener.OnInputUp(InputEventData eventData)
         {
             if (IsEnabled && eventData.PressType == InteractionSourcePressInfo.Select)
             {

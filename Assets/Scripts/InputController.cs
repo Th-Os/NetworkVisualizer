@@ -1,10 +1,10 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.XR.WSA.Input;
 using HoloToolkit.Unity.InputModule;
+using Helpers;
 
 // Functionality: All Input will be tracked. Different "Game States", different Events will be broadcasted
-public class InputController : MonoBehaviour, IInputHandler
+public class InputController : SetGlobalListenerHololens, SetGlobalListener
 {
 
     public enum States
@@ -20,7 +20,7 @@ public class InputController : MonoBehaviour, IInputHandler
     private bool _currentlyOnObject;
     private GameObject _currentObject;
     private Transform _focusedObject;
-    private GestureRecognizer recognizer;
+    //private GestureRecognizer recognizer;
 
     // Use this for initialization
     void Start () {
@@ -32,13 +32,13 @@ public class InputController : MonoBehaviour, IInputHandler
         Events.OnFocus += OnFocus;
         Events.OnUnfocus += OnUnfocus;
 
-        InteractionManager.InteractionSourcePressed += OnClick;
-
+        /*
         recognizer = new GestureRecognizer();
         recognizer.SetRecognizableGestures(GestureSettings.Tap);
         recognizer.Tapped += OnTap;
         recognizer.GestureError += OnError;
         recognizer.StartCapturingGestures();
+        */
         _currentlyOnObject = false;
         _trackGaze = false;
     }
@@ -46,6 +46,7 @@ public class InputController : MonoBehaviour, IInputHandler
     // Update is called once per frame
     void FixedUpdate()
     {
+        /*
         if (_trackGaze && CurrentState == States.Visualize)
         {
             RaycastHit hitInfo;
@@ -76,7 +77,7 @@ public class InputController : MonoBehaviour, IInputHandler
                 }
 
             }
-        }
+        }*/
 
     }
 
@@ -96,6 +97,7 @@ public class InputController : MonoBehaviour, IInputHandler
         }
     }
 
+    /*
     void OnTap(TappedEventArgs args)
     {
         Debug.Log("TAP " + args.tapCount);
@@ -182,6 +184,13 @@ public class InputController : MonoBehaviour, IInputHandler
         }
     }
 
+    void OnError(GestureErrorEventArgs args)
+    {
+        Debug.Log(args.error);
+        recognizer.Dispose();
+    }
+
+    */
     void OnHighlightObject(GameObject obj)
     {
         _currentlyOnObject = true;
@@ -212,20 +221,64 @@ public class InputController : MonoBehaviour, IInputHandler
         CurrentState = States.ChooseTest;
     }
 
-    void OnError(GestureErrorEventArgs args)
-    {
-        Debug.Log(args.error);
-        recognizer.Dispose();
-    }
-
     //TODO TEST !!!
     public void OnInputDown(InputEventData eventData)
     {
         Debug.Log("OnInputDown " + eventData.PressType + " " + eventData.selectedObject);
+        GameObject obj = eventData.selectedObject;
+        AbstractInteraction i = Utils.SearchFor<AbstractInteraction>(obj);
+
+        Debug.Log(i.gameObject);
+
+        if (CurrentState == States.ChooseTest)
+        {
+            Debug.Log("Test: " + i.name);
+
+            if (_focusedObject != null)
+            {
+                Debug.Log("TestObj: " + _focusedObject.name);
+                Events.Broadcast(Events.EVENTS.START_TEST, Convert.ToInt32(_focusedObject.name));
+            }
+        }
+
+        if (_currentlyOnObject && _currentObject != null)
+        {
+            Debug.Log("Clicked on " + _currentObject.name);
+            Debug.Log("Get Data of a " + _currentObject.tag);
+
+            if (CurrentState == States.ChooseTest && _currentObject.tag.Equals("Test"))
+            {
+                Debug.Log("Test: " + _currentObject.name);
+                Events.Broadcast(Events.EVENTS.START_TEST, Convert.ToInt32(_currentObject.name));
+            }
+
+            //Get Data of:
+            if (CurrentState == States.Visualize)
+            {
+                if (_currentObject.tag.Equals("Connection"))
+                {
+                    DeviceConnection dc = _currentObject.GetComponent<DeviceConnection>();
+                    Events.Broadcast(Events.EVENTS.REQUEST_LOCAL_DATA, dc.Source, dc.Target);
+                }
+
+                //Not sure if needed.
+                if (_currentObject.tag.Equals("Call"))
+                {
+
+                }
+
+                if (_currentObject.tag.Equals("Device"))
+                {
+                    Events.Broadcast(Events.EVENTS.REQUEST_LOCAL_DATA, _currentObject);
+                }
+            }
+        }
     }
 
     public void OnInputUp(InputEventData eventData)
     {
         Debug.Log("OnInputUp " + eventData.PressType + " " + eventData.selectedObject);
     }
+
+
 }

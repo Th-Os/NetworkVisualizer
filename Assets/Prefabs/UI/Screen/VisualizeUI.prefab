@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 224363827431972138}
   - component: {fileID: 222792950748523606}
   - component: {fileID: 114348392768754498}
+  - component: {fileID: 114359737755594804}
   m_Layer: 0
   m_Name: Panel
   m_TagString: Untagged
@@ -56,14 +57,14 @@ GameObject:
   - component: {fileID: 223406383927594852}
   - component: {fileID: 114320706092204436}
   - component: {fileID: 114062676274198570}
-  - component: {fileID: 114177462766409844}
+  - component: {fileID: 114246597024115282}
   m_Layer: 0
   m_Name: VisualizeUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &114033374487057630
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -113,7 +114,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &114177462766409844
+--- !u!114 &114246597024115282
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -121,9 +122,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1879777586024918}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81b3c7c39ac2b534c9b07b7d53e1a303, type: 3}
+  m_Script: {fileID: 11500000, guid: 28a447afa36512b4a8470df047d42f8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentFocus: {fileID: 0}
+  OnFocus: 0
 --- !u!114 &114320706092204436
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -172,6 +175,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114359737755594804
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1214939114915510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afe4ca8a6700b4440877c1f1f54a5f23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentFocus: {fileID: 0}
+  OnFocus: 0
+  OnFocusColor: {r: 1, g: 0, b: 0, a: 0.753}
 --- !u!222 &222458037617084084
 CanvasRenderer:
   m_ObjectHideFlags: 1
