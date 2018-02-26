@@ -8,18 +8,18 @@ using NetworkVisualizer.Objects;
 //Responsible for Device Initialization and Protection (World Anchor)
 public class ObjectManager : MonoBehaviour {
 
-    public int DeviceCount = 4;
-    public string[] Device_Names = new string[] { "Router", "First", "Second", "Third" };
+    public string[] Device_Names = new string[] { "router", "esp_1", "esp_2" };
     public GameObject Device;
 
     public Transform Devices;
 
+    private int _deviceCount;
     private int count;
 
 	// Use this for initialization
 	void Start () {
         Events.OnDeviceFound += OnNewDevice;
-                                                            
+        _deviceCount = Device_Names.Length;                                                    
         count = 0;
 	}
 
@@ -48,11 +48,13 @@ public class ObjectManager : MonoBehaviour {
         obj.name = name;
 
         Events.Broadcast(Events.EVENTS.DEVICE_DEFINED, obj.transform);
+
+        Debug.Log("New Device: " + obj.name + " parent: " + obj.transform.parent.name); 
         //AddAnchor(obj, name);
         //obj.AddComponent<Content>();
 
         count++;
-        if (count == DeviceCount)
+        if (count == _deviceCount)
         {
             Debug.Log("device count reached");
             GetComponent<ObjectsDefiner>().enabled = false;

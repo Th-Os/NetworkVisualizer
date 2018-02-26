@@ -89,12 +89,14 @@ namespace NetworkVisualizer
 
         private void OnConnection(Transform source, Transform target)
         {
-            StartCoroutine(StartConnection(source, target));
+            if(source != null && target != null)
+                StartCoroutine(StartConnection(source, target));
         }
 
         private void OnCall(Transform source)
         {
-            StartCoroutine(DeviceCall(source));
+            if(source != null)
+                StartCoroutine(DeviceCall(source));
         }
 
         //Establish Connection
@@ -116,7 +118,7 @@ namespace NetworkVisualizer
                     yield return new WaitForSeconds(m_Connection_Smooth_WaitFor);
                 }
 
-                CapsuleCollider capsule = GetComponent<CapsuleCollider>();
+                CapsuleCollider capsule = connection.GetComponent<CapsuleCollider>();
                 capsule.transform.position = Vector3.Lerp(source.position, target.position, 0.5f);
                 capsule.direction = 2;
                 capsule.radius = lr.startWidth /2;

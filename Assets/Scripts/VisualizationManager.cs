@@ -69,16 +69,13 @@ public class VisualizationManager : MonoBehaviour {
 
     private Transform GetDeviceByName(string name)
     {
-        GameObject[] objects = Devices.GetComponentsInChildren<GameObject>();
-
-        foreach(GameObject o in objects)
+        Transform device = Devices.transform.Find(name);
+        if(device != null)
         {
-            if(string.Equals(o.name, name, System.StringComparison.OrdinalIgnoreCase))
-            {
-                return o.transform;
-            }
+            return device;
         }
+        Debug.Log("found no device with name: " + name);
 
-        return null;
+        return Devices.transform.Find(name);
     }
 }
