@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class DeviceDataBox : DataBox {
 
-	// Use this for initialization
-	new void Start () {
+    // Use this for initialization
+    override protected void Start () {
         base.Start();
+
 	}
-	
-	// Update is called once per frame
-	new void Update () {
-        base.Update();
-	}
+
+    public override void OnFocusExit()
+    {
+        base.OnFocusExit();
+    }
+
+    public override void OnClick()
+    {
+        base.OnClick();
+    }
 }

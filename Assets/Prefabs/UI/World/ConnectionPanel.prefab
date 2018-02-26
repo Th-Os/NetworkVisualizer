@@ -212,6 +212,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1313727082b74924b9216ba2c21f75ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentFocus: {fileID: 0}
+  OnFocus: 0
+  CancelPanel: {fileID: 224178448058485394, guid: 0e722e5d85fc7ae46821d9caed50894d,
+    type: 2}
 --- !u!114 &114506247956648008
 MonoBehaviour:
   m_ObjectHideFlags: 1

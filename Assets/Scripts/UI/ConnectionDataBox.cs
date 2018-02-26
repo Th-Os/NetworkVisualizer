@@ -5,12 +5,8 @@ using UnityEngine;
 public class ConnectionDataBox : DataBox {
 
 	// Use this for initialization
-	new void Start () {
+	override protected void Start () {
         base.Start();
 	}
 	
-	// Update is called once per frame
-	new void Update () {
-        base.Update();
-	}
 }
