@@ -36,7 +36,7 @@ namespace NetworkVisualizer.Objects
 
         }
 
-        public void FillTexts(Text[] texts)
+        public override void FillTexts(Text[] texts)
         {
             foreach(Text text in texts)
             {

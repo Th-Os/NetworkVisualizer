@@ -4,78 +4,74 @@ using UnityEngine;
 using UnityEngine.UI;
 using NetworkVisualizer.Objects;
 
-public class VisualizationManager : MonoBehaviour {
+namespace NetworkVisualizer
+{
 
-    public GameObject Devices;
-
-    public GameObject DevicePanel;
-    public GameObject ConnectionPanel;
-
-    private Vector3 _panelOffset =  new Vector3(0f, 4f, 0f);
-
-    // Use this for initialization
-    void Start () {
-        Events.OnNewConnection += OnConnection;
-        Events.OnShowDeviceData += ShowDeviceData;
-        Events.OnShowConnectionData += ShowConnectionData;
-	}
-
-    public void OnConnection(NetworkObject connection)
+    public class VisualizationManager : MonoBehaviour
     {
-        Debug.Log("New Connection: " + connection.GetType());
 
-        if(connection is Connection)
+        public GameObject Devices;
+        public GameObject Panels;
+
+        // Use this for initialization
+        void Start()
         {
-            AddConnection(connection as Connection);
+            Events.OnNewConnection += OnConnection;
+            Events.OnShowDeviceData += ShowDeviceData;
+            Events.OnShowConnectionData += ShowConnectionData;
         }
 
-        if(connection is Call)
+        public void OnConnection(NetworkObject connection)
         {
-            AddCall(connection as Call);
+            Debug.Log("New Connection: " + connection.GetType());
+
+            if (connection is Connection)
+            {
+                AddConnection(connection as Connection);
+            }
+
+            if (connection is Call)
+            {
+                AddCall(connection as Call);
+            }
+
         }
 
-    }
-
-    public void ShowDeviceData(GameObject obj, Device device)
-    {
-        Vector3 position = obj.transform.position + _panelOffset;
-        obj.transform.position = position;
-        GameObject devicePanel = Instantiate(DevicePanel, position, obj.transform.rotation, obj.transform);
-        devicePanel.GetComponentInChildren<Canvas>().worldCamera = Camera.main;
-        device.FillTexts(devicePanel.GetComponentsInChildren<Text>());
-        Debug.Log("Display data " + device.Content.Value + " of device: " + device.Name + " with ip: " + device.Ip + " and position: " + device.Position);
-    }
-
-    public void ShowConnectionData(DeviceConnection dc, Connection conn)
-    {
-        Vector3 position = Vector3.Lerp(dc.Source.position, dc.Target.position + _panelOffset, 0.5f);
-        GameObject connectionPanel = Instantiate(ConnectionPanel, position, dc.Source.rotation, dc.Source);
-        connectionPanel.GetComponentInChildren<Canvas>().worldCamera = Camera.main;
-        conn.FillTexts(connectionPanel.GetComponentsInChildren<Text>());       
-        Debug.Log("Display data " + conn.Body + " of source: " + conn.Start.Name + " target: " + conn.Target.Name);
-    }
-
-    private void AddConnection(Connection con)
-    {
-        Debug.Log("New Connection from " + con.Start.Name + " to " + con.Target.Name);
-        Events.Broadcast(Events.EVENTS.DRAW_CONNECTION, GetDeviceByName(con.Start.Name), GetDeviceByName(con.Target.Name));
-    }
-
-    private void AddCall(Call call)
-    {
-        Debug.Log("New Call from " + call.start.Name);
-        Events.Broadcast(Events.EVENTS.DRAW_CALL, GetDeviceByName(call.start.Name));
-    }
-
-    private Transform GetDeviceByName(string name)
-    {
-        Transform device = Devices.transform.Find(name);
-        if(device != null)
+        public void ShowDeviceData(GameObject obj, Device device)
         {
-            return device;
+            Panels.GetComponent<PanelManager>().ShowPanel(obj, obj.transform.position, PanelType.Device, device);
+            Debug.Log("Display data " + device.Content.Value + " of device: " + device.Name + " with ip: " + device.Ip + " and position: " + device.Position);
         }
-        Debug.Log("found no device with name: " + name);
 
-        return Devices.transform.Find(name);
+        public void ShowConnectionData(DeviceConnection dc, Connection conn)
+        {
+            Vector3 position = Vector3.Lerp(dc.Source.position, dc.Target.position, 0.5f);
+            Panels.GetComponent<PanelManager>().ShowPanel(dc, position, PanelType.Connection, conn);
+            Debug.Log("Display data " + conn.Body + " of source: " + conn.Start.Name + " target: " + conn.Target.Name);
+        }
+
+        private void AddConnection(Connection con)
+        {
+            Debug.Log("New Connection from " + con.Start.Name + " to " + con.Target.Name);
+            Events.Broadcast(Events.EVENTS.DRAW_CONNECTION, GetDeviceByName(con.Start.Name), GetDeviceByName(con.Target.Name));
+        }
+
+        private void AddCall(Call call)
+        {
+            Debug.Log("New Call from " + call.start.Name);
+            Events.Broadcast(Events.EVENTS.DRAW_CALL, GetDeviceByName(call.start.Name));
+        }
+
+        private Transform GetDeviceByName(string name)
+        {
+            Transform device = Devices.transform.Find(name);
+            if (device != null)
+            {
+                return device;
+            }
+            Debug.Log("found no device with name: " + name);
+
+            return Devices.transform.Find(name);
+        }
     }
 }

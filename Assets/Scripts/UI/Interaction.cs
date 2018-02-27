@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using HoloToolkit.Unity.InputModule;
 using UnityEngine;
 
-public class AbstractInteraction : MonoBehaviour, IInteractable {
+public class Interaction : MonoBehaviour, IInteractable {
 
     [HideInInspector]
     public GameObject CurrentFocus;
@@ -15,21 +15,18 @@ public class AbstractInteraction : MonoBehaviour, IInteractable {
     {
         OnFocus = true;
         CurrentFocus = gameObject;
+        Events.Broadcast(Events.EVENTS.FOCUS, CurrentFocus);
     }
 
     public virtual void OnFocusExit()
     {
         OnFocus = false;
         CurrentFocus = null;
+        Events.Broadcast(Events.EVENTS.UNFOCUS, CurrentFocus);
     }
 
     public virtual void OnClick()
     {
-
+        Debug.Log("Clicked on: " + gameObject.name);
     }
-
-    public virtual void OnInputClicked(InputClickedEventData eventData)
-    {
-    }
-
 }

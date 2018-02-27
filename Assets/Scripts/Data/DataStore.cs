@@ -26,7 +26,8 @@ namespace NetworkVisualizer
         public Device GetDevice(Transform transform)
         {
             Device device = null;
-            _deviceMap.TryGetValue(transform, out device);
+            if(transform != null)
+                _deviceMap.TryGetValue(transform, out device);
             return device;
         }
 

@@ -8,7 +8,7 @@ public class Events {
 
     public enum EVENTS {
         DEVICE_FOUND, DEVICE_DEFINED,
-        FOCUS_TEST, UNFOCUS_TEST,
+        FOCUS, UNFOCUS,
         DATA_ARRIVED, REQUEST_LOCAL_DATA, REQUEST_DATA,
         START_DEFINE, END_DEFINE,
         START_TEST, END_TEST,
@@ -25,9 +25,9 @@ public class Events {
     public delegate void DeviceDefinedHandler(Transform transform);
     public static event DeviceDefinedHandler OnDeviceDefined;
 
-    public delegate void FocusTestHandler(Transform transform);
-    public static event FocusTestHandler OnFocus;
-    public static event FocusTestHandler OnUnfocus;
+    public delegate void FocusHandler(GameObject obg);
+    public static event FocusHandler OnFocus;
+    public static event FocusHandler OnUnfocus;
 
     public delegate void DataRequestedHandler(DataRequest request);
     public static event DataRequestedHandler OnDataRequested;
@@ -114,11 +114,11 @@ public class Events {
             case EVENTS.HIDE_OBJECT:
                 OnHide(value as Transform);
                 break;
-            case EVENTS.FOCUS_TEST:
-                OnFocus(value as Transform);
+            case EVENTS.FOCUS:
+                OnFocus(value as GameObject);
                 break;
-            case EVENTS.UNFOCUS_TEST:
-                OnUnfocus(value as Transform);
+            case EVENTS.UNFOCUS:
+                OnUnfocus(value as GameObject);
                 break;
             default:
                 Debug.Log("NO valid event broadcast for " + evnt.ToString());

@@ -51,7 +51,7 @@ public class DrawLine : MonoBehaviour {
         CapsuleCollider capsule = GetComponentInChildren<CapsuleCollider>();
         capsule.transform.position = Vector3.Lerp(transform.position, Target.position, 0.5f);
         capsule.direction = 2;
-        capsule.radius = _line.startWidth /2;
+        //capsule.radius = _line.startWidth /2;
         capsule.transform.LookAt(Target.position);
         
         capsule.height = (Target.position - transform.position).magnitude;

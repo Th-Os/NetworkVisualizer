@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4673885096026148}
   - component: {fileID: 120322622363197838}
   - component: {fileID: 114527040911162070}
-  - component: {fileID: 136429877236472338}
   m_Layer: 0
   m_Name: ConnectionLine
   m_TagString: Connection
@@ -53,6 +52,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 729a3e68696d4314694f8bc30a8296ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentFocus: {fileID: 0}
+  OnFocus: 0
+  HighlightMaterial: {fileID: 2100000, guid: c8c55b194bd8eb14b8f14920a2fb3c8e, type: 2}
 --- !u!120 &120322622363197838
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -92,7 +94,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 2
-    widthMultiplier: 0.05
+    widthMultiplier: 0.1
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -141,16 +143,3 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!136 &136429877236472338
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1125990914064798}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.025000066
-  m_Height: 1.0500001
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}

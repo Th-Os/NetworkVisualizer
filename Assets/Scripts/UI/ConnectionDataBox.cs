@@ -8,5 +8,14 @@ public class ConnectionDataBox : DataBox {
 	override protected void Start () {
         base.Start();
 	}
-	
+
+    public override void OnFocusExit()
+    {
+        base.OnFocusExit();
+    }
+
+    public override void OnClick()
+    {
+        base.OnClick();
+    }
 }

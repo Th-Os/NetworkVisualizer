@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine.UI;
 
-public class NetworkObject {
+public abstract class NetworkObject {
+
+    public abstract void FillTexts(Text[] texts);
 
 }

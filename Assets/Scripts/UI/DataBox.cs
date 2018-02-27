@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using HoloToolkit.Unity.InputModule;
 
-public class DataBox : AbstractInteraction {
+public class DataBox : Interaction {
 
     public Transform CancelPanel;
 
@@ -11,6 +11,12 @@ public class DataBox : AbstractInteraction {
     private Transform _cancelPanel;
 
     private bool isOnCancel;
+
+    // Use this for initialization
+    protected virtual void Start()
+    {
+        _canvas = GetComponentInChildren<Canvas>();
+    }
 
     public override void OnFocusEnter()
     {
@@ -29,11 +35,6 @@ public class DataBox : AbstractInteraction {
         }
     }
 
-    public override void OnInputClicked(InputClickedEventData eventData)
-    {
-        Debug.Log("DataBox: Clicked " + gameObject.name);
-    }
-
     public override void OnClick()
     {
         base.OnClick();
@@ -42,20 +43,14 @@ public class DataBox : AbstractInteraction {
         {
             if (isOnCancel)
             {
-                Destroy(gameObject);
+                Destroy(gameObject.transform.parent.gameObject);
             }
             else
             {
                 isOnCancel = true;
-                _cancelPanel = Instantiate(CancelPanel, transform);
+                _cancelPanel = Instantiate(CancelPanel, _canvas.transform);
             }
 
         }
     }
-
-    // Use this for initialization
-    protected virtual void Start () { 
-        _canvas = GetComponentInChildren<Canvas>();
-    }
-
 }

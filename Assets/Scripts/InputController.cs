@@ -3,129 +3,139 @@ using UnityEngine;
 using HoloToolkit.Unity.InputModule;
 using Helpers;
 
-// Functionality: All Input will be tracked. Different "Game States", different Events will be broadcasted
-public class InputController : SetGlobalListenerHololens, SetGlobalListener
+namespace NetworkVisualizer
 {
-
-    public enum States
+    // Functionality: All Input will be tracked. Different "Game States", different Events will be broadcasted
+    public class InputController : SetGlobalListenerHololens, SetGlobalListener
     {
-        DefineDevice,
-        ChooseTest,
-        Visualize
-    }
 
-    public static States CurrentState { get; set; }
-
-    private Transform _focusedObject;
-
-    // Use this for initialization
-    void Start () {
-        CurrentState = States.DefineDevice;
-
-        Events.OnDefineProcessEnded += OnSwitchToStateOne;
-        Events.OnTestStarted += OnSwitchToStateTwo;
-        Events.OnTestEnded += OnSwitchToStateOne;
-        Events.OnFocus += OnFocus;
-        Events.OnUnfocus += OnUnfocus;
-
-
-    }
-
-    void OnFocus(Transform obj)
-    {
-        if(_focusedObject == null)
+        public enum States
         {
-            _focusedObject = obj;
+            DefineDevice,
+            ChooseTest,
+            Visualize
         }
-    }
 
-    void OnUnfocus(Transform obj)
-    {
-        if(_focusedObject != null && _focusedObject.Equals(obj))
+        public static States CurrentState { get; set; }
+
+        private GameObject _focusedObject;
+
+        // Use this for initialization
+        void Start()
+        {
+            CurrentState = States.DefineDevice;
+
+            Events.OnDefineProcessEnded += OnSwitchToStateOne;
+            Events.OnTestStarted += OnSwitchToStateTwo;
+            Events.OnTestEnded += OnSwitchToStateOne;
+            Events.OnFocus += OnFocus;
+            Events.OnUnfocus += OnUnfocus;
+
+
+        }
+
+        void OnFocus(GameObject obj)
+        {
+            if (obj != null)
+            {
+                Debug.Log("Hello Focused object " + obj.name);
+                _focusedObject = obj;
+            }
+        }
+
+        void OnUnfocus(GameObject obj)
         {
             _focusedObject = null;
         }
-    }
 
-    void OnSwitchToStateTwo(int id)
-    {
-        CurrentState = States.Visualize;
-    }
-
-    void OnSwitchToStateOne()
-    {
-        CurrentState = States.ChooseTest;
-    }
-
-    //TODO TEST !!!
-    public void OnInputDown(InputEventData eventData)
-    {
-        if (CurrentState != States.DefineDevice)
+        void OnSwitchToStateTwo(int id)
         {
-            Debug.Log("OnInputDown " + eventData.PressType + " " + eventData.selectedObject);
-            GameObject obj = eventData.selectedObject;
+            CurrentState = States.Visualize;
+        }
 
-            Debug.Log(obj);
+        void OnSwitchToStateOne()
+        {
+            CurrentState = States.ChooseTest;
+        }
 
-            AbstractInteraction i = Utils.SearchFor<AbstractInteraction>(obj);
-
-            if (i == null)
+        //TODO TEST !!!
+        public void OnInputDown(InputEventData eventData)
+        {
+            if (CurrentState != States.DefineDevice)
             {
-                Debug.Log("No Interaction found");
-                return;
-            }
+                Debug.Log("OnInputDown " + eventData.PressType + " " + eventData.selectedObject);
+                GameObject obj = eventData.selectedObject;
 
-            Debug.Log(i.gameObject);
+                if (_focusedObject == null)
+                    Debug.Log("focused object is null");
+                else
+                    Debug.Log("Clicked on " + obj.name + " and focused on " + _focusedObject.name);
 
-            obj = i.gameObject;
+                Interaction i = Utils.SearchFor<Interaction>(obj);
 
-            i.OnClick();
+                if (i == null)
+                {
+                    Debug.Log("No Interaction found");
+                    return;
+                }
 
-            if (CurrentState == States.ChooseTest)
-            {
-                Debug.Log("Test: " + obj.name);
-                Debug.Log("Test Focused: " + _focusedObject);
+                Debug.Log(i.gameObject);
+
+                obj = i.gameObject;
+
+                i.OnClick();
+
+                if (CurrentState == States.ChooseTest)
+                {
+                    Debug.Log("Test: " + obj.name);
+                    Debug.Log("Test Focused: " + obj);
+
+                    if (obj != null)
+                    {
+                        Debug.Log("TestObj: " + obj.name);
+                        Events.Broadcast(Events.EVENTS.START_TEST, Convert.ToInt32(obj.name));
+                    }
+                }
 
                 if (_focusedObject != null)
                 {
-                    Debug.Log("TestObj: " + _focusedObject.name);
-                    Events.Broadcast(Events.EVENTS.START_TEST, Convert.ToInt32(_focusedObject.name));
-                }
-            }
+                    Debug.Log("Clicked on " + _focusedObject.name);
 
-            if (_focusedObject != null)
-            {
-                Debug.Log("Clicked on " + _focusedObject.name);
-                Debug.Log("Get Data of a " + _focusedObject.tag);
 
-                if (CurrentState == States.ChooseTest && _focusedObject.tag.Equals("Test"))
-                {
-                    Debug.Log("Test: " + _focusedObject.name);
-                    Events.Broadcast(Events.EVENTS.START_TEST, Convert.ToInt32(_focusedObject.name));
-                }
-
-                //Get Data of:
-                if (CurrentState == States.Visualize)
-                {
-                    if (_focusedObject.tag.Equals("Connection"))
+                    if (CurrentState == States.ChooseTest && _focusedObject.tag.Equals("Test"))
                     {
-                        DeviceConnection dc = _focusedObject.GetComponent<DeviceConnection>();
-                        Events.Broadcast(Events.EVENTS.REQUEST_LOCAL_DATA, dc.Source, dc.Target);
+                        Debug.Log("Test: " + _focusedObject.name);
+                        Events.Broadcast(Events.EVENTS.START_TEST, Convert.ToInt32(_focusedObject.name));
                     }
 
-                    if (_focusedObject.tag.Equals("Device"))
+                    //Get Data of:
+                    if (CurrentState == States.Visualize)
                     {
-                        Events.Broadcast(Events.EVENTS.REQUEST_LOCAL_DATA, _focusedObject);
+                        Debug.Log("Get Data of a " + _focusedObject.tag);
+                        if (_focusedObject.tag.Equals("Connection"))
+                        {
+                            DeviceConnection dc = _focusedObject.GetComponent<DeviceConnection>();
+                            //DEBUG SETTING
+                            GetComponent<VisualizationManager>().ShowConnectionData(dc, null);
+
+                            Events.Broadcast(Events.EVENTS.REQUEST_LOCAL_DATA, dc.Source, dc.Target);
+                        }
+
+                        if (_focusedObject.tag.Equals("Device"))
+                        {
+                            //DEBUG SETTING
+                            GetComponent<VisualizationManager>().ShowDeviceData(_focusedObject, null);
+
+                            Events.Broadcast(Events.EVENTS.REQUEST_LOCAL_DATA, _focusedObject);
+                        }
                     }
                 }
             }
         }
+
+        public void OnInputUp(InputEventData eventData)
+        {
+            Debug.Log("OnInputUp " + eventData.PressType + " " + eventData.selectedObject);
+        }
     }
-
-    public void OnInputUp(InputEventData eventData)
-    {
-        Debug.Log("OnInputUp " + eventData.PressType + " " + eventData.selectedObject);
-    }
-
-
 }

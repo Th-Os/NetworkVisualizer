@@ -12,7 +12,7 @@ namespace NetworkVisualizer
 
         public Material DeviceHighlightMaterial;
 
-        public float m_Connection_Speed_Line = 1f;
+        public float m_Connection_Speed_Line = 3f;
         public float m_Connection_Speed = 5f;
         public float m_Connection_Smooth_WaitFor = 0.001f;
         public float m_Connection_Highlight_Width = 1f;
@@ -118,12 +118,7 @@ namespace NetworkVisualizer
                     yield return new WaitForSeconds(m_Connection_Smooth_WaitFor);
                 }
 
-                CapsuleCollider capsule = connection.GetComponent<CapsuleCollider>();
-                capsule.transform.position = Vector3.Lerp(source.position, target.position, 0.5f);
-                capsule.direction = 2;
-                capsule.radius = lr.startWidth /2;
-                capsule.transform.LookAt(target.position);
-                capsule.height = (target.position - source.position).magnitude;
+                AddColliderToLine(connection, lr);
             }
 
             StartCoroutine(Connect(source, target));
@@ -136,7 +131,7 @@ namespace NetworkVisualizer
             Transform conn = Instantiate(Connection, start);
             conn.position = start.position;
 
-            while (!conn.position.Equals(target.position))
+            while (conn.position != target.position)
             {
                 conn.position = Vector3.MoveTowards(conn.position, target.position, m_Connection_Speed * Time.deltaTime);
                 yield return new WaitForSeconds(m_Connection_Smooth_WaitFor);
@@ -154,11 +149,30 @@ namespace NetworkVisualizer
             system.Play();
             yield return new WaitForSeconds(m_Call_Duration);
             system.Stop();
-            while (system.IsAlive())
-            {
-
-            }
             Destroy(call.gameObject);
+        }
+
+        private void AddColliderToLine(Transform t, LineRenderer line)
+        {
+
+            BoxCollider col = new GameObject("Collider").AddComponent<BoxCollider>();
+            col.transform.parent = line.transform;
+            Vector3 start = line.GetPosition(0);
+            Vector3 target = line.GetPosition(1);
+            float lineLength = Vector3.Distance(start, target);
+            col.size = new Vector3(lineLength, line.startWidth + 1f, 1f); 
+            Vector3 midPoint = Vector3.Lerp(start, target, 0.5f);
+            col.transform.position = midPoint;
+            float angle = (Mathf.Abs(start.y - target.y) / Mathf.Abs(start.x - target.x));
+            if ((start.y < target.y && start.x > target.x) || (target.y < start.y && target.x > start.x))
+            {
+                angle *= -1;
+            }
+            angle = Mathf.Rad2Deg * Mathf.Atan(angle);
+            col.transform.Rotate(0, 0, angle);
+            col.isTrigger = true;
+            col.transform.localScale = new Vector3(1f, 1f, 1f);
+            
         }
 
     }

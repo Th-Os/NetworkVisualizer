@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine.UI;
 
 namespace NetworkVisualizer.Objects
 {
@@ -15,6 +16,11 @@ namespace NetworkVisualizer.Objects
             this.start = start;
             this.type = type;
             this.time = time;
+        }
+
+        public override void FillTexts(Text[] texts)
+        {
+            throw new NotImplementedException();
         }
 
     }

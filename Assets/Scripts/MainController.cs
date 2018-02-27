@@ -10,9 +10,10 @@ namespace NetworkVisualizer
         public GameObject TestUI;
         public GameObject DefineUI;
         public GameObject VisualizeUI;
-        public MQTT_URI URI = MQTT_URI.TEST;
+        public MQTT m_MQTT = MQTT.TEST;
 
-        public enum MQTT_URI {
+        public enum MQTT {
+            OFF,
             TEST,
             PRODUCTIVE
         };
@@ -21,15 +22,19 @@ namespace NetworkVisualizer
         void Start()
         {
             string server = "";
-            if(URI == MQTT_URI.TEST)
+            switch(m_MQTT)
             {
-                server = "littleone";
+                case MQTT.TEST:
+                    server = "littleone";
+                    break;
+                case MQTT.PRODUCTIVE:
+                    server = "10.0.0.1";
+                    break;
+                case MQTT.OFF:
+                    break;
             }
-            if(URI == MQTT_URI.PRODUCTIVE)
-            {
-                server = "10.0.0.1";
-            }
-            MqttController.Init(server);
+            if(!server.Equals(""))
+                MqttController.Init(server);
             CanvasController.Instance.Init(ParentUI, TestUI, DefineUI, VisualizeUI);
             DataController.Instance.Init();
 
@@ -37,9 +42,6 @@ namespace NetworkVisualizer
             Events.OnTestEnded += OnTestEnded;
             StartCoroutine(InitApp());
             //StartCoroutine(StopTest());
-
-            Test.Init();
-
         }
 
         IEnumerator InitApp()
@@ -59,7 +61,7 @@ namespace NetworkVisualizer
 
         void OnTestStarted(int test)
         {
-            Test.Start();
+            GetComponent<Test>().Init();
         }
 
         void OnTestEnded()
