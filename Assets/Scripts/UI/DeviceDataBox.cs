@@ -2,21 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeviceDataBox : DataBox {
+namespace NetworkVisualizer
+{
 
-    // Use this for initialization
-    override protected void Start () {
-        base.Start();
-
-	}
-
-    public override void OnFocusExit()
+    public class DeviceDataBox : DataBox
     {
-        base.OnFocusExit();
-    }
 
-    public override void OnClick()
-    {
-        base.OnClick();
+        // Use this for initialization
+        override protected void Start()
+        {
+            base.Start();
+
+        }
+
+        public override void OnFocusExit()
+        {
+            base.OnFocusExit();
+        }
+
+        public override void OnClick()
+        {
+            base.OnClick();
+        }
     }
 }

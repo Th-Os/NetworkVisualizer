@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using HoloToolkit.Unity;
-
-using NetworkVisualizer.Objects;
+using NetworkVisualizer;
+using NetworkVisualizer.Enums;
 
 //Responsible for Device Initialization and Protection (World Anchor)
 public class ObjectManager : MonoBehaviour {
@@ -18,7 +18,7 @@ public class ObjectManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Events.OnDeviceFound += OnNewDevice;
+        EventHandler.OnDeviceFound += OnNewDevice;
         _deviceCount = Device_Names.Length;                                                    
         count = 0;
 	}
@@ -47,7 +47,7 @@ public class ObjectManager : MonoBehaviour {
 
         obj.name = name;
 
-        Events.Broadcast(Events.EVENTS.DEVICE_DEFINED, obj.transform);
+        EventHandler.Broadcast(Events.DEVICE_DEFINED, obj.transform);
 
         Debug.Log("New Device: " + obj.name + " parent: " + obj.transform.parent.name); 
         //AddAnchor(obj, name);
@@ -58,7 +58,7 @@ public class ObjectManager : MonoBehaviour {
         {
             Debug.Log("device count reached");
             GetComponent<ObjectsDefiner>().enabled = false;
-            Events.Broadcast(Events.EVENTS.END_DEFINE);
+            EventHandler.Broadcast(Events.END_DEFINE);
         }
     }
 }

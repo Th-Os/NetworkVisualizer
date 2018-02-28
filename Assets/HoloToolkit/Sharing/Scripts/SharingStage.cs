@@ -16,12 +16,12 @@ namespace HoloToolkit.Sharing
         /// <summary> 
         /// SharingManagerConnected event notifies when the sharing manager is created and connected.
         /// </summary> 
-        public event EventHandler SharingManagerConnected;
+        public event System.EventHandler SharingManagerConnected;
 
         /// <summary> 
         /// SharingManagerDisconnected event notifies when the sharing manager is disconnected.
         /// </summary> 
-        public event EventHandler SharingManagerDisconnected;
+        public event System.EventHandler SharingManagerDisconnected;
 
         /// <summary>
         /// Default username to use when joining a session.

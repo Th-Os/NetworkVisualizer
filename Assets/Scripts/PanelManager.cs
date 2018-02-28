@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NetworkVisualizer.Enums;
+
 namespace NetworkVisualizer {
     public class PanelManager : MonoBehaviour {
 

@@ -23,10 +23,10 @@ namespace NetworkVisualizer
         // Use this for initialization
         void Start()
         {
-            Events.OnDrawConnection += OnConnection;
-            Events.OnDrawCall += OnCall;
-            Events.OnHighlight += OnHighlight;
-            Events.OnHide += OnHide;
+            EventHandler.OnDrawConnection += OnConnection;
+            EventHandler.OnDrawCall += OnCall;
+            EventHandler.OnHighlight += OnHighlight;
+            EventHandler.OnHide += OnHide;
         }
 
         private void OnHighlight(Transform obj)

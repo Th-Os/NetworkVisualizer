@@ -4,6 +4,7 @@ using UnityEngine;
 using NetworkVisualizer.Objects;
 using Helpers;
 using System;
+using NetworkVisualizer.Enums;
 
 namespace NetworkVisualizer
 {
@@ -15,8 +16,8 @@ namespace NetworkVisualizer
         // Use this for initialization
         public void Init()
         {
-            Events.OnLocalDataRequested += OnDataRequested;
-            Events.OnDataArrived += OnDataArrived;
+            EventHandler.OnLocalDataRequested += OnDataRequested;
+            EventHandler.OnDataArrived += OnDataArrived;
         }
 
         void OnDataRequested(Transform source, Transform target)
@@ -27,9 +28,9 @@ namespace NetworkVisualizer
                 _hasDataLocally = LookUpDevice(source);
 
             if (_hasDataLocally)
-                Events.Broadcast(Events.EVENTS.DATA_ARRIVED, CreateData());
+                EventHandler.Broadcast(Events.DATA_ARRIVED, CreateData());
             else
-                Events.Broadcast(Events.EVENTS.REQUEST_DATA, CreateDataRequest(source, target));
+                EventHandler.Broadcast(Events.REQUEST_DATA, CreateDataRequest(source, target));
 
         }
 
@@ -40,7 +41,7 @@ namespace NetworkVisualizer
                 {
                     Device device = data.Device;
 
-                    Events.Broadcast(Events.EVENTS.SHOW_DEVICE_DATA, DataStore.Instance.GetTransform(device).gameObject, device);
+                    EventHandler.Broadcast(Events.SHOW_DEVICE_DATA, DataStore.Instance.GetTransform(device).gameObject, device);
                     
                 }
                 if(data.Type.Equals("connection"))
@@ -53,7 +54,7 @@ namespace NetworkVisualizer
                     if (dc == null)
                         dc = LookUpDeviceConnection(target, source);
 
-                    Events.Broadcast(Events.EVENTS.SHOW_CONNECTION_DATA, dc, conn);
+                    EventHandler.Broadcast(Events.SHOW_CONNECTION_DATA, dc, conn);
                 }
 
             }

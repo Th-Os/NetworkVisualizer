@@ -57,7 +57,6 @@ GameObject:
   - component: {fileID: 223406383927594852}
   - component: {fileID: 114320706092204436}
   - component: {fileID: 114062676274198570}
-  - component: {fileID: 114246597024115282}
   m_Layer: 0
   m_Name: VisualizeUI
   m_TagString: Untagged
@@ -114,19 +113,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &114246597024115282
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1879777586024918}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28a447afa36512b4a8470df047d42f8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CurrentFocus: {fileID: 0}
-  OnFocus: 0
 --- !u!114 &114320706092204436
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using NetworkVisualizer.Enums;
 
 namespace NetworkVisualizer
 {
@@ -7,9 +8,13 @@ namespace NetworkVisualizer
     public class MainController : MonoBehaviour
     {
         public GameObject ParentUI;
+
+        //Prefabs
         public GameObject TestUI;
         public GameObject DefineUI;
         public GameObject VisualizeUI;
+        public GameObject MenuUI;
+
         public MQTT m_MQTT = MQTT.TEST;
 
         public enum MQTT {
@@ -35,11 +40,12 @@ namespace NetworkVisualizer
             }
             if(!server.Equals(""))
                 MqttController.Init(server);
-            CanvasController.Instance.Init(ParentUI, TestUI, DefineUI, VisualizeUI);
+
+            CanvasController.Instance.Init(ParentUI, TestUI, DefineUI, VisualizeUI, MenuUI);
             DataController.Instance.Init();
 
-            Events.OnTestStarted += OnTestStarted;
-            Events.OnTestEnded += OnTestEnded;
+            EventHandler.OnTestStarted += OnTestStarted;
+            EventHandler.OnTestEnded += OnTestEnded;
             StartCoroutine(InitApp());
             //StartCoroutine(StopTest());
         }
@@ -48,13 +54,13 @@ namespace NetworkVisualizer
         {
             Debug.Log("Wait for 5 seconds, then start application.");
             yield return new WaitForSeconds(5f);
-            Events.Broadcast(Events.EVENTS.START_DEFINE);
+            EventHandler.Broadcast(Events.START_DEFINE);
         }
 
         IEnumerator StopTest()
         {
             yield return new WaitForSeconds(120f);
-            Events.Broadcast(Events.EVENTS.END_TEST);
+            EventHandler.Broadcast(Events.END_TEST);
         }
 
 
@@ -64,7 +70,7 @@ namespace NetworkVisualizer
             GetComponent<Test>().Init();
         }
 
-        void OnTestEnded()
+        void OnTestEnded(int test)
         {
            
         }

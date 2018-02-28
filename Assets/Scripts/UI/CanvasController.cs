@@ -3,111 +3,117 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Helpers;
+using NetworkVisualizer.Enums;
+using System;
+
+namespace NetworkVisualizer { 
 
 //important: https://forum.unity.com/threads/unity-ui-on-the-hololens.394629/
-public class CanvasController : Singleton<CanvasController> {
+    public class CanvasController : Singleton<CanvasController> {
 
-    public GameObject Parent;
-    public GameObject TestUI;
-    public GameObject DefineUI;
-    public GameObject VisualizeUI;
+        public GameObject Parent;
+        public GameObject TestUI;
+        public GameObject DefineUI;
+        public GameObject VisualizeUI;
+        public GameObject MenuUI;
 
-    private Vector3 _panelOffset;
+        private Vector3 _panelOffset;
 
-    private Transform _testInteraction;
-    private Transform _testPanels;
-    private bool _testShown;
+        private Transform _testInteraction;
+        private Transform _testPanels;
+        private bool _testShown;
+        private bool _menuShown;
 
-
-    //When the change to singleton is needed.
-    public void Init(GameObject Parent, GameObject TestUI, GameObject DefineUI, GameObject VisualizeUI)
-    {
-        this.Parent = Parent;
-        this.DefineUI = GameObject.Instantiate(DefineUI, Parent.transform);
-        this.TestUI = GameObject.Instantiate(TestUI, Parent.transform);
-        this.VisualizeUI = GameObject.Instantiate(VisualizeUI, Parent.transform);
-
-        Events.OnTestStarted += OnWorldUI;
-        Events.OnTestEnded += OnTestUI;
-        Events.OnDefineProcessStarted += OnDefineUI;
-        Events.OnDefineProcessEnded += OnTestUI;
-
-        DefineUI.SetActive(false);
-        TestUI.SetActive(false);
-        VisualizeUI.SetActive(false);
-
-        _panelOffset = new Vector3(0f, 4f, 0f);
-    }
-
-    void OnDefineUI()
-    {
-        Debug.Log("Start DefineUI");
-        if (!DefineUI.activeInHierarchy)
-            DefineUI.SetActive(true);
-
-        Events.OnDeviceDefined += OnDeviceFound;
-        DefineUI.GetComponent<Canvas>().worldCamera = Camera.main;
-        DefineUI.GetComponentInChildren<Text>().text = "Device Define Process started.";
-    }
-
-    void OnTestUI()
-    {
-        Debug.Log("Start TestUI");
-        Events.OnDeviceDefined -= OnDeviceFound;
-        if (DefineUI.activeInHierarchy)
-            DefineUI.SetActive(false);
+        private GameObject _currentUI;
 
 
-        if (VisualizeUI.activeInHierarchy)
-            VisualizeUI.SetActive(false);
-
-        TestUI.SetActive(true);
-        TestUI.GetComponent<Canvas>().worldCamera = Camera.main;
-        _testInteraction = TestUI.transform.Find("Interaction");
-        _testPanels = TestUI.transform.Find("Tests");
-        _testShown = true;
-    }
-
-    void OnWorldUI(int test)
-    {
-        Debug.Log("Start WorldUI");
-        if (TestUI.activeInHierarchy)
-            TestUI.SetActive(false);
-
-        VisualizeUI.SetActive(true);
-        VisualizeUI.GetComponent<Canvas>().worldCamera = Camera.main;
-    }
-
-    void OnDeviceFound(Transform obj)
-    {
-        DefineUI.GetComponentInChildren<Text>().text = "Device " + obj.name + " defined with position " + obj.transform.position;
-    }
-
-    void OnClick(Transform obj)
-    {
-        if (obj != null)
+        //When the change to singleton is needed.
+        public void Init(GameObject Parent, GameObject TestUI, GameObject DefineUI, GameObject VisualizeUI, GameObject MenuUI)
         {
-            Debug.Log("Clicked: " + obj.name);
+            this.Parent = Parent;
+            this.DefineUI = DefineUI;
+            this.TestUI = TestUI;
+            this.VisualizeUI = VisualizeUI;
+            this.MenuUI = MenuUI;
+
+            EventHandler.OnTestStarted += OnVisualizeUI;
+            EventHandler.OnShowTest += OnTestUI;
+            EventHandler.OnDefineProcessStarted += OnDefineUI;
+            EventHandler.OnShowMenu += OnMenuUI;
+            EventHandler.OnHideMenu += OnMenuUI;
+
+            _panelOffset = new Vector3(0f, 4f, 0f);
         }
-    }
 
-    void OnTestToggleHide()
-    {
-        if(TestUI.activeInHierarchy && _testInteraction != null && _testPanels != null)
+        private void OnMenuUI(States state)
         {
-            Text text = _testInteraction.GetComponentInChildren<Text>();
-            _testPanels.gameObject.SetActive(!_testShown);
-            if (_testShown)
+            DestroyUI();
+            //funktioniert besser mit lookrotation
+            _currentUI = GameObject.Instantiate(MenuUI, Camera.main.transform.forward, Quaternion.LookRotation(Camera.main.transform.forward, Camera.main.transform.up), Parent.transform);
+            _menuShown = !_menuShown;
+            _currentUI.SetActive(_menuShown);
+            if(_menuShown)
             {
-                _testShown = false;
-                text.text = "Show";
-            }else
-            {
-                _testShown = true;
-                text.text = "Hide";
+                if(_currentUI.GetComponent<Canvas>().worldCamera == null)
+                    _currentUI.GetComponent<Canvas>().worldCamera = Camera.main;
             }
-            
         }
 
+        void OnDefineUI()
+        {
+            DestroyUI();
+            _currentUI = GameObject.Instantiate(DefineUI, Parent.transform);
+            Debug.Log("Start DefineUI");
+            if (!_currentUI.activeInHierarchy)
+                _currentUI.SetActive(true);
+            
+            EventHandler.OnDeviceDefined += OnDeviceFound;
+            _currentUI.GetComponent<Canvas>().worldCamera = Camera.main;
+            _currentUI.GetComponentInChildren<Text>().text = "Device Define Process started.";
+        }
+
+        void OnTestUI(int test)
+        {
+            DestroyUI();
+            Debug.Log("Start TestUI");
+            EventHandler.OnDeviceDefined -= OnDeviceFound;
+
+            _currentUI = GameObject.Instantiate(TestUI, Camera.main.transform.forward, Camera.main.transform.rotation, Parent.transform);
+
+            _currentUI.SetActive(true);
+            _currentUI.GetComponent<Canvas>().worldCamera = Camera.main;
+            _testInteraction = _currentUI.transform.Find("Interaction");
+            _testPanels = _currentUI.transform.Find("Tests");
+            _testShown = true;
+        }
+
+        void OnVisualizeUI(int test)
+        {
+            Debug.Log("Start VisualizeUI");
+            DestroyUI();
+            _currentUI = GameObject.Instantiate(VisualizeUI, Parent.transform);
+            _currentUI.SetActive(true);
+            _currentUI.GetComponent<Canvas>().worldCamera = Camera.main;
+        }
+
+        void OnDeviceFound(Transform obj)
+        {
+            _currentUI.GetComponentInChildren<Text>().text = "Device " + obj.name + " defined with position " + obj.transform.position;
+        }
+
+        void OnClick(Transform obj)
+        {
+            if (obj != null)
+            {
+                Debug.Log("Canvas Clicked: " + obj.name);
+            }
+        }
+
+        void DestroyUI()
+        {
+            if (_currentUI != null)
+                GameObject.Destroy(_currentUI);
+            _currentUI = null;
+        }
     }
 }

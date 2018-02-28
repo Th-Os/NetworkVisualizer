@@ -8,6 +8,7 @@ TagManager:
   - Connection
   - Call
   - Test
+  - Menu
   layers:
   - Default
   - TransparentFX

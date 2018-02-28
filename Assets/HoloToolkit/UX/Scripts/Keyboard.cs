@@ -42,7 +42,7 @@ namespace HoloToolkit.UI.Keyboard
         /// cast the sender to 'Keyboard' and get the text from the TextInput field.
         /// (Cleared when keyboard is closed.)
         /// </summary>
-        public event EventHandler OnTextSubmitted = delegate { };
+        public event System.EventHandler OnTextSubmitted = delegate { };
 
         /// <summary>
         /// Fired every time the text in the InputField changes.
@@ -54,26 +54,26 @@ namespace HoloToolkit.UI.Keyboard
         /// Fired every time the Close button is pressed.
         /// (Cleared when keyboard is closed.)
         /// </summary>
-        public event EventHandler OnClosed = delegate { };
+        public event System.EventHandler OnClosed = delegate { };
 
         /// <summary>
         /// Sent when the 'Previous' button is pressed. Ideally you would use this event
         /// to set your targeted text input to the previous text field in your document.
         /// (Cleared when keyboard is closed.)
         /// </summary>
-        public event EventHandler OnPrevious = delegate { };
+        public event System.EventHandler OnPrevious = delegate { };
 
         /// <summary>
         /// Sent when the 'Next' button is pressed. Ideally you would use this event
         /// to set your targeted text input to the next text field in your document.
         /// (Cleared when keyboard is closed.)
         /// </summary>
-        public event EventHandler OnNext = delegate { };
+        public event System.EventHandler OnNext = delegate { };
 
         /// <summary>
         /// Sent when the keyboard is placed.  This allows listener to know when someone else is co-opting the keyboard.
         /// </summary>
-        public event EventHandler OnPlacement = delegate { };
+        public event System.EventHandler OnPlacement = delegate { };
 
         #endregion Callbacks
 

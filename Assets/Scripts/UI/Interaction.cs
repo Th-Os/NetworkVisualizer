@@ -2,31 +2,37 @@
 using System.Collections.Generic;
 using HoloToolkit.Unity.InputModule;
 using UnityEngine;
+using NetworkVisualizer.Enums;
 
-public class Interaction : MonoBehaviour, IInteractable {
+namespace NetworkVisualizer
+{
 
-    [HideInInspector]
-    public GameObject CurrentFocus;
-
-    [HideInInspector]
-    public bool OnFocus;
-
-    public virtual void OnFocusEnter()
+    public class Interaction : MonoBehaviour, IInteractable
     {
-        OnFocus = true;
-        CurrentFocus = gameObject;
-        Events.Broadcast(Events.EVENTS.FOCUS, CurrentFocus);
-    }
 
-    public virtual void OnFocusExit()
-    {
-        OnFocus = false;
-        CurrentFocus = null;
-        Events.Broadcast(Events.EVENTS.UNFOCUS, CurrentFocus);
-    }
+        [HideInInspector]
+        public GameObject CurrentFocus;
 
-    public virtual void OnClick()
-    {
-        Debug.Log("Clicked on: " + gameObject.name);
+        [HideInInspector]
+        public bool OnFocus;
+
+        public virtual void OnFocusEnter()
+        {
+            OnFocus = true;
+            CurrentFocus = gameObject;
+            EventHandler.Broadcast(Events.FOCUS, CurrentFocus);
+        }
+
+        public virtual void OnFocusExit()
+        {
+            OnFocus = false;
+            CurrentFocus = null;
+            EventHandler.Broadcast(Events.UNFOCUS, CurrentFocus);
+        }
+
+        public virtual void OnClick()
+        {
+            Debug.Log("Clicked on: " + gameObject.name);
+        }
     }
 }

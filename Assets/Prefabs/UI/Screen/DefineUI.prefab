@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 114169981967586172}
   - component: {fileID: 114386009418454846}
   - component: {fileID: 225279194936279878}
-  - component: {fileID: 114844290037110500}
   m_Layer: 0
   m_Name: DefineUI
   m_TagString: Untagged
@@ -162,17 +161,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114844290037110500
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1391628888540506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28a447afa36512b4a8470df047d42f8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!222 &222839260814973154
 CanvasRenderer:
   m_ObjectHideFlags: 1

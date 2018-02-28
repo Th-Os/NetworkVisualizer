@@ -6,7 +6,7 @@ using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 using Newtonsoft.Json;
 using UnityEngine;
-
+using NetworkVisualizer.Enums;
 using NetworkVisualizer.Objects;
 
 namespace NetworkVisualizer {
@@ -37,10 +37,10 @@ namespace NetworkVisualizer {
 
                 Send(PUB_TOPIC + "/status", "Hololens online");
 
-                Events.OnDataRequested += SendDataRequest;
-                Events.OnTestStarted += SendTestInitializer;
-                Events.OnTestEnded += SendTestCancel;
-                Events.OnDeviceDefined += SendDeviceData;
+                EventHandler.OnDataRequested += SendDataRequest;
+                EventHandler.OnTestStarted += SendTestInitializer;
+                EventHandler.OnTestEnded += SendTestCancel;
+                EventHandler.OnDeviceDefined += SendDeviceData;
 
             }
             catch (Exception e)
@@ -61,7 +61,7 @@ namespace NetworkVisualizer {
             Send(PUB_TOPIC + "/test", "{\"test\":" + testId + "}");
         }
 
-        private static void SendTestCancel()
+        private static void SendTestCancel(int test)
         {
             Send(PUB_TOPIC + "/test/stop", "{\"stop\": true}");
         }
@@ -88,15 +88,15 @@ namespace NetworkVisualizer {
 
             if (String.Equals(topic, CONNECTION, StringComparison.OrdinalIgnoreCase))
             {
-                Events.Broadcast(Events.EVENTS.NEW_CONNECTION, JsonConvert.DeserializeObject<Connection>(msg));
+                EventHandler.Broadcast(Events.NEW_CONNECTION, JsonConvert.DeserializeObject<Connection>(msg));
             }
             if (String.Equals(topic, CALL, StringComparison.OrdinalIgnoreCase))
             {
-                Events.Broadcast(Events.EVENTS.NEW_CONNECTION, JsonConvert.DeserializeObject<Call>(msg));
+                EventHandler.Broadcast(Events.NEW_CONNECTION, JsonConvert.DeserializeObject<Call>(msg));
             }
             if (String.Equals(topic, INCOMING_DATA, StringComparison.OrdinalIgnoreCase))
             {
-                Events.Broadcast(Events.EVENTS.DATA_ARRIVED, JsonConvert.DeserializeObject<Data>(msg));
+                EventHandler.Broadcast(Events.DATA_ARRIVED, JsonConvert.DeserializeObject<Data>(msg));
             }
 
             Debug.Log("Got message: " + topic + ": " + msg);

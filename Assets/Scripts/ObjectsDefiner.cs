@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using HoloToolkit.Unity.InputModule;
 using UnityEngine.XR.WSA.Input;
+using NetworkVisualizer;
+using NetworkVisualizer.Enums;
 
 public class ObjectsDefiner : MonoBehaviour {
 
@@ -17,7 +19,7 @@ public class ObjectsDefiner : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        Events.OnDefineProcessStarted += OnStart;
+        EventHandler.OnDefineProcessStarted += OnStart;
         _disabled = true;
     }
 
@@ -60,7 +62,7 @@ public class ObjectsDefiner : MonoBehaviour {
         //Instantiate(DefineCube, _currentObj.position, _currentObj.rotation, transform);
 
         Debug.Log(_currentObj + " : " + _currentObj.position);
-        Events.Broadcast(Events.EVENTS.DEVICE_FOUND, _currentObj.position);
+        EventHandler.Broadcast(Events.DEVICE_FOUND, _currentObj.position);
     }
 
     void OnError(GestureErrorEventArgs args)
@@ -76,6 +78,10 @@ public class ObjectsDefiner : MonoBehaviour {
 
     private void OnDestroy()
     {
+        if (_currentObj != null)
+        {
+            Destroy(_currentObj.gameObject);
+        }
         if (_recognizer != null)
         {
             _recognizer.Tapped -= OnTap;
@@ -87,6 +93,10 @@ public class ObjectsDefiner : MonoBehaviour {
     private void OnDisable()
     {
         _disabled = true;
+        if(_currentObj != null)
+        {
+            Destroy(_currentObj.gameObject);
+        }
         if (_recognizer != null)
         {
             _recognizer.Tapped -= OnTap;

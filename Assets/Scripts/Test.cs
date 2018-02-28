@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using NetworkVisualizer.Objects;
+using NetworkVisualizer.Enums;
 using UnityEngine;
 
 namespace NetworkVisualizer
@@ -16,7 +17,7 @@ namespace NetworkVisualizer
         {
              _router = new Device("router", new Position(1, 1, 1));
             _esp_1 = new Device("esp_1", new Position(1, 2, 3));
-            _esp_2 = new Device("esp_1", new Position(3, 2, 1));
+            _esp_2 = new Device("esp_2", new Position(3, 2, 1));
 
             StartCoroutine(Run());
 
@@ -25,18 +26,18 @@ namespace NetworkVisualizer
         IEnumerator Run()
         {
             yield return new WaitForSeconds(4f);
-            Events.Broadcast(Events.EVENTS.NEW_CONNECTION, new Connection(_router, _esp_1, "connection", "someTime", "someBody"));
+            EventHandler.Broadcast(Events.NEW_CONNECTION, new Connection(_router, _esp_1, "connection", "someTime", "someBody"));
             yield return new WaitForSeconds(2f);
-            Events.Broadcast(Events.EVENTS.NEW_CONNECTION, new Connection(_esp_1, _esp_2, "connection", "someTime", "someBody"));
+            EventHandler.Broadcast(Events.NEW_CONNECTION, new Connection(_esp_1, _esp_2, "connection", "someTime", "someBody"));
             yield return new WaitForSeconds(2f);
-            Events.Broadcast(Events.EVENTS.NEW_CONNECTION, new Call(_router, "call", "someTime"));
+            EventHandler.Broadcast(Events.NEW_CONNECTION, new Call(_router, "call", "someTime"));
             yield return new WaitForSeconds(4f);
 
-            Events.Broadcast(Events.EVENTS.NEW_CONNECTION, new Connection(_router, _esp_1, "connection", "someTime", "someBody"));
+            EventHandler.Broadcast(Events.NEW_CONNECTION, new Connection(_router, _esp_1, "connection", "someTime", "someBody"));
             yield return new WaitForSeconds(4f);
-            Events.Broadcast(Events.EVENTS.NEW_CONNECTION, new Connection(_router, _esp_1, "connection", "someTime", "someBody"));
+            EventHandler.Broadcast(Events.NEW_CONNECTION, new Connection(_router, _esp_1, "connection", "someTime", "someBody"));
             yield return new WaitForSeconds(4f);
-            Events.Broadcast(Events.EVENTS.NEW_CONNECTION, new Connection(_router, _esp_1, "connection", "someTime", "someBody"));
+            EventHandler.Broadcast(Events.NEW_CONNECTION, new Connection(_router, _esp_1, "connection", "someTime", "someBody"));
             yield return new WaitForSeconds(4f);
         }
 
