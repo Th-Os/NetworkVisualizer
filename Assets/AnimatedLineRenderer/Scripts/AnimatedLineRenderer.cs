@@ -32,6 +32,8 @@ namespace DigitalRuby.AnimatedLineRenderer
         [Tooltip("Order in sort layer")]
         public int OrderInSortLayer = 1;
 
+        public int FadeAfterPositionChanges = 5;
+
         private struct QueueItem
         {
             public Vector3 Position;
@@ -62,7 +64,7 @@ namespace DigitalRuby.AnimatedLineRenderer
                     current = queue.Dequeue();
                     if (++index == 0)
                     {
-                        lineRenderer.SetVertexCount(1);
+                        lineRenderer.positionCount = 1;
                         StartPoint = current.Position;
                         current.ElapsedSeconds = current.TotalSeconds = current.TotalSecondsInverse = 0.0f;
                         lineRenderer.SetPosition(0, current.Position);
@@ -70,7 +72,7 @@ namespace DigitalRuby.AnimatedLineRenderer
                     }
                     else
                     {
-                        lineRenderer.SetVertexCount(index + 1);
+                        lineRenderer.positionCount = index + 1;
                     }
                 }
             }
@@ -95,7 +97,7 @@ namespace DigitalRuby.AnimatedLineRenderer
         private void Start()
         {
             lineRenderer = GetComponent<LineRenderer>();
-            lineRenderer.SetVertexCount(0);
+            lineRenderer.positionCount = 0;
         }
 
         private void Update()
@@ -103,8 +105,10 @@ namespace DigitalRuby.AnimatedLineRenderer
             ProcessCurrent();
             if (!Resetting)
             {
-                lineRenderer.SetColors(StartColor, EndColor);
-                lineRenderer.SetWidth(StartWidth, EndWidth);
+                lineRenderer.startColor = StartColor;
+                lineRenderer.endColor = EndColor;
+                lineRenderer.startWidth = StartWidth;
+                lineRenderer.endWidth = EndWidth;
                 lineRenderer.sortingLayerName = SortLayerName;
                 lineRenderer.sortingOrder = OrderInSortLayer;
             }
@@ -203,7 +207,7 @@ namespace DigitalRuby.AnimatedLineRenderer
             lastQueued = null;
             if (lineRenderer != null)
             {
-                lineRenderer.SetVertexCount(0);
+                lineRenderer.positionCount = 0;
             }
             remainder = 0.0f;
             queue.Clear();

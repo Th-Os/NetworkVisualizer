@@ -112,6 +112,48 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &309946138
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4193124462137718, guid: 1ddfb3473fa87c44599af4b922cd1e15, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4193124462137718, guid: 1ddfb3473fa87c44599af4b922cd1e15, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4193124462137718, guid: 1ddfb3473fa87c44599af4b922cd1e15, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4193124462137718, guid: 1ddfb3473fa87c44599af4b922cd1e15, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4193124462137718, guid: 1ddfb3473fa87c44599af4b922cd1e15, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4193124462137718, guid: 1ddfb3473fa87c44599af4b922cd1e15, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4193124462137718, guid: 1ddfb3473fa87c44599af4b922cd1e15, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4193124462137718, guid: 1ddfb3473fa87c44599af4b922cd1e15, type: 2}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 1ddfb3473fa87c44599af4b922cd1e15, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &438637437
 Prefab:
   m_ObjectHideFlags: 0
@@ -316,6 +358,7 @@ MonoBehaviour:
   m_Connection_Smooth_WaitFor: 0.001
   m_Connection_Highlight_Width: 1
   m_Call_Duration: 5
+  m_Connection_Duration: 5
 --- !u!114 &619351500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -551,6 +594,11 @@ Prefab:
         type: 2}
       propertyPath: buttonType
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114905378934476236, guid: 6baba202b5cc7954193562351570ad62,
+        type: 2}
+      propertyPath: ShowPointingRay
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6baba202b5cc7954193562351570ad62, type: 2}

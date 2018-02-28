@@ -54,7 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentFocus: {fileID: 0}
   OnFocus: 0
-  HighlightMaterial: {fileID: 2100000, guid: c8c55b194bd8eb14b8f14920a2fb3c8e, type: 2}
+  HighlightMaterial: {fileID: 2100000, guid: 5977353cac4e3244da964f8317a83a78, type: 2}
 --- !u!120 &120322622363197838
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -69,7 +69,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1ed8c88d6efbb8242a4ee0df5a530d48, type: 2}
+  - {fileID: 2100000, guid: 701d1a997ad5bed44a551a5e1461909a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -139,7 +139,7 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 0
+    textureMode: 1
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0

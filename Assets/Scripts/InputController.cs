@@ -166,6 +166,7 @@ namespace NetworkVisualizer
                             }
                         }
 
+                        //TEST!!!
                         if (CurrentState == States.MENU)
                         {
                             if (_focusedObject != null && _focusedObject.CompareTag("Menu"))

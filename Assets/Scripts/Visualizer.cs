@@ -17,6 +17,7 @@ namespace NetworkVisualizer
         public float m_Connection_Smooth_WaitFor = 0.001f;
         public float m_Connection_Highlight_Width = 1f;
         public float m_Call_Duration = 5f;
+        public float m_Connection_Duration = 5f;
 
         private Material _standardDeviceMaterial;
 
@@ -121,7 +122,8 @@ namespace NetworkVisualizer
                 AddColliderToLine(connection, lr);
             }
 
-            StartCoroutine(Connect(source, target));
+            Instantiate(Connection, source).GetComponent<DrawConnection>().Init(source.GetComponent<LineRenderer>().startWidth, m_Connection_Duration).Connect(source, target);
+            //StartCoroutine(Connect(source, target));
         }
 
         //Fires one connection
