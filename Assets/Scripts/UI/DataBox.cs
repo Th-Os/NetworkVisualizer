@@ -45,16 +45,18 @@ namespace NetworkVisualizer
             Debug.Log("DataBox: Clicked virtual" + gameObject.name);
             if (OnFocus)
             {
+                Destroy(gameObject.transform.parent.gameObject);
+                /*
                 if (isOnCancel)
                 {
-                    Destroy(gameObject.transform.parent.gameObject);
+                    
                 }
                 else
                 {
                     isOnCancel = true;
                     _cancelPanel = Instantiate(CancelPanel, _canvas.transform);
                 }
-
+                */
             }
         }
     }

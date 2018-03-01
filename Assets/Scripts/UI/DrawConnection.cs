@@ -5,24 +5,16 @@ using DigitalRuby.AnimatedLineRenderer;
 
 public class DrawConnection : MonoBehaviour {
 
-    public float Duration = 2f;
-
     private AnimatedLineRenderer _aLine;
     private bool _hasStarted;
 
-	// Use this for initialization
-	void Start () {
-        _aLine = GetComponent<AnimatedLineRenderer>();
-        _aLine.SecondsPerLine = Duration;
-        _hasStarted = false;
-    }
-
     public DrawConnection Init(float width, float duration)
     {
+        _aLine = GetComponent<AnimatedLineRenderer>();
+        _hasStarted = false;
         _aLine.StartWidth = width;
         _aLine.EndWidth = width;
         _aLine.SecondsPerLine = duration;
-        Duration = duration;
         return this;
     }
 
