@@ -13,7 +13,7 @@ public class DrawAnimatedLine : MonoBehaviour {
         _line = GetComponent<LineRenderer>();
         new WaitForSeconds(2f);
         _aLine = GetComponent<AnimatedLineRenderer>();
-        _aLine.Enqueue(new Vector3(0,0,1));
+        _aLine.Enqueue(new Vector3(0,0,-25));
         _aLine.Enqueue(new Vector3(2,0,8));
 
     }

@@ -150,7 +150,7 @@ namespace NetworkVisualizer
                 case Events.OPEN_MENU:
                     OnShowMenu(state);
                     break;
-                case Events.CLOSE_MENU:
+                case Events.HIDE_MENU:
                     OnHideMenu(state);
                     break;
                 default:

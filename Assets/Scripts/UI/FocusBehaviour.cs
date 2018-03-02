@@ -8,7 +8,7 @@ namespace NetworkVisualizer
 {
     public class FocusBehaviour : Interaction
     {
-
+        /*
         public Color OnFocusColor;
         public Sprite OnFocusSprite;
 
@@ -17,13 +17,16 @@ namespace NetworkVisualizer
         private Sprite _oldSprite;
 
         private Selectable _selectable;
+        */
 
         public void Start()
         {
+            /*
             _image = GetComponent<Image>();
             _selectable = GetComponent<Selectable>();
             _color = _image.color;
             _oldSprite = _image.sprite;
+            */
         }
 
         public override void OnFocusEnter()
@@ -31,17 +34,17 @@ namespace NetworkVisualizer
             base.OnFocusEnter();
             //if (OnFocusColor != null)
             //    _image.color = OnFocusColor;
+            /*
             if(_selectable != null)
                 _selectable.Select();
 
             _image.sprite = OnFocusSprite;
+            */
         }
 
         public override void OnFocusExit()
         {
             base.OnFocusExit();
-            //_image.color = _color;
-            _image.sprite = _oldSprite;
             
         }
 

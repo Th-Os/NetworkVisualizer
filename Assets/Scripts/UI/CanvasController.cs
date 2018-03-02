@@ -36,7 +36,8 @@ namespace NetworkVisualizer {
             this.VisualizeUI = VisualizeUI;
             this.MenuUI = MenuUI;
 
-            EventHandler.OnTestStarted += OnVisualizeUI;
+            //not needed right now
+            //EventHandler.OnTestStarted += OnVisualizeUI;
             EventHandler.OnShowTest += OnTestUI;
             EventHandler.OnDefineProcessStarted += OnDefineUI;
             EventHandler.OnShowMenu += OnMenuUI;
