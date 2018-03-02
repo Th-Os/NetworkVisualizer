@@ -53,6 +53,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4962390561249920}
+  - component: {fileID: 135101374900960270}
+  - component: {fileID: 114095432970952592}
   m_Layer: 0
   m_Name: Device_new
   m_TagString: Untagged
@@ -94,7 +96,7 @@ Transform:
   m_GameObject: {fileID: 1998538260387188}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 4032682452515920}
   - {fileID: 4731064738522868}
@@ -183,3 +185,30 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1058574797850504}
   m_Mesh: {fileID: 4300000, guid: 42ea5ad012a758d47b06fa8cdadf5685, type: 3}
+--- !u!114 &114095432970952592
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1998538260387188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6137b26f26a71f94e9debc34d3d45a50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentFocus: {fileID: 0}
+  OnFocus: 0
+  DeviceHighlightMaterial: {fileID: 2100000, guid: f01ed46168496284f985650a1752bbca,
+    type: 2}
+--- !u!135 &135101374900960270
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1998538260387188}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}

@@ -56,7 +56,13 @@ namespace NetworkVisualizer
         private void AddConnection(Connection con)
         {
             Debug.Log("New Connection from " + con.Start.Name + " to " + con.Target.Name);
-            EventHandler.Broadcast(Events.DRAW_CONNECTION, GetDeviceByName(con.Start.Name), GetDeviceByName(con.Target.Name));
+            var source = GetDeviceByName(con.Start.Name);
+            var target = GetDeviceByName(con.Target.Name);
+            if(source == null || target == null)
+            {
+                Debug.Log("Didn t find the devices");
+            }
+            EventHandler.Broadcast(Events.DRAW_CONNECTION, source, target);
         }
 
         private void AddCall(Call call)

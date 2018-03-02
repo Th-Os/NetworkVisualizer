@@ -105,7 +105,7 @@ namespace NetworkVisualizer
         {
             if (DataStore.Instance.AddConnectedDevices(source,target))
             {
-                
+                Debug.Log("first step");
                 Transform connection = Instantiate(ConnectionLine, source);
                 connection.GetComponent<DeviceConnection>().Source = source;
                 connection.GetComponent<DeviceConnection>().Target = target;
@@ -121,7 +121,7 @@ namespace NetworkVisualizer
 
                 AddColliderToLine(connection, lr);
             }
-
+            Debug.Log("ran through first step of connection");
             Instantiate(Connection, source).GetComponent<DrawConnection>().Init(source.GetComponent<LineRenderer>().startWidth, m_Connection_Duration).Connect(source, target);
             //StartCoroutine(Connect(source, target));
         }
