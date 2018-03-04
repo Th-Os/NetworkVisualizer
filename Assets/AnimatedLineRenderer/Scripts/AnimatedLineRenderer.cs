@@ -92,6 +92,7 @@ namespace DigitalRuby.AnimatedLineRenderer
             float lerp = current.TotalSecondsInverse * current.ElapsedSeconds;
             EndPoint = Vector3.Lerp(prev.Position, current.Position, lerp);
             lineRenderer.SetPosition(index, EndPoint);
+            //lineRenderer.material.mainTextureScale = new Vector3(Vector3.Distance(lineRenderer.GetPosition(0), EndPoint), 1f, 1f);
         }
 
         private void Start()

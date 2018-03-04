@@ -127,6 +127,7 @@ namespace NetworkVisualizer
                 lr.transform.position = source.position;
                 lr.SetPosition(0, source.position);
                 lr.SetPosition(1, target.position);
+                lr.material.mainTextureScale = new Vector3(Vector3.Distance(source.position, target.position), 1f, 1f);
                 while (!lr.GetPosition(1).Equals(target.position))
                 {
                     lr.SetPosition(1, Vector3.MoveTowards(lr.GetPosition(1), target.position, m_Connection_Speed_Line * Time.deltaTime));
@@ -187,7 +188,7 @@ namespace NetworkVisualizer
             angle = Mathf.Rad2Deg * Mathf.Atan(angle);
             col.transform.Rotate(0, 0, angle);
             col.isTrigger = true;
-            col.transform.localScale = new Vector3(1f, 1f, 1f);
+            col.transform.localScale = new Vector3(0.5f, 0.5f, 0.8f);
             
         }
 

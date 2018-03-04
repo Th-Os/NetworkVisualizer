@@ -61,7 +61,7 @@ namespace NetworkVisualizer
         private void InitPanel(GameObject panel)
         {
             if(_type == PanelType.Device)
-                panel.GetComponent<RectTransform>().localPosition = new Vector3(0f, 4f, 0f);
+                panel.GetComponent<RectTransform>().localPosition = new Vector3(0f, 2f, 0f);
             else
                 panel.GetComponent<RectTransform>().localPosition = new Vector3(0f, 2f, 0f);
             panel.GetComponent<RectTransform>().localRotation.SetLookRotation(Camera.main.transform.position);
