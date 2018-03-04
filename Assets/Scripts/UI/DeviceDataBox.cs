@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace NetworkVisualizer
 {
@@ -12,6 +13,11 @@ namespace NetworkVisualizer
         override protected void Start()
         {
             base.Start();
+        }
+
+        public override void OnFocusEnter()
+        {
+            base.OnFocusEnter();
 
         }
 

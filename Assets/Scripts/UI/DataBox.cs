@@ -1,42 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using HoloToolkit.Unity.InputModule;
+using UnityEngine.UI;
 
 namespace NetworkVisualizer
 {
 
     public class DataBox : Interaction
     {
+        public Sprite HighlightSprite;
 
-        public Transform CancelPanel;
-
-        private Canvas _canvas;
-        private Transform _cancelPanel;
-
-        private bool isOnCancel;
+        private Sprite _standardSprite;
+        private Image _image;
 
         // Use this for initialization
         protected virtual void Start()
         {
-            _canvas = GetComponentInChildren<Canvas>();
+            _image = GetComponentInChildren<Image>();
+            _standardSprite = _image.sprite;
         }
 
         public override void OnFocusEnter()
         {
             base.OnFocusEnter();
             Debug.Log("DataBox: Enter " + gameObject.name);
+            _image.sprite = HighlightSprite;
         }
 
         public override void OnFocusExit()
         {
-            Debug.Log("DataBox: Exit " + gameObject.name);
             base.OnFocusExit();
-            if (isOnCancel)
-            {
-                isOnCancel = false;
-                Destroy(_cancelPanel);
-            }
+            Debug.Log("DataBox: Exit " + gameObject.name);            
+            _image.sprite = _standardSprite;
         }
 
         public override void OnClick()
