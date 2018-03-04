@@ -6,6 +6,8 @@ namespace NetworkVisualizer
     public class Visualizer : MonoBehaviour
     {
 
+        public Transform Connections;
+
         public Transform ConnectionLine;
         public Transform Connection;
         public Transform Call;
@@ -28,6 +30,18 @@ namespace NetworkVisualizer
             EventHandler.OnDrawCall += OnCall;
             EventHandler.OnHighlight += OnHighlight;
             EventHandler.OnHide += OnHide;
+            EventHandler.OnDestroyVisualization += OnDestroyConnections;
+        }
+
+        private void OnDestroyConnections()
+        {
+            foreach(Transform c in Connections)
+            {
+                if(c.name.Contains("(Clone)"))
+                {
+                    Destroy(c.gameObject);
+                }
+            }
         }
 
         private void OnHighlight(Transform obj)
@@ -103,10 +117,10 @@ namespace NetworkVisualizer
         //Establish Connection
         IEnumerator StartConnection(Transform source, Transform target)
         {
-            if (DataStore.Instance.AddConnectedDevices(source,target))
+            if (DataStore.Instance.AddConnectedDevices(source, target))
             {
                 Debug.Log("first step");
-                Transform connection = Instantiate(ConnectionLine, source);
+                Transform connection = Instantiate(ConnectionLine, Connections);
                 connection.GetComponent<DeviceConnection>().Source = source;
                 connection.GetComponent<DeviceConnection>().Target = target;
                 LineRenderer lr = connection.GetComponent<LineRenderer>();
@@ -122,7 +136,7 @@ namespace NetworkVisualizer
                 AddColliderToLine(connection, lr);
             }
             Debug.Log("ran through first step of connection");
-            Instantiate(Connection, source).GetComponent<DrawConnection>().Init(source.GetComponent<LineRenderer>().startWidth, m_Connection_Duration).Connect(source, target);
+            Instantiate(Connection, GetDeviceConnection(source,target).transform).GetComponent<DrawConnection>().Init(m_Connection_Duration).Connect(source, target);
             //StartCoroutine(Connect(source, target));
         }
 
@@ -175,6 +189,19 @@ namespace NetworkVisualizer
             col.isTrigger = true;
             col.transform.localScale = new Vector3(1f, 1f, 1f);
             
+        }
+
+        private DeviceConnection GetDeviceConnection(Transform source, Transform target)
+        {
+            foreach (Transform connectionLine in Connections)
+            {
+                DeviceConnection dc = connectionLine.GetComponent<DeviceConnection>();
+                if (dc != null)
+                    if (dc.Source.name.Equals(source.name) && dc.Target.name.Equals(target.name))
+                        return dc;
+
+            }
+            return null;
         }
 
     }

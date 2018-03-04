@@ -20,6 +20,7 @@ namespace NetworkVisualizer
             EventHandler.OnNewConnection += OnConnection;
             EventHandler.OnShowDeviceData += ShowDeviceData;
             EventHandler.OnShowConnectionData += ShowConnectionData;
+            EventHandler.OnDestroyVisualization += DestroyConnections;
         }
 
         public void OnConnection(NetworkObject connection)
@@ -81,6 +82,28 @@ namespace NetworkVisualizer
             Debug.Log("found no device with name: " + name);
 
             return Devices.transform.Find(name);
+        }
+
+        private void DestroyConnections()
+        {
+            foreach(Transform device in Devices.transform)
+            {
+               foreach(Transform part in device.transform)
+                {
+                    if(part.name.Contains("(Clone)"))
+                    {
+                        Destroy(part.gameObject);
+                    }
+                }
+            }
+
+            foreach (Transform panel in Panels.transform)
+            {
+                if (panel.name.Contains("(Clone)"))
+                    Destroy(panel.gameObject);
+            }
+
+            DataStore.Instance.RefreshConnectedDevices();
         }
     }
 }

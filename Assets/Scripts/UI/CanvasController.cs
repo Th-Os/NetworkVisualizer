@@ -37,7 +37,7 @@ namespace NetworkVisualizer {
             this.MenuUI = MenuUI;
 
             //not needed right now
-            //EventHandler.OnTestStarted += OnVisualizeUI;
+            EventHandler.OnTestStarted += OnVisualizeUI;
             EventHandler.OnShowTest += OnTestUI;
             EventHandler.OnDefineProcessStarted += OnDefineUI;
             EventHandler.OnShowMenu += OnMenuUI;
@@ -46,7 +46,7 @@ namespace NetworkVisualizer {
             _panelOffset = new Vector3(0f, 4f, 0f);
         }
 
-        private void OnMenuUI(States state)
+        private void OnMenuUI()
         {
             DestroyUI();
             //funktioniert besser mit lookrotation
@@ -79,7 +79,7 @@ namespace NetworkVisualizer {
             Debug.Log("Start TestUI");
             EventHandler.OnDeviceDefined -= OnDeviceFound;
 
-            _currentUI = GameObject.Instantiate(TestUI, Camera.main.transform.forward, Camera.main.transform.rotation, Parent.transform);
+            _currentUI = GameObject.Instantiate(TestUI, Camera.main.transform.forward, Quaternion.LookRotation(Camera.main.transform.forward, Camera.main.transform.up), Parent.transform);
 
             _currentUI.SetActive(true);
             _currentUI.GetComponent<Canvas>().worldCamera = Camera.main;

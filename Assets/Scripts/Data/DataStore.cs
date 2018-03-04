@@ -53,9 +53,9 @@ namespace NetworkVisualizer
             return false;
         }
 
-        public DeviceConnection GetDeviceConnection(Transform one, Transform two)
+        public DeviceConnection GetDeviceConnection(Transform source, Transform target)
         {
-            Transform[] transforms = GetConnectedDevices(one, two);
+            Transform[] transforms = GetConnectedDevices(source, target);
             DeviceConnection dc = null;
             if (transforms != null)
             {
@@ -71,19 +71,21 @@ namespace NetworkVisualizer
             return dc;
         }
 
-        public Transform[] GetConnectedDevices(Transform one, Transform two)
+        public Transform[] GetConnectedDevices(Transform source, Transform target)
         {
             foreach(Transform[] array in _connectedDevices.Values)
             {
-                if(array[0].name == one.name || array[0].name == two.name)
+                if(array[0].name == source.name && array[1].name == target.name)
                 {
-                    if(array[1].name == one.name || array[1].name == two.name)
-                    {
-                        return array;
-                    }
+                    return array;
                 }
             }
             return null;
+        }
+
+        public void RefreshConnectedDevices()
+        {
+            _connectedDevices.Clear();
         }
     }
 }

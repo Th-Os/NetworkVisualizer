@@ -9,6 +9,7 @@ TagManager:
   - Call
   - Test
   - Menu
+  - Panel
   layers:
   - Default
   - TransparentFX

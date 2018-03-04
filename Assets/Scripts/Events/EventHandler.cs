@@ -57,9 +57,12 @@ namespace NetworkVisualizer
         public static event HighlightUIHandler OnHighlight;
         public static event HighlightUIHandler OnHide;
 
-        public delegate void MenuHandler(States state);
+        public delegate void MenuHandler();
         public static event MenuHandler OnShowMenu;
         public static event MenuHandler OnHideMenu;
+
+        public delegate void DestroyHandler();
+        public static event DestroyHandler OnDestroyVisualization;
 
         public static void Broadcast<T, E>(Events evnt, T value1, E value2)
         {
@@ -142,23 +145,6 @@ namespace NetworkVisualizer
             }
         }
 
-        public static void Broadcast(Events evnt, States state)
-        {
-            Debug.Log("False Broadcast for int = state");
-            switch (evnt)
-            {
-                case Events.OPEN_MENU:
-                    OnShowMenu(state);
-                    break;
-                case Events.HIDE_MENU:
-                    OnHideMenu(state);
-                    break;
-                default:
-                    Debug.Log("NO valid event broadcast for " + evnt.ToString());
-                    break;
-            }
-        }
-
         public static void Broadcast(Events evnt, Vector3 position)
         {
             switch (evnt)
@@ -181,6 +167,15 @@ namespace NetworkVisualizer
                     break;
                 case Events.END_DEFINE:
                     OnDefineProcessEnded();
+                    break;
+                case Events.OPEN_MENU:
+                    OnShowMenu();
+                    break;
+                case Events.HIDE_MENU:
+                    OnHideMenu();
+                    break;
+                case Events.DESTROY_VISUALIZATION:
+                    OnDestroyVisualization();
                     break;
                 default:
                     Debug.Log("NO valid event broadcast for " + evnt.ToString());

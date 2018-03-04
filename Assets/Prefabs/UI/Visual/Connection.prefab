@@ -61,6 +61,7 @@ MonoBehaviour:
   EndWidth: 2
   SortLayerName: Default
   OrderInSortLayer: 1
+  FadeAfterPositionChanges: 5
 --- !u!114 &114983394082636108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -72,7 +73,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08a6cf80ff38e9d4ea4f04de8146f170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Duration: 2
 --- !u!120 &120330336545349474
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -112,7 +112,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 2
-    widthMultiplier: 1
+    widthMultiplier: 0.05
     widthCurve:
       serializedVersion: 2
       m_Curve:
