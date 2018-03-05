@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 223402292352002170}
   - component: {fileID: 114718478494705064}
   - component: {fileID: 114118008141797408}
+  - component: {fileID: 114568947822229280}
   m_Layer: 5
   m_Name: MenuUI_new
   m_TagString: Untagged
@@ -128,8 +129,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentFocus: {fileID: 0}
   OnFocus: 0
-  OnFocusColor: {r: 1, g: 1, b: 1, a: 1}
-  OnFocusSprite: {fileID: 21300000, guid: 0ac0865a6f4e5404191e2d4d65b6a2d7, type: 3}
 --- !u!114 &114456348109367326
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -167,6 +166,23 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 114713463811659104}
+--- !u!114 &114568947822229280
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1868031289725742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 456eda422e1dc4c4cb4fd6c25cbc2fbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SphereRadius: 1
+  MoveSpeed: 2
+  useUnscaledTime: 1
+  hideOnStart: 0
+  debugDisplaySphere: 1
+  debugDisplayTargetPosition: 1
 --- !u!114 &114580876259614148
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -255,8 +271,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentFocus: {fileID: 0}
   OnFocus: 0
-  OnFocusColor: {r: 1, g: 1, b: 1, a: 0.991}
-  OnFocusSprite: {fileID: 21300000, guid: b60651da937ba4847b121e1f143cd650, type: 3}
 --- !u!114 &114871664894503204
 MonoBehaviour:
   m_ObjectHideFlags: 1

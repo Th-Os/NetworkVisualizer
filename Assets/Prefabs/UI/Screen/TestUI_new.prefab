@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 114342465971118422}
   - component: {fileID: 114711310399167632}
   - component: {fileID: 225937418914936358}
+  - component: {fileID: 114376008807616876}
   m_Layer: 0
   m_Name: TestUI_new
   m_TagString: Untagged
@@ -254,8 +255,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentFocus: {fileID: 0}
   OnFocus: 0
-  OnFocusColor: {r: 0.5724137, g: 1, b: 0, a: 1}
-  OnFocusSprite: {fileID: 0}
 --- !u!114 &114288552632677442
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -269,8 +268,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentFocus: {fileID: 0}
   OnFocus: 0
-  OnFocusColor: {r: 0, g: 0.6689658, b: 1, a: 1}
-  OnFocusSprite: {fileID: 0}
 --- !u!114 &114342465971118422
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -292,6 +289,23 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 10
+--- !u!114 &114376008807616876
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1167396991532686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 456eda422e1dc4c4cb4fd6c25cbc2fbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SphereRadius: 1
+  MoveSpeed: 2
+  useUnscaledTime: 1
+  hideOnStart: 0
+  debugDisplaySphere: 1
+  debugDisplayTargetPosition: 1
 --- !u!114 &114414420329702146
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -359,8 +373,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentFocus: {fileID: 0}
   OnFocus: 0
-  OnFocusColor: {r: 1, g: 0.14705884, b: 0.14705884, a: 1}
-  OnFocusSprite: {fileID: 0}
 --- !u!114 &114711310399167632
 MonoBehaviour:
   m_ObjectHideFlags: 1
