@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using NetworkVisualizer.Objects;
 using NetworkVisualizer.Enums;
+using System;
 
 namespace NetworkVisualizer
 {
@@ -43,7 +44,7 @@ namespace NetworkVisualizer
         {
             Panels.GetComponent<PanelManager>().ShowPanel(obj, obj.transform.position, PanelType.Device, device);
             if(device != null)
-                Debug.Log("Display data " + device.Content.Value + " of device: " + device.Name + " with ip: " + device.Ip + " and position: " + device.Position);
+                Debug.Log("Display data " + device.Content + " of device: " + device.Name + " with ip: " + device.Ip + " and position: " + device.Position);
         }
 
         public void ShowConnectionData(DeviceConnection dc, Connection conn)
@@ -74,14 +75,29 @@ namespace NetworkVisualizer
 
         private Transform GetDeviceByName(string name)
         {
-            Transform device = Devices.transform.Find(name);
-            if (device != null)
+            try
             {
-                return device;
+                Transform device = Devices.transform.Find(name);
+                if (device != null)
+                {
+                    return device;
+                }
+                Debug.Log("found no device with name: " + name);
+            }catch(Exception exception)
+            {
+                Debug.Log(exception.StackTrace);
+                Debug.Log(exception.Message);
+                Debug.Log("Tye another approach.");
+                foreach(Transform t in Devices.transform)
+                {
+                    if (t.name.Equals(name, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return t;
+                    }
+                }
             }
-            Debug.Log("found no device with name: " + name);
-
-            return Devices.transform.Find(name);
+            Debug.Log("Still didnt find any device transform");
+            return null;
         }
 
         private void DestroyConnections()

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine.UI;
+using Newtonsoft.Json;
 
 namespace NetworkVisualizer.Objects
 {
@@ -7,14 +8,17 @@ namespace NetworkVisualizer.Objects
     [Serializable]
     public class Connection : NetworkObject
     {
+        public int Id { get; set; }
         public Device Start { get; }
         public Device Target { get; }
         public string Type { get; }
         public string Time { get; }
         public string Body { get; }
 
-        public Connection(Device start, Device target, string type, string time, string body)
+        [JsonConstructor]
+        public Connection(int id, Device start, Device target, string type, string time, string body)
         {
+            this.Id = id;
             this.Start = start;
             this.Target = target;
             this.Type = type;

@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Newtonsoft.Json;
 
 namespace NetworkVisualizer.Objects
 {
@@ -8,10 +9,21 @@ namespace NetworkVisualizer.Objects
     [Serializable]
     public class Device : NetworkObject
     {
+        public int Id { get; set; }
         public string Name { get; set;  }
         public string Ip { get; set; }
         public Position Position { get; set; }
-        public Content Content { get; set; }
+        public string Content { get; set; }
+
+        [JsonConstructor]
+        public Device(int id, string name, string ip, Position position, string content)
+        {
+            Id = id;
+            Name = name;
+            Ip = ip;
+            Position = position;
+            Content = content;
+        }
 
         public Device(string name, Position position)
         {
@@ -27,7 +39,7 @@ namespace NetworkVisualizer.Objects
 
         }
 
-        public Device(string name, String ip, Position position, Content content)
+        public Device(string name, String ip, Position position, string content)
         {
             this.Name = name;
             this.Ip = ip;
@@ -49,7 +61,7 @@ namespace NetworkVisualizer.Objects
                         text.text += Ip;
                         break;
                     case "content":
-                        text.text += Content.ToText();
+                        text.text += Content;
                         break;
                     default:
                         break;

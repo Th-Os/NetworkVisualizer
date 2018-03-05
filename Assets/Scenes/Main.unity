@@ -269,7 +269,7 @@ MonoBehaviour:
   VisualizeUI: {fileID: 1879777586024918, guid: 6c9f53532025391418d2a67ae0f3779f,
     type: 2}
   MenuUI: {fileID: 1868031289725742, guid: 5fe49e9dc260a0a49bbc5d49f0bb6ce4, type: 2}
-  m_MQTT: 0
+  m_MQTT: 2
 --- !u!114 &619351497
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ public class PanelControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         Debug.Log("Start");
-        Device device = new Device("hello", "1.1.1.1", new Position(new Vector3(1f, 2f, 3f)), new Content("content"));
+        Device device = new Device("hello", "1.1.1.1", new Position(new Vector3(1f, 2f, 3f)), "content");
         Debug.Log(device.ToString());
         Text[] texts = GetComponentsInChildren<Text>();
         Debug.Log(texts.Length);

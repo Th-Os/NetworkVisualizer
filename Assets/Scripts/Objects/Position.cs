@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Newtonsoft.Json;
 
 namespace NetworkVisualizer.Objects
 {
@@ -7,12 +8,15 @@ namespace NetworkVisualizer.Objects
     [Serializable]
     public class Position
     {
+        public int Id {get; set;}
         public float x { get; }
         public float y { get; }
         public float z { get; }
 
-        public Position(float x, float y, float z)
+        [JsonConstructor]
+        public Position(int id, float x, float y, float z)
         {
+            this.Id = id;
             this.x = x;
             this.y = y;
             this.z = z;

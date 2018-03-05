@@ -5,6 +5,7 @@ using System.Text;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 using NetworkVisualizer.Enums;
 using NetworkVisualizer.Objects;
@@ -82,26 +83,36 @@ namespace NetworkVisualizer {
         }
 
         private static void OnMessageReceived(object sender, MqttMsgPublishEventArgs e)
-        {
-            string topic = e.Topic.ToString();
-            string msg = Encoding.UTF8.GetString(e.Message);
-
-            if (String.Equals(topic, CONNECTION, StringComparison.OrdinalIgnoreCase))
-            {
-                EventHandler.Broadcast(Events.NEW_CONNECTION, JsonConvert.DeserializeObject<Connection>(msg));
-            }
-            if (String.Equals(topic, CALL, StringComparison.OrdinalIgnoreCase))
-            {
-                EventHandler.Broadcast(Events.NEW_CONNECTION, JsonConvert.DeserializeObject<Call>(msg));
-            }
-            if (String.Equals(topic, INCOMING_DATA, StringComparison.OrdinalIgnoreCase))
-            {
-                EventHandler.Broadcast(Events.DATA_ARRIVED, JsonConvert.DeserializeObject<Data>(msg));
-            }
-
-            Debug.Log("Got message: " + topic + ": " + msg);
-
+        {     
+            ProcessMessage(e.Topic.ToString(), Encoding.UTF8.GetString(e.Message));
         }
 
+        private static void ProcessMessage(string topic, string msg)
+        {
+            string jsonString = msg.Substring(msg.IndexOf("{"), (msg.LastIndexOf("}") - msg.IndexOf("{")) + 1);
+            Debug.Log("Got message: " + topic + ": " + jsonString);
+            try
+            {
+                if (String.Equals(topic, CONNECTION, StringComparison.OrdinalIgnoreCase))
+                {
+                    Debug.Log("Found connection");
+                    EventHandler.Broadcast(Events.NEW_CONNECTION, JsonConvert.DeserializeObject<Connection>(jsonString));
+                    Debug.Log("Fired connection");
+                }
+                if (String.Equals(topic, CALL, StringComparison.OrdinalIgnoreCase))
+                {
+                    EventHandler.Broadcast(Events.NEW_CONNECTION, JsonConvert.DeserializeObject<Call>(jsonString));
+                }
+                if (String.Equals(topic, INCOMING_DATA, StringComparison.OrdinalIgnoreCase))
+                {
+                    EventHandler.Broadcast(Events.DATA_ARRIVED, JsonConvert.DeserializeObject<Data>(jsonString));
+                }
+            }
+            catch (Exception exception)
+            {
+                Debug.Log(exception.StackTrace);
+                Debug.Log(exception.Message);
+            }
+        }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using NetworkVisualizer.Enums;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Bson;
+using NetworkVisualizer.Objects;
 
 namespace NetworkVisualizer
 {
@@ -26,8 +29,9 @@ namespace NetworkVisualizer
         // Use this for initialization
         void Start()
         {
+            
             string server = "";
-            switch(m_MQTT)
+            switch (m_MQTT)
             {
                 case MQTT.TEST:
                     server = "littleone";
@@ -38,7 +42,7 @@ namespace NetworkVisualizer
                 case MQTT.OFF:
                     break;
             }
-            if(!server.Equals(""))
+            if (!server.Equals(""))
                 MqttController.Init(server);
 
             CanvasController.Instance.Init(ParentUI, TestUI, DefineUI, VisualizeUI, MenuUI);
@@ -48,7 +52,8 @@ namespace NetworkVisualizer
             EventHandler.OnTestEnded += OnTestEnded;
             StartCoroutine(InitApp());
             //StartCoroutine(StopTest());
-        }
+            
+    }
 
         IEnumerator InitApp()
         {
