@@ -58,46 +58,53 @@ namespace NetworkVisualizer
         private void AddConnection(Connection con)
         {
             Debug.Log("New Connection from " + con.Start.Name + " to " + con.Target.Name);
-            var source = GetDeviceByName(con.Start.Name);
-            var target = GetDeviceByName(con.Target.Name);
-            if(source == null || target == null)
-            {
-                Debug.Log("Didn t find the devices");
-            }
-            EventHandler.Broadcast(Events.DRAW_CONNECTION, source, target);
+
+            StartCoroutine(GetDeviceByName(con.Start.Name, con.Target.Name, (values) => {
+                if (values != null) {
+                    EventHandler.Broadcast(Events.DRAW_CONNECTION, values[0], values[1]);
+                }
+            }));            
         }
 
         private void AddCall(Call call)
         {
             Debug.Log("New Call from " + call.start.Name);
-            EventHandler.Broadcast(Events.DRAW_CALL, GetDeviceByName(call.start.Name));
+            StartCoroutine(GetDeviceByName(call.start.Name, "", (values) => {
+                if (values != null)
+                {
+                    EventHandler.Broadcast(Events.DRAW_CONNECTION, values[0]);
+                }
+            }));
         }
 
-        private Transform GetDeviceByName(string name)
+        private IEnumerator GetDeviceByName(string sourceName, string targetName, Action<Transform[]> callback)
         {
+            Transform source = null;
+            Transform target = null;
             try
             {
-                Transform device = Devices.transform.Find(name);
-                if (device != null)
-                {
-                    return device;
-                }
-                Debug.Log("found no device with name: " + name);
+                source = Devices.transform.Find(sourceName);
+                if(targetName.Length > 0)
+                    target = Devices.transform.Find(targetName);
             }catch(Exception exception)
             {
                 Debug.Log(exception.StackTrace);
                 Debug.Log(exception.Message);
-                Debug.Log("Tye another approach.");
+                Debug.Log("Try another approach.");
                 foreach(Transform t in Devices.transform)
                 {
-                    if (t.name.Equals(name, StringComparison.OrdinalIgnoreCase))
+                    if (t.name.Equals(sourceName, StringComparison.OrdinalIgnoreCase))
                     {
-                        return t;
+                        source = t;
+                    }
+                    if (targetName.Length > 0 && t.name.Equals(targetName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        target = t;
                     }
                 }
             }
-            Debug.Log("Still didnt find any device transform");
-            return null;
+            yield return null;
+            callback(new Transform[] { source, target });
         }
 
         private void DestroyConnections()
