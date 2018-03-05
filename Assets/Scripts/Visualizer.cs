@@ -136,9 +136,10 @@ namespace NetworkVisualizer
 
                 AddColliderToLine(connection, lr);
             }
-            Transform parent = GetDeviceConnection(source, target).transform;
+            DeviceConnection dc = GetDeviceConnection(source, target);
+            Transform parent = dc.transform;
             Transform connectionObject = Instantiate(Connection, parent);
-            connectionObject.gameObject.GetComponent<DrawConnection>().Init(m_Connection_Duration).Connect(source, target);
+            connectionObject.gameObject.GetComponent<DrawConnection>().Init(m_Connection_Duration).Connect(source, target, dc);
         }
 
         //Fires one connection

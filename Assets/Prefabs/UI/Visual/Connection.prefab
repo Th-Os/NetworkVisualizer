@@ -73,6 +73,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08a6cf80ff38e9d4ea4f04de8146f170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ConnectionUp: {fileID: 2100000, guid: d4269c6262fa2724cbea378ec1ac6707, type: 2}
+  ConnectionDown: {fileID: 2100000, guid: 2fa77371f295b19439582af275684177, type: 2}
 --- !u!120 &120330336545349474
 LineRenderer:
   m_ObjectHideFlags: 1

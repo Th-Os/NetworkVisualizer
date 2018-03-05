@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DigitalRuby.AnimatedLineRenderer;
+using NetworkVisualizer;
 
 public class DrawConnection : MonoBehaviour {
+
+    public Material ConnectionUp;
+    public Material ConnectionDown;
 
     private AnimatedLineRenderer _aLine;
     private bool _hasStarted;
@@ -22,23 +26,33 @@ public class DrawConnection : MonoBehaviour {
         return this;
     }
 
-    public void Connect(Transform source, Transform target)
+    public void Connect(Transform source, Transform target, DeviceConnection dc)
     {
         Debug.Log(source + " to " + target);
         _source = source;
         _target = target;
+        SetMaterial(dc);
         _aLine.Enqueue(source.position);
         _aLine.Enqueue(target.position);
         _hasStarted = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (_hasStarted && _aLine.LineRenderer.positionCount == 2 && _aLine.LineRenderer.GetPosition(1) == _target.position)
         {
             _aLine.Reset();
-            //Destroy(gameObject);
+            Debug.Log("DOING A DESTROY NOW ON DRAWCONNECTION");
+            Destroy(gameObject);
         }
+    }
+
+    private void SetMaterial(DeviceConnection dc)
+    {
+        if (_source.name.Equals(dc.Source.name))
+            _aLine.LineRenderer.material = ConnectionUp;
+        else
+            _aLine.LineRenderer.material = ConnectionDown;
+
     }
 }
