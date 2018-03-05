@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace NetworkVisualizer
@@ -119,7 +120,6 @@ namespace NetworkVisualizer
         {
             if (DataStore.Instance.AddConnectedDevices(source, target))
             {
-                Debug.Log("first step");
                 Transform connection = Instantiate(ConnectionLine, Connections);
                 connection.GetComponent<DeviceConnection>().Source = source;
                 connection.GetComponent<DeviceConnection>().Target = target;
@@ -136,9 +136,9 @@ namespace NetworkVisualizer
 
                 AddColliderToLine(connection, lr);
             }
-            Debug.Log("ran through first step of connection");
-            Instantiate(Connection, GetDeviceConnection(source,target).transform).GetComponent<DrawConnection>().Init(m_Connection_Duration).Connect(source, target);
-            //StartCoroutine(Connect(source, target));
+            Transform parent = GetDeviceConnection(source, target).transform;
+            Transform connectionObject = Instantiate(Connection, parent);
+            connectionObject.gameObject.GetComponent<DrawConnection>().Init(m_Connection_Duration).Connect(source, target);
         }
 
         //Fires one connection
@@ -198,8 +198,11 @@ namespace NetworkVisualizer
             {
                 DeviceConnection dc = connectionLine.GetComponent<DeviceConnection>();
                 if (dc != null)
-                    if (dc.Source.name.Equals(source.name) && dc.Target.name.Equals(target.name))
+                    if (dc.Source.name.Equals(source.name, StringComparison.OrdinalIgnoreCase) && dc.Target.name.Equals(target.name, StringComparison.OrdinalIgnoreCase))
                         return dc;
+                    else
+                        if (dc.Source.name.Equals(target.name, StringComparison.OrdinalIgnoreCase) && dc.Target.name.Equals(source.name, StringComparison.OrdinalIgnoreCase))
+                            return dc;
 
             }
             return null;

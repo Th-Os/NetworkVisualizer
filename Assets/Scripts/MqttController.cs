@@ -77,8 +77,8 @@ namespace NetworkVisualizer {
 
         static void SendDataRequest(DataRequest request)
         {
-            Send(PUB_TOPIC + "/data", JsonConvert.SerializeObject(request));
             Debug.Log("Get Data for " + request.Type + " : " + request.Id + " in this manner: multiple: " + request.Multiple + ", timebased: " + request.Timebased + ", specific: " + request.Specific);
+            Send(PUB_TOPIC + "/data", JsonConvert.SerializeObject(request));
 
         }
 
@@ -95,9 +95,7 @@ namespace NetworkVisualizer {
             {
                 if (String.Equals(topic, CONNECTION, StringComparison.OrdinalIgnoreCase))
                 {
-                    Debug.Log("Found connection");
                     EventHandler.Broadcast(Events.NEW_CONNECTION, JsonConvert.DeserializeObject<Connection>(jsonString));
-                    Debug.Log("Fired connection");
                 }
                 if (String.Equals(topic, CALL, StringComparison.OrdinalIgnoreCase))
                 {

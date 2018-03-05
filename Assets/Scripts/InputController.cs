@@ -85,7 +85,7 @@ namespace NetworkVisualizer
         {
             if (_focusedObject != null)
             {
-                Debug.Log(_focusedObject.tag + ": " + _focusedObject.name);
+                Debug.Log("Clicked: " + _focusedObject.tag + ": " + _focusedObject.name);
                 switch (_focusedObject.tag)
                 {
                     case "Test":
@@ -110,7 +110,7 @@ namespace NetworkVisualizer
                         {
                             DeviceConnection dc = _focusedObject.GetComponent<DeviceConnection>();
                             //DEBUG SETTING
-                            GetComponent<VisualizationManager>().ShowConnectionData(dc, null);
+                            //GetComponent<VisualizationManager>().ShowConnectionData(dc, null);
 
                             EventHandler.Broadcast(Events.REQUEST_LOCAL_DATA, dc.Source, dc.Target);
                         }
@@ -118,8 +118,8 @@ namespace NetworkVisualizer
                     case "Device":
                         if (CurrentState == States.VISUALIZE)
                         {
-                            GetComponent<VisualizationManager>().ShowDeviceData(_focusedObject, null);
-                            EventHandler.Broadcast(Events.REQUEST_LOCAL_DATA, _focusedObject);
+                            //GetComponent<VisualizationManager>().ShowDeviceData(_focusedObject, null);
+                            EventHandler.Broadcast(Events.REQUEST_LOCAL_DATA, _focusedObject.transform);
                         }
                         break;
                     case "Panel":

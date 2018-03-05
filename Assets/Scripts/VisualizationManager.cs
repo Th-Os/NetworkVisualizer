@@ -26,8 +26,6 @@ namespace NetworkVisualizer
 
         public void OnConnection(NetworkObject connection)
         {
-            Debug.Log("New Connection: " + connection.GetType());
-
             if (connection is Connection)
             {
                 AddConnection(connection as Connection);
@@ -57,24 +55,25 @@ namespace NetworkVisualizer
 
         private void AddConnection(Connection con)
         {
-            Debug.Log("New Connection from " + con.Start.Name + " to " + con.Target.Name);
-
-            StartCoroutine(GetDeviceByName(con.Start.Name, con.Target.Name, (values) => {
-                if (values != null) {
+            UnityMainThreadDispatcher.Instance().Enqueue(
+                GetDeviceByName(con.Start.Name, con.Target.Name, (values) => {
+                if (values != null)
+                {
                     EventHandler.Broadcast(Events.DRAW_CONNECTION, values[0], values[1]);
                 }
-            }));            
+            }));
         }
 
         private void AddCall(Call call)
         {
-            Debug.Log("New Call from " + call.start.Name);
-            StartCoroutine(GetDeviceByName(call.start.Name, "", (values) => {
-                if (values != null)
-                {
-                    EventHandler.Broadcast(Events.DRAW_CONNECTION, values[0]);
-                }
-            }));
+            Debug.Log("New Call from " + call.Start.Name);
+            UnityMainThreadDispatcher.Instance().Enqueue(
+                GetDeviceByName(call.Start.Name, "", (values) => {
+                    if (values != null)
+                    {
+                        EventHandler.Broadcast(Events.DRAW_CONNECTION, values[0]);
+                    }
+                }));
         }
 
         private IEnumerator GetDeviceByName(string sourceName, string targetName, Action<Transform[]> callback)

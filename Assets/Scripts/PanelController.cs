@@ -20,11 +20,13 @@ namespace NetworkVisualizer
         private DeviceConnection _deviceConnection;
         private GameObject _device;
         private PanelType _type;
+        private NetworkObject _networkObject;
 
         public void Init(PanelType type, NetworkObject obj)
         { 
             _type = type;
             _panelParent = gameObject;
+            _networkObject = obj;
             //http://wiki.unity3d.com/index.php?title=CameraFacingBillboard
             _panelParent.transform.LookAt(_panelParent.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
             GameObject panel = null;
@@ -66,6 +68,8 @@ namespace NetworkVisualizer
                 panel.GetComponent<RectTransform>().localPosition = new Vector3(0f, 2f, 0f);
             panel.GetComponent<RectTransform>().localRotation.SetLookRotation(Camera.main.transform.position);
             panel.GetComponentInChildren<Canvas>().worldCamera = Camera.main;
+
+            FillPanel(panel, _networkObject);
         }
 
         private void FillPanel(GameObject panel, NetworkObject obj)

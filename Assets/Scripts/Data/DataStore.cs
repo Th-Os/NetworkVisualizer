@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Helpers;
 using NetworkVisualizer.Objects;
+using System;
 
 namespace NetworkVisualizer
 {
@@ -31,6 +32,7 @@ namespace NetworkVisualizer
             return device;
         }
 
+        /*
         public Transform GetTransform(Device device)
         {
             foreach(Transform transform in _deviceMap.Keys)
@@ -41,6 +43,25 @@ namespace NetworkVisualizer
                 }
             }
             return null;
+        }
+         */
+        public IEnumerator GetTransform(string source, string target, Action<Transform, Transform> callback)
+        {
+            Transform tSource = null;
+            Transform tTarget = null;
+            foreach (Transform t in _deviceMap.Keys)
+            {
+                if (t.name.Equals(source, StringComparison.OrdinalIgnoreCase))
+                {
+                    tSource = t;
+                }
+                if(t.name.Equals(target, StringComparison.OrdinalIgnoreCase))
+                {
+                    tTarget = t;
+                }
+            }
+            yield return null;
+            callback(tSource, tTarget);
         }
 
         public bool AddConnectedDevices(Transform source, Transform target)
@@ -75,9 +96,10 @@ namespace NetworkVisualizer
         {
             foreach(Transform[] array in _connectedDevices.Values)
             {
-                if(array[0].name == source.name && array[1].name == target.name)
-                {
-                    return array;
+                if(array[0].name == source.name || array[0].name == target.name)
+                {   
+                    if(array[1].name == source.name || array[1].name == target.name)
+                        return array;
                 }
             }
             return null;

@@ -10,6 +10,7 @@ TagManager:
   - Test
   - Menu
   - Panel
+  - ConnectionContainer
   layers:
   - Default
   - TransparentFX

@@ -8,14 +8,14 @@ namespace NetworkVisualizer.Objects
     public class Call : NetworkObject
     {
         public int Id { get; set; }
-        public Device start { get; }
+        public Device Start { get; }
         public string type { get; }
         public string time { get; }
 
         public Call(int id, Device start, string type, string time)
         {
             this.Id = id;
-            this.start = start;
+            this.Start = start;
             this.type = type;
             this.time = time;
         }

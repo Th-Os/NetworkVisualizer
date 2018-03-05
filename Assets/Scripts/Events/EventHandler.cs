@@ -105,6 +105,9 @@ namespace NetworkVisualizer
                 case Events.REQUEST_LOCAL_DATA:
                     OnLocalDataRequested(value as Transform);
                     break;
+                case Events.REQUEST_DATA:
+                    OnDataRequested(value as DataRequest);
+                    break;
                 case Events.HIGHLIGHT_OJECT:
                     OnHighlight(value as Transform);
                     break;

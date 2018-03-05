@@ -47,9 +47,6 @@ public class ObjectsDefiner : MonoBehaviour {
         _recognizer.Tapped += OnTap;
         _recognizer.GestureError += OnError;
         _recognizer.StartCapturingGestures();
-
-        InteractionManager.InteractionSourcePressed += InteractionManager_SourcePressed;
-
         _disabled = false;
 
         Debug.Log("Definer started");
@@ -71,11 +68,6 @@ public class ObjectsDefiner : MonoBehaviour {
         _recognizer.Dispose();
     }
 
-    private void InteractionManager_SourcePressed(InteractionSourcePressedEventArgs args)
-    {
-        Debug.Log("PressType: " + args.pressType);
-    }
-
     private void OnDestroy()
     {
         if (_currentObj != null)
@@ -93,14 +85,15 @@ public class ObjectsDefiner : MonoBehaviour {
     private void OnDisable()
     {
         _disabled = true;
-        if(_currentObj != null)
-        {
-            Destroy(_currentObj.gameObject);
-        }
         if (_recognizer != null)
         {
             _recognizer.Tapped -= OnTap;
             _recognizer.StopCapturingGestures();
         }
+        if (_currentObj != null)
+        {
+            Destroy(_currentObj.gameObject);
+        }
+
     }
 }

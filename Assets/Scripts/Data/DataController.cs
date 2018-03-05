@@ -40,36 +40,63 @@ namespace NetworkVisualizer
                 if (data.Type.Equals("device"))
                 {
                     Device device = data.Device;
-
-                    EventHandler.Broadcast(Events.SHOW_DEVICE_DATA, DataStore.Instance.GetTransform(device).gameObject, device);
-                    
+                    UnityMainThreadDispatcher.Instance().Enqueue(
+                    DataStore.Instance.GetTransform(device.Name, "", (source, target) => {
+                        if (source != null)
+                        {
+                            EventHandler.Broadcast(Events.SHOW_DEVICE_DATA, source.gameObject, device);
+                        }
+                    }));
                 }
                 if(data.Type.Equals("connection"))
                 {
                     Connection conn = data.Connection;
-                    Transform source = DataStore.Instance.GetTransform(conn.Start);
-                    Transform target = DataStore.Instance.GetTransform(conn.Target);
-
-                    DeviceConnection dc = LookUpDeviceConnection(source, target);
-                    if (dc == null)
-                        dc = LookUpDeviceConnection(target, source);
-
-                    EventHandler.Broadcast(Events.SHOW_CONNECTION_DATA, dc, conn);
+                    UnityMainThreadDispatcher.Instance().Enqueue(
+                    DataStore.Instance.GetTransform(conn.Start.Name, conn.Target.Name, (source, target) => {
+                        if (source != null && target != null)
+                        {
+                            UnityMainThreadDispatcher.Instance().Enqueue(
+                            LookUpDeviceConnection(source, target, (deviceConnection) => {
+                                if (deviceConnection != null)
+                                {
+                                    EventHandler.Broadcast(Events.SHOW_CONNECTION_DATA, deviceConnection, conn);
+                                }
+                            }));
+                        }
+                    }));
                 }
 
             }
         }
 
-        DeviceConnection LookUpDeviceConnection(Transform one, Transform two)
+        DeviceConnection LookUpDeviceConnection(Transform source, Transform target)
         {
-            foreach (DeviceConnection dc in one.GetComponentsInChildren<DeviceConnection>())
+            GameObject connectionContainer = GameObject.FindGameObjectWithTag("ConnectionContainer");
+            foreach (DeviceConnection dc in connectionContainer.GetComponentsInChildren<DeviceConnection>())
             {
-                if (dc.Target.name.Equals(two.name))
+                if ((dc.Source.name.Equals(source.name, StringComparison.OrdinalIgnoreCase) && dc.Target.name.Equals(target.name, StringComparison.OrdinalIgnoreCase)) || (dc.Source.name.Equals(target.name, StringComparison.OrdinalIgnoreCase) && dc.Target.name.Equals(source.name, StringComparison.OrdinalIgnoreCase)))
                 {
                     return dc;
                 }
+
             }
             return null;
+        }
+
+        private IEnumerator LookUpDeviceConnection(Transform source, Transform target, Action<DeviceConnection> callback)
+        {
+            GameObject connectionContainer = GameObject.FindGameObjectWithTag("ConnectionContainer");
+            DeviceConnection deviceConnection = null;
+            foreach (DeviceConnection dc in connectionContainer.GetComponentsInChildren<DeviceConnection>())
+            {
+                if ((dc.Source.name.Equals(source.name, StringComparison.OrdinalIgnoreCase) && dc.Target.name.Equals(target.name, StringComparison.OrdinalIgnoreCase)) || (dc.Source.name.Equals(target.name, StringComparison.OrdinalIgnoreCase) && dc.Target.name.Equals(source.name, StringComparison.OrdinalIgnoreCase)))
+                {
+                    deviceConnection = dc; 
+                }
+
+            }
+            yield return null;
+            callback(deviceConnection);
         }
 
 
@@ -99,8 +126,8 @@ namespace NetworkVisualizer
             if(target == null)
             {
                 type = "device";
+                Debug.Log(" datarequest device with: " + source.name);
                 start = DataStore.Instance.GetDevice(source);
-
                 return new DataRequest(timebased, type, start);
             }
             else
