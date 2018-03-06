@@ -54,9 +54,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4823382873539056}
   - component: {fileID: 95958717912838024}
+  - component: {fileID: 114747557788191328}
+  - component: {fileID: 114760183721473024}
   m_Layer: 0
   m_Name: Device_new_with_animations
-  m_TagString: Untagged
+  m_TagString: Device
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -201,3 +203,31 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114747557788191328
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1826031295499852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f6fbb6a889286648af9aa2333da9850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CallIndicator: {fileID: 223815584435527684, guid: c0fe7d42f44b2874294f52e890738637,
+    type: 2}
+--- !u!114 &114760183721473024
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1826031295499852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6137b26f26a71f94e9debc34d3d45a50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentFocus: {fileID: 0}
+  OnFocus: 0
+  DeviceHighlightMaterial: {fileID: 2100000, guid: f01ed46168496284f985650a1752bbca,
+    type: 2}

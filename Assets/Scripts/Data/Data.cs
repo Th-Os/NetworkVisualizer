@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace NetworkVisualizer.Objects
 /*
@@ -12,6 +13,41 @@ data : {
             call: _Call, (as JSONObject)
             device: _Device (as JSONObject)
            }
+           Example:
+           {
+          "Connection": {
+                    "body": "",
+                    "id": 27455,
+                    "start": {
+                              "content": "\"\"",
+                              "id": 51,
+                              "ip": "10.0.0.11",
+                              "name": "esp_1",
+                              "position": {
+                                        "id": 50,
+                                        "x": 1.8716265,
+                                        "y": 1.38976359,
+                                        "z": 2.20299029
+                              }
+                    },
+                    "target": {
+                              "content": "\"\"",
+                              "id": 49,
+                              "ip": "10.0.0.1",
+                              "name": "router",
+                              "position": {
+                                        "id": 48,
+                                        "x": -0.231124252,
+                                        "y": 0.773213863,
+                                        "z": 2.274579
+                              }
+                    },
+                    "time": "80303",
+                    "type": "ANSWER"
+          },
+          "Timebased": true,
+          "Type": "connection"
+}
        */
 {
     [Serializable]
@@ -25,6 +61,18 @@ data : {
         public Connection Connection { get; set; }
         public Call Call { get; set; }
         public Device Device { get; set; }
+
+        [JsonConstructor]
+        public Data(NetworkObject no, bool timebased, string type)
+        {
+            if (type == "connection")
+                Connection = no as Connection;
+            else
+                Device = no as Device;
+
+            Timebased = timebased;
+            Type = type;
+        }
 
         public Data(bool multiple, Device[] devices, bool timebased, bool specific, string type, Connection connection, Call call, Device device)
         {

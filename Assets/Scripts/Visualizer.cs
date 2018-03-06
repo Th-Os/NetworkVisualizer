@@ -111,8 +111,12 @@ namespace NetworkVisualizer
 
         private void OnCall(Transform source)
         {
-            if(source != null)
-                StartCoroutine(DeviceCall(source));
+            if(source.GetComponent<DeviceAnimator>())
+            {
+                source.GetComponent<DeviceAnimator>().Call();
+            }
+            //if(source != null)
+            //    StartCoroutine(DeviceCall(source));
         }
 
         //Establish Connection

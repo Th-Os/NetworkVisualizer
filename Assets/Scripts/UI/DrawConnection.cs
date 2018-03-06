@@ -49,10 +49,13 @@ public class DrawConnection : MonoBehaviour {
 
     private void SetMaterial(DeviceConnection dc)
     {
-        if (_source.name.Equals(dc.Source.name))
-            _aLine.LineRenderer.material = ConnectionUp;
-        else
-            _aLine.LineRenderer.material = ConnectionDown;
+        if (dc != null)
+        {
+            if (_source.name.Equals(dc.Source.name))
+                _aLine.LineRenderer.material = ConnectionUp;
+            else
+                _aLine.LineRenderer.material = ConnectionDown;
+        }
 
     }
 }

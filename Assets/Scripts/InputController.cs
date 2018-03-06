@@ -11,10 +11,12 @@ namespace NetworkVisualizer
     public class InputController : SetGlobalListenerHololens, SetGlobalListener
     {
 
+        public Transform HoldIndicator;
         public static States CurrentState { get; private set; }
 
         private GameObject _focusedObject;
         private GestureRecognizer _recognizer;
+        private Transform _holdIndicator;
 
         // Use this for initialization
         void Start()
@@ -59,8 +61,18 @@ namespace NetworkVisualizer
                 _recognizer = new GestureRecognizer();
                 _recognizer.SetRecognizableGestures(GestureSettings.Hold);
 
+                _recognizer.HoldStarted += OnHoldStarted;
                 _recognizer.HoldCompleted += OnHold;
                 _recognizer.StartCapturingGestures();
+            }
+        } 
+
+        void OnHoldStarted(HoldStartedEventArgs args)
+        {
+            if (_focusedObject == null)
+            {
+                _holdIndicator = Instantiate(HoldIndicator, transform);
+                _holdIndicator.GetComponent<Canvas>().worldCamera = Camera.main;
             }
         }
 
@@ -68,6 +80,7 @@ namespace NetworkVisualizer
         {
             if (_focusedObject == null)
             {
+                Destroy(_holdIndicator.gameObject);
                 if (CurrentState == States.VISUALIZE)
                 {
                     EventHandler.Broadcast(Events.OPEN_MENU);
