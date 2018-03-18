@@ -55,13 +55,13 @@ namespace NetworkVisualizer.Objects
                 switch(text.name)
                 {
                     case "name":
-                        text.text += Name;
+                        text.text = DeviceNameToUpperCase(Name);
                         break;
                     case "ip":
-                        text.text += Ip;
+                        text.text += " " + Ip;
                         break;
                     case "content":
-                        text.text += Content;
+                        text.text += " " + Content;
                         break;
                     default:
                         break;

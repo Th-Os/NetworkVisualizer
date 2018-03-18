@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 using HoloToolkit.Unity.InputModule;
 using Helpers;
 using NetworkVisualizer.Enums;
@@ -12,11 +13,15 @@ namespace NetworkVisualizer
     {
 
         public Transform HoldIndicator;
+        public Color HoldStartColor;
+        public Color HoldInitiatedColor;
         public static States CurrentState { get; private set; }
+        
 
         private GameObject _focusedObject;
         private GestureRecognizer _recognizer;
         private Transform _holdIndicator;
+        private States _lastState;
 
         // Use this for initialization
         void Start()
@@ -49,13 +54,13 @@ namespace NetworkVisualizer
 
         void OnSwitchToStateOne()
         {
-            OnSwitchToStateOne(0);
+            OnSwitchToStateOne(1);
         }
 
         void OnSwitchToStateOne(int test)
         {
             CurrentState = States.TEST;
-
+            Debug.Log("Hello State " + CurrentState);
             if (_recognizer == null)
             {
                 _recognizer = new GestureRecognizer();
@@ -69,33 +74,42 @@ namespace NetworkVisualizer
 
         void OnHoldStarted(HoldStartedEventArgs args)
         {
-            if (_focusedObject == null)
+            if (_focusedObject == null && _holdIndicator != null)                       
             {
-                _holdIndicator = Instantiate(HoldIndicator, transform);
-                _holdIndicator.GetComponent<Canvas>().worldCamera = Camera.main;
+                foreach(Image img in _holdIndicator.GetComponentsInChildren<Image>())
+                {
+                    img.color = HoldInitiatedColor;
+                }
+                _holdIndicator.GetComponentInChildren<Text>().text = "Release";
             }
         }
 
         void OnHold(HoldCompletedEventArgs args)
         {
-            if (_focusedObject == null)
+            if (_focusedObject == null && _holdIndicator != null)
             {
+                
                 Destroy(_holdIndicator.gameObject);
-                if (CurrentState == States.VISUALIZE)
+                if (_lastState == States.VISUALIZE)
                 {
                     EventHandler.Broadcast(Events.OPEN_MENU);
                 }
 
-                if(CurrentState == States.TEST)
+                if(_lastState == States.TEST)
                 {
                     EventHandler.Broadcast(Events.SHOW_TEST, 0);
-                }
-                    
+                }   
             }
         }
 
         public void OnInputDown(InputEventData eventData)
         {
+            //Debug.Log("current state: " + CurrentState);
+            //Debug.Log("has selected object: ");
+            //Debug.Log(eventData.selectedObject != null);
+            //if (eventData.selectedObject != null)
+            //    Debug.Log(eventData.selectedObject.name);
+
             if (_focusedObject != null)
             {
                 Debug.Log("Clicked: " + _focusedObject.tag + ": " + _focusedObject.name);
@@ -109,6 +123,7 @@ namespace NetworkVisualizer
                         if (_focusedObject.name.Equals("Minimize"))
                         {
                             EventHandler.Broadcast(Events.HIDE_MENU);
+                            CurrentState = States.VISUALIZE;
                         }
                         if (_focusedObject.name.Equals("Close"))
                         {
@@ -143,6 +158,22 @@ namespace NetworkVisualizer
                         break;
 
                 }
+            }else
+            {
+                if (CurrentState != States.DEFINE && CurrentState != States.MENU && eventData.selectedObject.CompareTag("Untagged") && eventData.selectedObject.name.IndexOf("surface", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    _lastState = CurrentState;
+                    CurrentState = States.MENU;
+                    Debug.Log("Hello indicator");
+                    GameObject cursor = GameObject.Find("DefaultCursor");
+                    Vector3 position = (cursor != null) ? cursor.transform.position : transform.position;
+                    _holdIndicator = Instantiate(HoldIndicator, position, transform.rotation, transform);
+                    _holdIndicator.GetComponent<Canvas>().worldCamera = Camera.main;
+                    _holdIndicator.LookAt(Camera.main.transform);
+                    foreach (Image img in _holdIndicator.GetComponentsInChildren<Image>()) {
+                        img.color = HoldStartColor;
+                    }
+                }
             }
 
         }
@@ -156,6 +187,12 @@ namespace NetworkVisualizer
             }
         }
 
-        public void OnInputUp(InputEventData eventData){}
+        public void OnInputUp(InputEventData eventData){
+            if(_holdIndicator != null)
+            {
+                CurrentState = _lastState;
+                Destroy(_holdIndicator.gameObject);
+            }
+        }
     }
 }

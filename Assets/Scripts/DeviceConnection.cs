@@ -21,7 +21,6 @@ namespace NetworkVisualizer
         {
             _line = GetComponent<LineRenderer>();
             _oldMaterial = _line.material;
-           //_line.material.mainTextureScale = new Vector2(Vector2.Distance(_line.GetPosition(0), _line.GetPosition(1)), 1f);
         }
 
         public override void OnFocusEnter()

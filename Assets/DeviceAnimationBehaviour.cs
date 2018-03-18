@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class DeviceAnimationBehaviour : StateMachineBehaviour {
 
+    public delegate void ExitHandler();
+    public ExitHandler OnExit;
+
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	//override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 	//
@@ -16,8 +19,8 @@ public class DeviceAnimationBehaviour : StateMachineBehaviour {
 
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-        if (stateInfo.IsName("Call"))
-            animator.SetBool("isCalled", false);
+        if (OnExit != null)
+            OnExit();
 	}
 
 	// OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here

@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 4
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
@@ -250,7 +250,9 @@ MonoBehaviour:
   - router
   - esp_1
   - esp_2
-  Device: {fileID: 1826031295499852, guid: 901993f16df0bf9489e39e27bb6ac9ba, type: 2}
+  - esp_3
+  - esp_4
+  Device: {fileID: 1294601162126068, guid: 31079f8aa0b8c7b4eac5f093997b9e93, type: 2}
   Devices: {fileID: 1074959758}
 --- !u!114 &619351496
 MonoBehaviour:
@@ -296,6 +298,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HoldIndicator: {fileID: 224970473350342078, guid: d1ec813da2bbd674d8e1f528754b8b85,
     type: 2}
+  HoldStartColor: {r: 0.9338235, g: 0.8831546, b: 0.19912416, a: 1}
+  HoldInitiatedColor: {r: 0.18685117, g: 0.85294116, b: 0.16306229, a: 1}
 --- !u!114 &619351499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -760,16 +764,6 @@ Prefab:
     - target: {fileID: 4000013298573622, guid: 2ed75ffdf9031c94e8bce4b3d17b9928, type: 2}
       propertyPath: m_RootOrder
       value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000011154029958, guid: 2ed75ffdf9031c94e8bce4b3d17b9928,
-        type: 2}
-      propertyPath: drawVisualMeshes
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000011154029958, guid: 2ed75ffdf9031c94e8bce4b3d17b9928,
-        type: 2}
-      propertyPath: autoStartObserver
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2ed75ffdf9031c94e8bce4b3d17b9928, type: 2}

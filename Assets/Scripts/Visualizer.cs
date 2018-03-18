@@ -109,14 +109,20 @@ namespace NetworkVisualizer
                 StartCoroutine(StartConnection(source, target));
         }
 
-        private void OnCall(Transform source)
+        private void OnCall(Transform source, Transform target, string toIp)
         {
             if(source.GetComponent<DeviceAnimator>())
             {
-                source.GetComponent<DeviceAnimator>().Call();
+                source.GetComponent<DeviceAnimator>().Call(target, toIp, OnAnswer);
             }
             //if(source != null)
             //    StartCoroutine(DeviceCall(source));
+        }
+
+        private void OnAnswer(Transform target, string toIp)
+        {
+            if (target.GetComponent<DeviceAnimator>())
+                target.GetComponent<DeviceAnimator>().Answer(toIp);
         }
 
         //Establish Connection
@@ -193,7 +199,7 @@ namespace NetworkVisualizer
             angle = Mathf.Rad2Deg * Mathf.Atan(angle);
             col.transform.Rotate(0, 0, angle);
             col.isTrigger = true;
-            col.transform.localScale = new Vector3(0.5f, 0.5f, 0.8f);
+            col.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
             
         }
 

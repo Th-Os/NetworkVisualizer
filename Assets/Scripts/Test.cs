@@ -11,34 +11,56 @@ namespace NetworkVisualizer
         private static Device _router;
         private static Device _esp_1;
         private static Device _esp_2;
+        private static Device _esp_3;
+        private static Device _esp_4;
 
+        private int _current;
+        private int _test;
 
-        public void Init()
+        public void Init(int test)
         {
-             _router = new Device("router", new Position(1, 1, 1, 1));
-            _esp_1 = new Device("esp_1", new Position(2, 1, 2, 3));
-            _esp_2 = new Device("esp_2", new Position(3, 3, 2, 1));
+            _test = test;
+             _router = new Device("router", "10.0.0.1", new Position(1, 1, 1, 1));
+            _esp_1 = new Device("esp_1", "10.0.0.11", new Position(2, 1, 2, 3));
+            _esp_2 = new Device("esp_2", "10.0.0.12", new Position(3, 3, 2, 1));
+            _esp_3 = new Device("esp_3", "10.0.0.13", new Position(3, 3, 2, 1));
+            _esp_4 = new Device("esp_4", "10.0.0.14", new Position(3, 3, 2, 1));
+            EventHandler.OnFinishedCall += OnCallFinished;
+            _current = 1;
 
-            //StartCoroutine(Run());
+            StartCoroutine(Run(_current));
 
         }
 
-        IEnumerator Run()
+        IEnumerator Run(int number)
         {
-            yield return new WaitForSeconds(4f);
-            EventHandler.Broadcast(Events.NEW_CONNECTION, new Connection(1, _router, _esp_1, "connection", "someTime", "someBody"));
-            yield return new WaitForSeconds(2f);
-            EventHandler.Broadcast(Events.NEW_CONNECTION, new Connection(2, _esp_1, _esp_2, "connection", "someTime", "someBody"));
-            yield return new WaitForSeconds(2f);
-            EventHandler.Broadcast(Events.NEW_CONNECTION, new Call(1, _router, "call", "someTime"));
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(5f);
+            switch (number)
+            {
+                case 1:
+                    EventHandler.Broadcast(Events.NEW_CONNECTION, new Call(1, _router, _esp_1, "call", "someTime", _esp_1.Ip));
+                    break;
+                case 2:
+                    EventHandler.Broadcast(Events.NEW_CONNECTION, new Call(1, _router, _esp_2, "call", "someTime", _esp_2.Ip));
+                    break;
+                case 3:
+                    EventHandler.Broadcast(Events.NEW_CONNECTION, new Call(1, _router, _esp_3, "call", "someTime", _esp_3.Ip));
+                    break;
+                case 4:
+                    EventHandler.Broadcast(Events.NEW_CONNECTION, new Call(1, _router, _esp_4, "call", "someTime", _esp_4.Ip));
+                    break;
+            }
+        }
 
-            EventHandler.Broadcast(Events.NEW_CONNECTION, new Connection(3, _router, _esp_1, "connection", "someTime", "someBody"));
-            yield return new WaitForSeconds(4f);
-            EventHandler.Broadcast(Events.NEW_CONNECTION, new Connection(4, _router, _esp_1, "connection", "someTime", "someBody"));
-            yield return new WaitForSeconds(4f);
-            EventHandler.Broadcast(Events.NEW_CONNECTION, new Connection(5, _router, _esp_1, "connection", "someTime", "someBody"));
-            yield return new WaitForSeconds(4f);
+        private void OnCallFinished()
+        {
+            if (_current == 4)
+            {
+                EventHandler.Broadcast(Events.INFORM_START_TEST, _test);
+                return;
+            }
+            _current++;
+            StartCoroutine(Run(_current));
         }
 
     }

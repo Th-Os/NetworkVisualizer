@@ -10,6 +10,7 @@ public class DrawConnection : MonoBehaviour {
     public Material ConnectionDown;
 
     private AnimatedLineRenderer _aLine;
+    private LineRenderer _line;
     private bool _hasStarted;
 
     private Transform _source;
@@ -18,10 +19,10 @@ public class DrawConnection : MonoBehaviour {
     public DrawConnection Init(float duration)
     {
         _aLine = GetComponent<AnimatedLineRenderer>();
-        LineRenderer line = GetComponent<LineRenderer>();
+        _line = GetComponent<LineRenderer>();
         _hasStarted = false;
-        _aLine.StartWidth = line.startWidth;
-        _aLine.EndWidth = line.endWidth;
+        _aLine.StartWidth = _line.startWidth;
+        _aLine.EndWidth = _line.endWidth;
         _aLine.SecondsPerLine = duration;
         return this;
     }
@@ -42,7 +43,6 @@ public class DrawConnection : MonoBehaviour {
         if (_hasStarted && _aLine.LineRenderer.positionCount == 2 && _aLine.LineRenderer.GetPosition(1) == _target.position)
         {
             _aLine.Reset();
-            Debug.Log("DOING A DESTROY NOW ON DRAWCONNECTION");
             Destroy(gameObject);
         }
     }
@@ -51,10 +51,17 @@ public class DrawConnection : MonoBehaviour {
     {
         if (dc != null)
         {
-            if (_source.name.Equals(dc.Source.name))
-                _aLine.LineRenderer.material = ConnectionUp;
-            else
-                _aLine.LineRenderer.material = ConnectionDown;
+            //Debug.Log(_line.material.name);
+            //Debug.Log(_source.name + " vs " + dc.Source.name);
+            //Debug.Log(_source.name.Equals(dc.Source.name));
+            _line.material = ConnectionUp;
+            //if (_source.name.Equals(dc.Source.name))
+            //    _line.material = ConnectionUp;
+            //else
+            //    _line.material = ConnectionDown;
+
+            //line.UpdateGIMaterials();
+            Debug.Log(_line.material.name);
         }
 
     }

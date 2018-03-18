@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 95958717912838024}
   - component: {fileID: 114747557788191328}
   - component: {fileID: 114760183721473024}
+  - component: {fileID: 135561785652471966}
   m_Layer: 0
   m_Name: Device_new_with_animations
   m_TagString: Device
@@ -195,7 +196,7 @@ Animator:
   m_GameObject: {fileID: 1826031295499852}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 63c40b6eb9830654e8ea1c6b3b817535, type: 3}
-  m_Controller: {fileID: 9100000, guid: 133343356cbbb1b4b850a0a4bf12efa5, type: 2}
+  m_Controller: {fileID: 9100000, guid: 4f38320a4150de4498d32801534a240b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -214,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f6fbb6a889286648af9aa2333da9850, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CallIndicator: {fileID: 223815584435527684, guid: c0fe7d42f44b2874294f52e890738637,
+  CallIndicator: {fileID: 224732985333942224, guid: c0fe7d42f44b2874294f52e890738637,
     type: 2}
 --- !u!114 &114760183721473024
 MonoBehaviour:
@@ -231,3 +232,15 @@ MonoBehaviour:
   OnFocus: 0
   DeviceHighlightMaterial: {fileID: 2100000, guid: f01ed46168496284f985650a1752bbca,
     type: 2}
+--- !u!135 &135561785652471966
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1826031295499852}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.13
+  m_Center: {x: 0, y: 0, z: 0}

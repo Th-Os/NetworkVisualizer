@@ -92,7 +92,6 @@ namespace DigitalRuby.AnimatedLineRenderer
             float lerp = current.TotalSecondsInverse * current.ElapsedSeconds;
             EndPoint = Vector3.Lerp(prev.Position, current.Position, lerp);
             lineRenderer.SetPosition(index, EndPoint);
-            //lineRenderer.material.mainTextureScale = new Vector3(Vector3.Distance(lineRenderer.GetPosition(0), EndPoint), 1f, 1f);
         }
 
         private void Start()
@@ -138,7 +137,9 @@ namespace DigitalRuby.AnimatedLineRenderer
                 elapsedSeconds += Time.deltaTime;
                 c1.a = a;
                 c2.a = a;
-                lineRenderer.SetColors(c1, c2);
+                lineRenderer.startColor = c1;
+                lineRenderer.endColor = c2;
+                //lineRenderer.SetColors(c1, c2);
                 yield return new WaitForSeconds(0.01f);
             }
             Reset();

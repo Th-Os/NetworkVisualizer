@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using Newtonsoft.Json;
 
@@ -33,10 +34,10 @@ namespace NetworkVisualizer.Objects
                 switch (text.name)
                 {
                     case "source":
-                        text.text += Start.Name;
+                        text.text += DeviceNameToUpperCase(Start.Name);
                         break;
                     case "target":
-                        text.text += Target.Name;
+                        text.text += DeviceNameToUpperCase(Target.Name);
                         break;
                     case "type":
                         text.text += Type;

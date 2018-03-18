@@ -72,7 +72,7 @@ namespace NetworkVisualizer
 
         void OnTestStarted(int test)
         {
-            GetComponent<Test>().Init();
+            GetComponent<Test>().Init(test);
         }
 
         void OnTestEnded(int test)

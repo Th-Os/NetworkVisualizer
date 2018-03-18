@@ -66,12 +66,12 @@ namespace NetworkVisualizer
 
         private void AddCall(Call call)
         {
-            Debug.Log("New Call from " + call.Start.Name);
+            Debug.Log("New Call from " + call.Start.Name + " to " + call.Target.Name);
             UnityMainThreadDispatcher.Instance().Enqueue(
-                GetDeviceByName(call.Start.Name, "", (values) => {
+                GetDeviceByName(call.Start.Name, call.Target.Name, (values) => {
                     if (values != null)
                     {
-                        EventHandler.Broadcast(Events.DRAW_CONNECTION, values[0]);
+                        EventHandler.Broadcast(Events.DRAW_CALL, values[0], values[1], call.ToIp);
                     }
                 }));
         }

@@ -171,7 +171,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentFocus: {fileID: 0}
   OnFocus: 0
-  OnFocusColor: {r: 0.986207, g: 1, b: 0, a: 0.991}
 --- !u!114 &114330161313969482
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -201,7 +200,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentFocus: {fileID: 0}
   OnFocus: 0
-  OnFocusColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &114634738606917016
 MonoBehaviour:
   m_ObjectHideFlags: 1

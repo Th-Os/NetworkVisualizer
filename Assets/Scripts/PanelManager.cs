@@ -18,7 +18,7 @@ namespace NetworkVisualizer {
 
         public void ShowPanel(object sender, Vector3 position, PanelType type, NetworkObject networkObject)
         {
-            if (_currentPanel != null)
+            if (_currentPanel != null && _currentPanel.activeInHierarchy)
                 Destroy(_currentPanel);
 
             _currentPanel = CreatePanel(position);

@@ -214,7 +214,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentFocus: {fileID: 0}
   OnFocus: 0
-  HighlightSprite: {fileID: 21300000, guid: ae0f307abe706b94da986661c3c80f40, type: 3}
+  HighlightSprite: {fileID: 21300000, guid: 68050cabe378a11479039c3a392cca87, type: 3}
 --- !u!114 &114506247956648008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -250,7 +250,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 3a179a5543fb00f4a9f0e9b997428d1a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a6caae0fb4a8e114bb4b3e5533a7b16d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

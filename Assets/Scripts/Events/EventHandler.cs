@@ -31,6 +31,7 @@ namespace NetworkVisualizer
 
         public delegate void TestHandler(int id);
         public static event TestHandler OnTestStarted;
+        public static event TestHandler OnInformTestStarted;
         public static event TestHandler OnTestEnded;
         public static event TestHandler OnShowTest;
 
@@ -50,8 +51,11 @@ namespace NetworkVisualizer
         public delegate void DrawConnectionHandler(Transform source, Transform target);
         public static event DrawConnectionHandler OnDrawConnection;
 
-        public delegate void DrawCallHandler(Transform source);
+        public delegate void DrawCallHandler(Transform source, Transform target, string toIp);
         public static event DrawCallHandler OnDrawCall;
+
+        public delegate void CallFinishedHandler();
+        public static event CallFinishedHandler OnFinishedCall;
 
         public delegate void HighlightUIHandler(Transform obj);
         public static event HighlightUIHandler OnHighlight;
@@ -63,6 +67,20 @@ namespace NetworkVisualizer
 
         public delegate void DestroyHandler();
         public static event DestroyHandler OnDestroyVisualization;
+
+
+        public static void Broadcast<T, E, F>(Events evnt, T value1, E value2, F value3)
+        {
+            switch (evnt)
+            {
+                case Events.DRAW_CALL:
+                    OnDrawCall(value1 as Transform, value2 as Transform, value3 as string);
+                    break;
+                default:
+                    Debug.Log("NO valid event broadcast for " + evnt.ToString());
+                    break;
+            }
+        }
 
         public static void Broadcast<T, E>(Events evnt, T value1, E value2)
         {
@@ -99,9 +117,7 @@ namespace NetworkVisualizer
                 case Events.NEW_CONNECTION:
                     OnNewConnection(value as NetworkObject);
                     break;
-                case Events.DRAW_CALL:
-                    OnDrawCall(value as Transform);
-                    break;
+
                 case Events.REQUEST_LOCAL_DATA:
                     OnLocalDataRequested(value as Transform);
                     break;
@@ -142,6 +158,9 @@ namespace NetworkVisualizer
                 case Events.END_TEST:
                     OnTestEnded(value);
                     break;
+                case Events.INFORM_START_TEST:
+                    OnInformTestStarted(value);
+                    break;
                 default:
                     Debug.Log("NO valid event broadcast for " + evnt.ToString());
                     break;
@@ -180,6 +199,10 @@ namespace NetworkVisualizer
                 case Events.DESTROY_VISUALIZATION:
                     OnDestroyVisualization();
                     break;
+                case Events.CALL_FINISHED:
+                    OnFinishedCall();
+                    break;
+
                 default:
                     Debug.Log("NO valid event broadcast for " + evnt.ToString());
                     break;

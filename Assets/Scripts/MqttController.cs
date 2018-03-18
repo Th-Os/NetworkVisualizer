@@ -39,7 +39,7 @@ namespace NetworkVisualizer {
                 Send(PUB_TOPIC + "/status", "Hololens online");
 
                 EventHandler.OnDataRequested += SendDataRequest;
-                EventHandler.OnTestStarted += SendTestInitializer;
+                EventHandler.OnInformTestStarted += SendTestInitializer;
                 EventHandler.OnTestEnded += SendTestCancel;
                 EventHandler.OnDeviceDefined += SendDeviceData;
 
@@ -47,6 +47,7 @@ namespace NetworkVisualizer {
             catch (Exception e)
             {
                 Debug.Log(e.StackTrace);
+                Debug.Log(e.Message);
                 Debug.Log("No start up of Mqtt module possible.");
             }
         }

@@ -50,7 +50,7 @@ namespace NetworkVisualizer {
         {
             DestroyUI();
             //funktioniert besser mit lookrotation
-            _currentUI = GameObject.Instantiate(MenuUI, Camera.main.transform.forward, Quaternion.LookRotation(Camera.main.transform.forward, Camera.main.transform.up), Parent.transform);
+            _currentUI = GameObject.Instantiate(MenuUI, GetPositionOfCursor(), Quaternion.LookRotation(Camera.main.transform.forward, Camera.main.transform.up), Parent.transform);
             _menuShown = !_menuShown;
             _currentUI.SetActive(_menuShown);
             if(_menuShown)
@@ -79,7 +79,7 @@ namespace NetworkVisualizer {
             Debug.Log("Start TestUI");
             EventHandler.OnDeviceDefined -= OnDeviceFound;
 
-            _currentUI = GameObject.Instantiate(TestUI, Camera.main.transform.forward, Quaternion.LookRotation(Camera.main.transform.forward, Camera.main.transform.up), Parent.transform);
+            _currentUI = GameObject.Instantiate(TestUI, GetPositionOfCursor(), Quaternion.LookRotation(Camera.main.transform.forward, Camera.main.transform.up), Parent.transform);
 
             _currentUI.SetActive(true);
             _currentUI.GetComponent<Canvas>().worldCamera = Camera.main;
@@ -116,5 +116,18 @@ namespace NetworkVisualizer {
                 GameObject.Destroy(_currentUI);
             _currentUI = null;
         }
+
+        private Vector3 GetPositionOfCursor()
+        {
+            GameObject cursor = GameObject.Find("DefaultCursor");
+            if (cursor == null)
+                return Camera.main.transform.forward * 2;
+
+            Vector3 position = cursor.transform.position;
+            if(position.z > 2f)
+                position.z -= 1f;
+
+            return position;
+        } 
     }
 }
