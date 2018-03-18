@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using NetworkVisualizer.Enums;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Bson;
-using NetworkVisualizer.Objects;
+using NetworkVisualizer.Data;
+using NetworkVisualizer.Visual;
 
 namespace NetworkVisualizer
 {
@@ -72,7 +71,7 @@ namespace NetworkVisualizer
 
         void OnTestStarted(int test)
         {
-            GetComponent<Test>().Init(test);
+            GetComponent<SimulateCallBehaviour>().Init(test);
         }
 
         void OnTestEnded(int test)

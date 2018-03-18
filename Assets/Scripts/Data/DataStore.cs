@@ -5,25 +5,54 @@ using Helpers;
 using NetworkVisualizer.Objects;
 using System;
 
-namespace NetworkVisualizer
+namespace NetworkVisualizer.Data
 {
+    /// <summary>
+    /// The DataStore functions as a storage for the relations between devices and transforms and between the connected transforms.
+    /// </summary>
     public class DataStore : Singleton<DataStore>
     {
 
         private Dictionary<Transform, Device> _deviceMap;
         private Dictionary<int, Transform[]> _connectedDevices;
 
-        public DataStore()
+        private DataStore()
         {
             _deviceMap = new Dictionary<Transform, Device>();
             _connectedDevices = new Dictionary<int, Transform[]>();
         }
 
+        /// <summary>
+        /// Adds a device with its device representation to the relation map.
+        /// </summary>
+        /// <param name="transform"></param>
+        /// <param name="device"></param>
         public void AddDevice(Transform transform, Device device)
         {
             _deviceMap.Add(transform, device);
         }
 
+        /// <summary>
+        /// Adds two devices to the map, which contains all connected devices.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public bool AddConnectedDevices(Transform source, Transform target)
+        {
+            if (GetConnectedDevices(source, target) == null)
+            {
+                _connectedDevices.Add(_connectedDevices.Count, new Transform[] { source, target });
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Gets the device representation of a transform.
+        /// </summary>
+        /// <param name="transform"></param>
+        /// <returns></returns>
         public Device GetDevice(Transform transform)
         {
             Device device = null;
@@ -32,19 +61,13 @@ namespace NetworkVisualizer
             return device;
         }
 
-        /*
-        public Transform GetTransform(Device device)
-        {
-            foreach(Transform transform in _deviceMap.Keys)
-            {
-                if(transform.name.Equals(device.Name))
-                {
-                    return transform;
-                }
-            }
-            return null;
-        }
-         */
+        /// <summary>
+        /// Starts an asynchronous function that finds transforms with the name of a device or devices.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <param name="callback"></param>
+        /// <returns></returns>
         public IEnumerator GetTransform(string source, string target, Action<Transform, Transform> callback)
         {
             Transform tSource = null;
@@ -64,16 +87,12 @@ namespace NetworkVisualizer
             callback(tSource, tTarget);
         }
 
-        public bool AddConnectedDevices(Transform source, Transform target)
-        {
-            if (GetConnectedDevices(source, target) == null)
-            {
-                _connectedDevices.Add(_connectedDevices.Count, new Transform[] { source, target });
-                return true;
-            }
-            return false;
-        }
-
+        /// <summary>
+        /// Returns the DeviceConnection of two transforms.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public DeviceConnection GetDeviceConnection(Transform source, Transform target)
         {
             Transform[] transforms = GetConnectedDevices(source, target);
@@ -92,6 +111,12 @@ namespace NetworkVisualizer
             return dc;
         }
 
+        /// <summary>
+        /// Returns an array, if the two params are connected.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public Transform[] GetConnectedDevices(Transform source, Transform target)
         {
             foreach(Transform[] array in _connectedDevices.Values)
@@ -105,6 +130,9 @@ namespace NetworkVisualizer
             return null;
         }
 
+        /// <summary>
+        /// Clears the connected devices map.
+        /// </summary>
         public void RefreshConnectedDevices()
         {
             _connectedDevices.Clear();

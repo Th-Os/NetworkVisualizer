@@ -1,17 +1,18 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Text;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using UnityEngine;
 using NetworkVisualizer.Enums;
 using NetworkVisualizer.Objects;
+using NetworkVisualizer.Data;
 
-namespace NetworkVisualizer {
-    public static class MqttController {
+namespace NetworkVisualizer
+{
+
+    public static class MqttController
+    {
 
         private static string PUB_TOPIC = "controller";
         private static string SUB_TOPIC = "hololens/#";
@@ -104,7 +105,7 @@ namespace NetworkVisualizer {
                 }
                 if (String.Equals(topic, INCOMING_DATA, StringComparison.OrdinalIgnoreCase))
                 {
-                    EventHandler.Broadcast(Events.DATA_ARRIVED, JsonConvert.DeserializeObject<Data>(jsonString));
+                    EventHandler.Broadcast(Events.DATA_ARRIVED, JsonConvert.DeserializeObject<DataResponse>(jsonString));
                 }
             }
             catch (Exception exception)

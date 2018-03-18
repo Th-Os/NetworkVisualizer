@@ -6,21 +6,25 @@ using Helpers;
 using System;
 using NetworkVisualizer.Enums;
 
-namespace NetworkVisualizer
+namespace NetworkVisualizer.Data
 {
-
+    /// <summary>
+    /// The DataController gets all requests to and from the server to verify/convert the data and adds missing components.
+    /// </summary>
     public class DataController : Singleton<DataController>
     {
         private bool _hasDataLocally;
 
-        // Use this for initialization
+        /// <summary>
+        /// Adds the Eventlisteners to the DataController.
+        /// </summary>
         public void Init()
         {
             EventHandler.OnLocalDataRequested += OnDataRequested;
             EventHandler.OnDataArrived += OnDataArrived;
         }
 
-        void OnDataRequested(Transform source, Transform target)
+        private void OnDataRequested(Transform source, Transform target)
         {
             if (target == null)
                 _hasDataLocally = LookUpConnection(source, target);
@@ -34,7 +38,7 @@ namespace NetworkVisualizer
 
         }
 
-        void OnDataArrived(Data data)
+        private void OnDataArrived(DataResponse data)
         {
             if (data.Timebased) {
                 if (data.Type.Equals("device"))
@@ -69,7 +73,7 @@ namespace NetworkVisualizer
             }
         }
 
-        DeviceConnection LookUpDeviceConnection(Transform source, Transform target)
+        private DeviceConnection LookUpDeviceConnection(Transform source, Transform target)
         {
             GameObject connectionContainer = GameObject.FindGameObjectWithTag("ConnectionContainer");
             foreach (DeviceConnection dc in connectionContainer.GetComponentsInChildren<DeviceConnection>())
@@ -100,24 +104,7 @@ namespace NetworkVisualizer
         }
 
 
-        //Not Implemented
-        bool LookUpConnection(Transform source, Transform target)
-        {
-            return false;
-        }
-
-        //Not Implemented
-        bool LookUpDevice(Transform device)
-        {
-            return false;
-        }
-
-        Data CreateData()
-        {
-            throw new NotImplementedException();
-        }
-
-        DataRequest CreateDataRequest(Transform source, Transform target)
+        private DataRequest CreateDataRequest(Transform source, Transform target)
         {
             bool timebased = true;
             string type = "";
@@ -138,5 +125,24 @@ namespace NetworkVisualizer
                 return new DataRequest(timebased, start, destination, type);
             }   
         }
+
+        #region NotImplementedYet
+
+        bool LookUpConnection(Transform source, Transform target)
+        {
+            return false;
+        }
+
+        bool LookUpDevice(Transform device)
+        {
+            return false;
+        }
+
+        DataResponse CreateData()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

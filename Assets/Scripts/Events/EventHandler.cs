@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using NetworkVisualizer.Enums;
 using NetworkVisualizer.Objects;
 
@@ -26,7 +24,7 @@ namespace NetworkVisualizer
         public delegate void LocalDataRequestHandler(Transform one, Transform two = null);
         public static event LocalDataRequestHandler OnLocalDataRequested;
 
-        public delegate void DataArrivedHandler(Data data);
+        public delegate void DataArrivedHandler(DataResponse data);
         public static event DataArrivedHandler OnDataArrived;
 
         public delegate void TestHandler(int id);
@@ -112,7 +110,7 @@ namespace NetworkVisualizer
                     OnDeviceDefined(value as Transform);
                     break;
                 case Events.DATA_ARRIVED:
-                    OnDataArrived(value as Data);
+                    OnDataArrived(value as DataResponse);
                     break;
                 case Events.NEW_CONNECTION:
                     OnNewConnection(value as NetworkObject);
