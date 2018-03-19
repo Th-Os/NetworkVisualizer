@@ -1,5 +1,11 @@
 # NetworkVisualizer
 
+## Refactoring:
+
+Device -> Node
+Connections generischer
+usw...
+
 ## Echtzeitvisualisierung
 
 * Jede Verbindung anzeigen 
