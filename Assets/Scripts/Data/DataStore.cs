@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Helpers;
 using NetworkVisualizer.Objects;
-using System;
+using NetworkVisualizer.Visual;
+
 
 namespace NetworkVisualizer.Data
 {
@@ -16,7 +18,7 @@ namespace NetworkVisualizer.Data
         private Dictionary<Transform, Device> _deviceMap;
         private Dictionary<int, Transform[]> _connectedDevices;
 
-        private DataStore()
+        public DataStore()
         {
             _deviceMap = new Dictionary<Transform, Device>();
             _connectedDevices = new Dictionary<int, Transform[]>();

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using HoloToolkit.Unity.InputModule;
 using UnityEngine;
 
-namespace NetworkVisualizer
+namespace NetworkVisualizer.Visual
 {
-
+    /// <summary>
+    /// A DeviceConnection defines and saves the two related nodes. Furthermore it changes the material of a device on focus.
+    /// </summary>
     public class DeviceConnection : Interaction
     {
 

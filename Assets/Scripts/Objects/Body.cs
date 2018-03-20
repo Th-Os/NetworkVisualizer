@@ -2,6 +2,9 @@
 
 namespace NetworkVisualizer.Objects
 {
+    /// <summary>
+    /// Body of a connection. Is not used right now.
+    /// </summary>
     [Serializable]
     public class Body
     {

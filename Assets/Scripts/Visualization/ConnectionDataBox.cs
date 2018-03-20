@@ -2,10 +2,11 @@
 
 namespace NetworkVisualizer.Visual
 {
+    /// <summary>
+    /// Functionality of a <see cref="DataBox"/> specific to a connection.
+    /// </summary>
     public class ConnectionDataBox : DataBox
     {
-
-        // Use this for initialization
         override protected void Start()
         {
             base.Start();

@@ -3,7 +3,9 @@ using NetworkVisualizer.Enums;
 
 namespace NetworkVisualizer.Visual
 {
-
+    /// <summary>
+    /// Basic Interaction class.
+    /// </summary>
     public class Interaction : MonoBehaviour, IInteractable
     {
 
@@ -13,6 +15,9 @@ namespace NetworkVisualizer.Visual
         [HideInInspector]
         public bool OnFocus;
 
+        /// <summary>
+        /// Called, when the user looks at this object.
+        /// </summary>
         public virtual void OnFocusEnter()
         {
             OnFocus = true;
@@ -20,6 +25,9 @@ namespace NetworkVisualizer.Visual
             EventHandler.Broadcast(Events.FOCUS, CurrentFocus);
         }
 
+        /// <summary>
+        /// Called, when the users gaze moves elsewhere after being on the object.
+        /// </summary>
         public virtual void OnFocusExit()
         {
             OnFocus = false;
@@ -27,6 +35,9 @@ namespace NetworkVisualizer.Visual
             EventHandler.Broadcast(Events.UNFOCUS, CurrentFocus);
         }
 
+        /// <summary>
+        /// Called, when the user focuses on the object and execute a tap.
+        /// </summary>
         public virtual void OnClick()
         {
             Debug.Log("Clicked on: " + gameObject.name);

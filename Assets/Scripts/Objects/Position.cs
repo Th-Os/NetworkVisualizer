@@ -4,7 +4,9 @@ using Newtonsoft.Json;
 
 namespace NetworkVisualizer.Objects
 {
-
+    /// <summary>
+    /// Representation of a position in a data object.
+    /// </summary>
     [Serializable]
     public class Position
     {

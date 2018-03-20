@@ -5,7 +5,10 @@ using HoloToolkit.Unity;
 using NetworkVisualizer;
 using NetworkVisualizer.Enums;
 
-//Responsible for Device Initialization and Protection (World Anchor)
+/// <summary>
+/// The DeviceManager initializes an Device with a position given by the <see cref="DeviceDefiner"/>.
+/// Furthermore it ends the device defining process, when all devices are assigned.
+/// </summary>
 public class DeviceManager : MonoBehaviour {
 
     public string[] Device_Names = new string[] { "router", "esp_1", "esp_2" };
@@ -23,26 +26,9 @@ public class DeviceManager : MonoBehaviour {
         count = 0;
 	}
 
-    void AddAnchor(GameObject obj, string name)
-    {
-        WorldAnchorManager.Instance.AttachAnchor(obj, name);
-    }
-
-    void RemoveAnchor(GameObject obj)
-    {
-        WorldAnchorManager.Instance.RemoveAnchor(obj);
-    }
-
-    void OnNewDevice(Vector3 position)
+    private void OnNewDevice(Vector3 position)
     {
         string name = Device_Names[count];
-        Debug.Log("hello " + name);
-
-        if(name.Equals("None"))
-        {
-            Debug.Log("Here is a None");
-        }
-
         GameObject obj = Instantiate(Device, position, transform.rotation, Devices);
 
         obj.name = name;
@@ -50,13 +36,10 @@ public class DeviceManager : MonoBehaviour {
         EventHandler.Broadcast(Events.DEVICE_DEFINED, obj.transform);
 
         Debug.Log("New Device: " + obj.name + " parent: " + obj.transform.parent.name); 
-        //AddAnchor(obj, name);
-        //obj.AddComponent<Content>();
 
         count++;
         if (count == _deviceCount)
         {
-            Debug.Log("device count reached");
             GetComponent<DeviceDefiner>().enabled = false;
             EventHandler.Broadcast(Events.END_DEFINE);
         }

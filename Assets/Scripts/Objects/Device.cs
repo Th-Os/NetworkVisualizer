@@ -5,7 +5,9 @@ using Newtonsoft.Json;
 
 namespace NetworkVisualizer.Objects
 {
-
+    /// <summary>
+    /// Representation of a device data object.
+    /// </summary>
     [Serializable]
     public class Device : NetworkObject
     {

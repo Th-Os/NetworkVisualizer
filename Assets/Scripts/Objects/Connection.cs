@@ -1,11 +1,12 @@
 ﻿using System;
-using UnityEngine;
 using UnityEngine.UI;
 using Newtonsoft.Json;
 
 namespace NetworkVisualizer.Objects
 {
-    //TODO evtl Body object benutzen.
+    /// <summary>
+    /// A network connection.
+    /// </summary>
     [Serializable]
     public class Connection : NetworkObject
     {

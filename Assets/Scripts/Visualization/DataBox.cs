@@ -3,15 +3,20 @@ using UnityEngine.UI;
 
 namespace NetworkVisualizer.Visual
 {
-
+    /// <summary>
+    /// The Databox represents a detail panel in the application.
+    /// It implements specific interactions and destroys the panel on a click.
+    /// </summary>
     public class DataBox : Interaction
     {
+        /// <summary>
+        /// A sprite that will be used, when the box has the focus of the user.
+        /// </summary>
         public Sprite HighlightSprite;
 
         private Sprite _standardSprite;
         private Image _image;
 
-        // Use this for initialization
         protected virtual void Start()
         {
             _image = GetComponentInChildren<Image>();

@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using NetworkVisualizer.Enums;
 using NetworkVisualizer.Objects;
+using NetworkVisualizer.Visual;
 
 namespace NetworkVisualizer
 {
-
+    /// <summary>
+    /// The Eventhandler can broadcast from everywhere to all subscribers.
+    /// </summary>
     public class EventHandler
     {
 
@@ -66,7 +69,17 @@ namespace NetworkVisualizer
         public delegate void DestroyHandler();
         public static event DestroyHandler OnDestroyVisualization;
 
-
+        /// <summary>
+        /// Used for 3 parameters. All possible events:
+        /// <list type="bullet"><item>DRAW_CALL</item></list>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="E"></typeparam>
+        /// <typeparam name="F"></typeparam>
+        /// <param name="evnt"></param>
+        /// <param name="value1"></param>
+        /// <param name="value2"></param>
+        /// <param name="value3"></param>
         public static void Broadcast<T, E, F>(Events evnt, T value1, E value2, F value3)
         {
             switch (evnt)
@@ -75,11 +88,23 @@ namespace NetworkVisualizer
                     OnDrawCall(value1 as Transform, value2 as Transform, value3 as string);
                     break;
                 default:
-                    Debug.Log("NO valid event broadcast for " + evnt.ToString());
+                    Debug.LogWarning("NO valid event broadcast for " + evnt.ToString());
                     break;
             }
         }
 
+        /// <summary>
+        /// Used for 2 parameters. All possible events:
+        /// SHOW_DEVICE_DATA
+        /// SHOW_CONNECTION_DATA
+        /// DRAW_CONNECTION
+        /// REQUEST_LOCAL_DATA
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="E"></typeparam>
+        /// <param name="evnt"></param>
+        /// <param name="value1"></param>
+        /// <param name="value2"></param>
         public static void Broadcast<T, E>(Events evnt, T value1, E value2)
         {
             switch (evnt)
@@ -97,11 +122,25 @@ namespace NetworkVisualizer
                     OnLocalDataRequested(value1 as Transform, value2 as Transform);
                     break;
                 default:
-                    Debug.Log("NO valid event broadcast for " + evnt.ToString());
+                    Debug.LogWarning("NO valid event broadcast for " + evnt.ToString());
                     break;
             }
         }
 
+        /// <summary>
+        /// Used for 1 parameter. All used Events:
+        /// DEVICE_DEFINED
+        /// DATA_ARRIVED
+        /// NEW_CONNECTION
+        /// REQUEST_LOCAL_DATA
+        /// HIGHLIGHT_OBJECT
+        /// HIDE_OBJECT
+        /// FOCUS
+        /// UNFOCUS
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="evnt"></param>
+        /// <param name="value"></param>
         public static void Broadcast<T>(Events evnt, T value)
         {
             switch (evnt)
@@ -115,7 +154,6 @@ namespace NetworkVisualizer
                 case Events.NEW_CONNECTION:
                     OnNewConnection(value as NetworkObject);
                     break;
-
                 case Events.REQUEST_LOCAL_DATA:
                     OnLocalDataRequested(value as Transform);
                     break;
@@ -135,12 +173,20 @@ namespace NetworkVisualizer
                     OnUnfocus(value as GameObject);
                     break;
                 default:
-                    Debug.Log("NO valid event broadcast for " + evnt.ToString());
+                    Debug.LogWarning("NO valid event broadcast for " + evnt.ToString());
                     break;
             }
-
         }
 
+        /// <summary>
+        /// Uses one integer value. All valid events:
+        /// START_TEST
+        /// SHOW_TEST
+        /// END_TEST
+        /// INFORM_START_TEST
+        /// </summary>
+        /// <param name="evnt"></param>
+        /// <param name="value"></param>
         public static void Broadcast(Events evnt, int value)
         {
             switch (evnt)
@@ -149,9 +195,7 @@ namespace NetworkVisualizer
                     OnTestStarted(value);
                     break;
                 case Events.SHOW_TEST:
-                    Debug.Log("Show Test " + value);
                     OnShowTest(value);
-                    Debug.Log("Event fired");
                     break;
                 case Events.END_TEST:
                     OnTestEnded(value);
@@ -160,11 +204,17 @@ namespace NetworkVisualizer
                     OnInformTestStarted(value);
                     break;
                 default:
-                    Debug.Log("NO valid event broadcast for " + evnt.ToString());
+                    Debug.LogWarning("NO valid event broadcast for " + evnt.ToString());
                     break;
             }
         }
 
+        /// <summary>
+        /// Uses one <see cref="Vector3"/> value. All applicable events:
+        /// DEVICE_FOUND
+        /// </summary>
+        /// <param name="evnt"></param>
+        /// <param name="position"></param>
         public static void Broadcast(Events evnt, Vector3 position)
         {
             switch (evnt)
@@ -173,11 +223,21 @@ namespace NetworkVisualizer
                     OnDeviceFound(position);
                     break;
                 default:
-                    Debug.Log("NO valid event broadcast for " + evnt.ToString());
+                    Debug.LogWarning("NO valid event broadcast for " + evnt.ToString());
                     break;
             }
         }
 
+        /// <summary>
+        /// Uses no parameters. All possible events:
+        /// START_DEFINE
+        /// END_DEFINE
+        /// OPEN_MENU
+        /// HIDE_MENU
+        /// DESTROY_VISUALIZATION
+        /// CALL_FINISHED
+        /// </summary>
+        /// <param name="evnt"></param>
         public static void Broadcast(Events evnt)
         {
             switch (evnt)
@@ -200,9 +260,8 @@ namespace NetworkVisualizer
                 case Events.CALL_FINISHED:
                     OnFinishedCall();
                     break;
-
                 default:
-                    Debug.Log("NO valid event broadcast for " + evnt.ToString());
+                    Debug.LogWarning("NO valid event broadcast for " + evnt.ToString());
                     break;
             }
 

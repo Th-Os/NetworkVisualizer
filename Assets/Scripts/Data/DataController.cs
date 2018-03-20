@@ -5,6 +5,7 @@ using NetworkVisualizer.Objects;
 using Helpers;
 using System;
 using NetworkVisualizer.Enums;
+using NetworkVisualizer.Visual;
 
 namespace NetworkVisualizer.Data
 {
@@ -14,6 +15,11 @@ namespace NetworkVisualizer.Data
     public class DataController : Singleton<DataController>
     {
         private bool _hasDataLocally;
+
+        public DataController()
+        {
+
+        }
 
         /// <summary>
         /// Adds the Eventlisteners to the DataController.

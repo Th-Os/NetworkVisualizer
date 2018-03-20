@@ -5,7 +5,9 @@ using Newtonsoft.Json;
 
 namespace NetworkVisualizer.Objects
 {
-
+    /// <summary>
+    /// ARP protocol call.
+    /// </summary>
     [Serializable]
     public class Call : NetworkObject
     {

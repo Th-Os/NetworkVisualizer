@@ -3,10 +3,15 @@ using DigitalRuby.AnimatedLineRenderer;
 
 namespace NetworkVisualizer.Visual
 {
-
+    /// <summary>
+    /// DrawConnection will draw a line with the <see cref="AnimatedLineRenderer"/> feature to visualize incoming or outgoing connections.
+    /// </summary>
     public class DrawConnection : MonoBehaviour
     {
 
+        /// <summary>
+        /// Right now only the ConnectionUp material is used, because the material changes faces, when the line moves from the other side.
+        /// </summary>
         public Material ConnectionUp;
         public Material ConnectionDown;
 

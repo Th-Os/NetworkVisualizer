@@ -1,14 +1,18 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR.WSA.Input;
 using HoloToolkit.Unity.InputModule;
 using Helpers;
 using NetworkVisualizer.Enums;
-using UnityEngine.XR.WSA.Input;
+using NetworkVisualizer.Visual;
+
 
 namespace NetworkVisualizer
 {
-    // Functionality: All Input will be tracked. Different "Game States", different Events will be broadcasted
+    /// <summary>
+    /// 
+    /// </summary>
     public class InputController : SetGlobalListenerHololens, SetGlobalListener
     {
 
@@ -34,74 +38,11 @@ namespace NetworkVisualizer
             EventHandler.OnUnfocus += OnUnfocus;
         }
 
-        void OnFocus(GameObject obj)
-        {
-            if (obj != null)
-            {
-                _focusedObject = obj;
-            }
-        }
 
-        void OnUnfocus(GameObject obj)
-        {
-            _focusedObject = null;
-        }
-
-        void OnSwitchToStateTwo(int id)
-        {
-            CurrentState = States.VISUALIZE;
-        }
-
-        void OnSwitchToStateOne()
-        {
-            OnSwitchToStateOne(1);
-        }
-
-        void OnSwitchToStateOne(int test)
-        {
-            CurrentState = States.TEST;
-            Debug.Log("Hello State " + CurrentState);
-            if (_recognizer == null)
-            {
-                _recognizer = new GestureRecognizer();
-                _recognizer.SetRecognizableGestures(GestureSettings.Hold);
-
-                _recognizer.HoldStarted += OnHoldStarted;
-                _recognizer.HoldCompleted += OnHold;
-                _recognizer.StartCapturingGestures();
-            }
-        } 
-
-        void OnHoldStarted(HoldStartedEventArgs args)
-        {
-            if (_focusedObject == null && _holdIndicator != null)                       
-            {
-                foreach(Image img in _holdIndicator.GetComponentsInChildren<Image>())
-                {
-                    img.color = HoldInitiatedColor;
-                }
-                _holdIndicator.GetComponentInChildren<Text>().text = "Release";
-            }
-        }
-
-        void OnHold(HoldCompletedEventArgs args)
-        {
-            if (_focusedObject == null && _holdIndicator != null)
-            {
-                
-                Destroy(_holdIndicator.gameObject);
-                if (_lastState == States.VISUALIZE)
-                {
-                    EventHandler.Broadcast(Events.OPEN_MENU);
-                }
-
-                if(_lastState == States.TEST)
-                {
-                    EventHandler.Broadcast(Events.SHOW_TEST, 0);
-                }   
-            }
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventData"></param>
         public void OnInputDown(InputEventData eventData)
         {
             //Debug.Log("current state: " + CurrentState);
@@ -158,7 +99,8 @@ namespace NetworkVisualizer
                         break;
 
                 }
-            }else
+            }
+            else
             {
                 if (CurrentState != States.DEFINE && CurrentState != States.MENU && eventData.selectedObject.CompareTag("Untagged") && eventData.selectedObject.name.IndexOf("surface", StringComparison.OrdinalIgnoreCase) >= 0)
                 {
@@ -170,13 +112,97 @@ namespace NetworkVisualizer
                     _holdIndicator = Instantiate(HoldIndicator, position, transform.rotation, transform);
                     _holdIndicator.GetComponent<Canvas>().worldCamera = Camera.main;
                     _holdIndicator.LookAt(Camera.main.transform);
-                    foreach (Image img in _holdIndicator.GetComponentsInChildren<Image>()) {
+                    foreach (Image img in _holdIndicator.GetComponentsInChildren<Image>())
+                    {
                         img.color = HoldStartColor;
                     }
                 }
             }
-
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventData"></param>
+        public void OnInputUp(InputEventData eventData)
+        {
+            if (_holdIndicator != null)
+            {
+                CurrentState = _lastState;
+                Destroy(_holdIndicator.gameObject);
+            }
+        }
+
+        #region private methods
+
+        private void OnFocus(GameObject obj)
+        {
+            if (obj != null)
+            {
+                _focusedObject = obj;
+            }
+        }
+
+        private void OnUnfocus(GameObject obj)
+        {
+            _focusedObject = null;
+        }
+
+        private void OnSwitchToStateTwo(int id)
+        {
+            CurrentState = States.VISUALIZE;
+        }
+
+        private  void OnSwitchToStateOne()
+        {
+            OnSwitchToStateOne(1);
+        }
+
+        private void OnSwitchToStateOne(int test)
+        {
+            CurrentState = States.TEST;
+            Debug.Log("Hello State " + CurrentState);
+            if (_recognizer == null)
+            {
+                _recognizer = new GestureRecognizer();
+                _recognizer.SetRecognizableGestures(GestureSettings.Hold);
+
+                _recognizer.HoldStarted += OnHoldStarted;
+                _recognizer.HoldCompleted += OnHold;
+                _recognizer.StartCapturingGestures();
+            }
+        } 
+
+        private void OnHoldStarted(HoldStartedEventArgs args)
+        {
+            if (_focusedObject == null && _holdIndicator != null)                       
+            {
+                foreach(Image img in _holdIndicator.GetComponentsInChildren<Image>())
+                {
+                    img.color = HoldInitiatedColor;
+                }
+                _holdIndicator.GetComponentInChildren<Text>().text = "Release";
+            }
+        }
+
+        private void OnHold(HoldCompletedEventArgs args)
+        {
+            if (_focusedObject == null && _holdIndicator != null)
+            {
+                
+                Destroy(_holdIndicator.gameObject);
+                if (_lastState == States.VISUALIZE)
+                {
+                    EventHandler.Broadcast(Events.OPEN_MENU);
+                }
+
+                if(_lastState == States.TEST)
+                {
+                    EventHandler.Broadcast(Events.SHOW_TEST, 0);
+                }   
+            }
+        }
+
 
         private void OnDestroy()
         {
@@ -186,13 +212,6 @@ namespace NetworkVisualizer
                 _recognizer.Dispose();
             }
         }
-
-        public void OnInputUp(InputEventData eventData){
-            if(_holdIndicator != null)
-            {
-                CurrentState = _lastState;
-                Destroy(_holdIndicator.gameObject);
-            }
-        }
+        #endregion
     }
 }

@@ -2,6 +2,9 @@
 
 namespace NetworkVisualizer.Objects
 {
+    /// <summary>
+    /// Content of a device. Not used right now.
+    /// </summary>
     [Serializable]
     public class Content
     {

@@ -4,13 +4,15 @@ using NetworkVisualizer.Enums;
 
 namespace NetworkVisualizer.Visual
 {
-
+     /// <summary>
+     /// PanelController is used to create, position and fill a panel.
+     /// </summary>
     public class PanelController : MonoBehaviour
     {
 
         public GameObject ConnectionPanel;
         public GameObject DevicePanel;
-
+        public float PanelOffsetY = 2f;
         public bool HasPanel { get; private set; }
 
         private GameObject _panelParent;
@@ -23,18 +25,17 @@ namespace NetworkVisualizer.Visual
         public void Init(PanelType type, NetworkObject obj)
         { 
             _type = type;
-            _panelParent = gameObject;
             _networkObject = obj;
             //http://wiki.unity3d.com/index.php?title=CameraFacingBillboard
-            _panelParent.transform.LookAt(_panelParent.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+            transform.LookAt(_panelParent.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
             GameObject panel = null;
             switch (_type)
             {
                 case PanelType.Connection:
-                    panel = Instantiate(ConnectionPanel, _panelParent.transform);
+                    panel = Instantiate(ConnectionPanel, transform);
                     break;
                 case PanelType.Device:
-                    panel = Instantiate(DevicePanel, _panelParent.transform);
+                    panel = Instantiate(DevicePanel, transform);
                     break;
             }
             if (panel != null)
@@ -60,10 +61,7 @@ namespace NetworkVisualizer.Visual
 
         private void InitPanel(GameObject panel)
         {
-            if(_type == PanelType.Device)
-                panel.GetComponent<RectTransform>().localPosition = new Vector3(0f, 2f, 0f);
-            else
-                panel.GetComponent<RectTransform>().localPosition = new Vector3(0f, 2f, 0f);
+            panel.GetComponent<RectTransform>().localPosition = new Vector3(0f, PanelOffsetY, 0f);
             panel.GetComponent<RectTransform>().localRotation.SetLookRotation(Camera.main.transform.position);
             panel.GetComponentInChildren<Canvas>().worldCamera = Camera.main;
 

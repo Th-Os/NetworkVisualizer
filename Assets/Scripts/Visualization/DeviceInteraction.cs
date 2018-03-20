@@ -2,8 +2,14 @@
 
 namespace NetworkVisualizer.Visual
 {
+    /// <summary>
+    /// DeviceInteraction handles the interactions by changing the color of the device shell.
+    /// </summary>
     class DeviceInteraction : Interaction
     {
+        /// <summary>
+        /// When the device has the focus of the user it will change the outer material to this one.
+        /// </summary>
         public Material DeviceHighlightMaterial;
 
         private Material _standardDeviceMaterial;

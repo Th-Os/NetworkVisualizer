@@ -4,6 +4,9 @@ using Helpers;
 
 namespace NetworkVisualizer.Visual { 
 
+    /// <summary>
+    /// The CanvasController is responsible for de/activating the different user interfaces.
+    /// </summary>
     public class CanvasController : Singleton<CanvasController> {
 
         public GameObject Parent;
@@ -21,8 +24,16 @@ namespace NetworkVisualizer.Visual {
 
         private GameObject _currentUI;
 
+        public CanvasController() { }
 
-        //When the change to singleton is needed.
+        /// <summary>
+        /// Initializes the <see cref="CanvasController"/> with all used canvases.
+        /// </summary>
+        /// <param name="Parent"></param>
+        /// <param name="TestUI"></param>
+        /// <param name="DefineUI"></param>
+        /// <param name="VisualizeUI"></param>
+        /// <param name="MenuUI"></param>
         public void Init(GameObject Parent, GameObject TestUI, GameObject DefineUI, GameObject VisualizeUI, GameObject MenuUI)
         {
             this.Parent = Parent;

@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 namespace NetworkVisualizer.Visual
 {
-
+    /// <summary>
+    /// Functionality of a <see cref="DataBox"/> specific to a device.
+    /// </summary>
     public class DeviceDataBox : DataBox
     {
-
-        // Use this for initialization
         override protected void Start()
         {
             base.Start();

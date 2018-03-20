@@ -1,5 +1,8 @@
 ﻿namespace NetworkVisualizer.Enums
 {
+    /// <summary>
+    /// Representing all possible events.
+    /// </summary>
     public enum Events
     {
         DEVICE_FOUND, DEVICE_DEFINED,
