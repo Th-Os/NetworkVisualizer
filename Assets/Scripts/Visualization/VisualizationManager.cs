@@ -8,7 +8,11 @@ using NetworkVisualizer.Data;
 
 namespace NetworkVisualizer.Visual
 {
-
+    /// <summary>
+    /// The VisualizationManager is the layer between the system and the visual representations.
+    /// It manages specific incoming events and distributes them to the responsible controller.
+    /// Furthermore it requires 2 GameObjects that act as parents for the devices or panels.
+    /// </summary>
     public class VisualizationManager : MonoBehaviour
     {
 
@@ -24,7 +28,7 @@ namespace NetworkVisualizer.Visual
             EventHandler.OnDestroyVisualization += DestroyConnections;
         }
 
-        public void OnConnection(NetworkObject connection)
+        private void OnConnection(NetworkObject connection)
         {
             if (connection is Connection)
             {
@@ -38,14 +42,14 @@ namespace NetworkVisualizer.Visual
 
         }
 
-        public void ShowDeviceData(GameObject obj, Device device)
+        private void ShowDeviceData(GameObject obj, Device device)
         {
             Panels.GetComponent<PanelManager>().ShowPanel(obj, obj.transform.position, PanelType.Device, device);
             if(device != null)
                 Debug.Log("Display data " + device.Content + " of device: " + device.Name + " with ip: " + device.Ip + " and position: " + device.Position);
         }
 
-        public void ShowConnectionData(DeviceConnection dc, Connection conn)
+        private void ShowConnectionData(DeviceConnection dc, Connection conn)
         {
             Vector3 position = Vector3.Lerp(dc.Source.position, dc.Target.position, 0.5f);
             Panels.GetComponent<PanelManager>().ShowPanel(dc, position, PanelType.Connection, conn);

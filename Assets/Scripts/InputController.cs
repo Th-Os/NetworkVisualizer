@@ -11,7 +11,8 @@ using NetworkVisualizer.Visual;
 namespace NetworkVisualizer
 {
     /// <summary>
-    /// 
+    /// The InputController works as a GlobalListener and is registered on input and hold events.
+    /// Furthermore it implements functionality to manage the hold interaction and differences between states and clicked objects.
     /// </summary>
     public class InputController : SetGlobalListenerHololens, SetGlobalListener
     {
@@ -40,7 +41,8 @@ namespace NetworkVisualizer
 
 
         /// <summary>
-        /// 
+        /// All taps or clicks will be handled by this method.
+        /// It has a different functionality for every combination of state and object that was clicked.
         /// </summary>
         /// <param name="eventData"></param>
         public void OnInputDown(InputEventData eventData)
@@ -121,7 +123,7 @@ namespace NetworkVisualizer
         }
 
         /// <summary>
-        /// 
+        /// OnInputUp indicates a exit of an interaction. If the interaction before was of the type hold, then it will cancel.
         /// </summary>
         /// <param name="eventData"></param>
         public void OnInputUp(InputEventData eventData)

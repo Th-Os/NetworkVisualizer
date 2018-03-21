@@ -2,11 +2,16 @@
 
 namespace NetworkVisualizer.Visual
 {
-
+    /// <summary>
+    /// A UIView is responsible for showing and hiding an UI element.
+    /// </summary>
     public class UIView : MonoBehaviour, IUIInteractable
     {
         private CanvasGroup _canvasGroup;
 
+        /// <summary>
+        /// Hide <see cref="CanvasGroup"/>.
+        /// </summary>
         public void Hide()
         {
             _canvasGroup.interactable = false;
@@ -14,6 +19,9 @@ namespace NetworkVisualizer.Visual
             _canvasGroup.alpha = 0;
         }
 
+        /// <summary>
+        /// Show <see cref="CanvasGroup"/>.
+        /// </summary>
         public void Show()
         {
             _canvasGroup.interactable = true;

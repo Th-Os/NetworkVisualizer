@@ -35,7 +35,7 @@ namespace NetworkVisualizer.Visual
 
         }
 
-        IEnumerator Run(int number)
+        private IEnumerator Run(int number)
         {
             yield return new WaitForSeconds(5f);
             switch (number)

@@ -6,7 +6,10 @@ using NetworkVisualizer.Visual;
 
 namespace NetworkVisualizer
 {
-
+    /// <summary>
+    /// The MainController manages and initializes other controllers:
+    /// <see cref="MqttController"/>, <see cref="CanvasController"/> and <see cref="DataController"/>
+    /// </summary>
     public class MainController : MonoBehaviour
     {
         public GameObject ParentUI;
@@ -52,16 +55,16 @@ namespace NetworkVisualizer
             StartCoroutine(InitApp());
             //StartCoroutine(StopTest());
             
-    }
+        }
 
-        IEnumerator InitApp()
+        private IEnumerator InitApp()
         {
             Debug.Log("Wait for 5 seconds, then start application.");
             yield return new WaitForSeconds(5f);
             EventHandler.Broadcast(Events.START_DEFINE);
         }
 
-        IEnumerator StopTest()
+        private IEnumerator StopTest()
         {
             yield return new WaitForSeconds(120f);
             EventHandler.Broadcast(Events.END_TEST);
@@ -69,12 +72,12 @@ namespace NetworkVisualizer
 
 
 
-        void OnTestStarted(int test)
+        private void OnTestStarted(int test)
         {
             GetComponent<SimulateCallBehaviour>().Init(test);
         }
 
-        void OnTestEnded(int test)
+        private void OnTestEnded(int test)
         {
            
         }

@@ -5,6 +5,11 @@ using NetworkVisualizer.Data;
 
 namespace NetworkVisualizer.Visual
 {
+    /// <summary>
+    /// The Visualizer presents the visual layer. Lines of connection can be drawn and single connections can be fired.
+    /// Additionally a call animation will trigger, when the specific event is fired.
+    /// Last but not least, it handles the highlighting of objects.
+    /// </summary>
     public class Visualizer : MonoBehaviour
     {
 

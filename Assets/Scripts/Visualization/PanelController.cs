@@ -5,7 +5,7 @@ using NetworkVisualizer.Enums;
 namespace NetworkVisualizer.Visual
 {
      /// <summary>
-     /// PanelController is used to create, position and fill a panel.
+     /// PanelController is used to create, position and fill a panel (device or connection details).
      /// </summary>
     public class PanelController : MonoBehaviour
     {
@@ -22,7 +22,12 @@ namespace NetworkVisualizer.Visual
         private PanelType _type;
         private NetworkObject _networkObject;
 
-        public void Init(PanelType type, NetworkObject obj)
+        /// <summary>
+        /// Initializes a specific panel, which is specified by the <see cref="PanelType"/>, and adds data in form of a <see cref="NetworkObject"/> to it.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="obj"></param>
+        public void InitPanel(PanelType type, NetworkObject obj)
         { 
             _type = type;
             _networkObject = obj;
